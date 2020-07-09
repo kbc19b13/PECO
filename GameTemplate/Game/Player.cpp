@@ -15,8 +15,15 @@ Player::~Player()
 
 void Player::Update()
 {
+	if (g_pad[0].IsPress(enButtonLeft)) {
+		m_pos.x += 5.0f;
+	}
+	if (g_pad[0].IsPress(enButtonRight)) {
+		m_pos.x -= 5.0f;
+	}
+
 	//ワールド行列の更新。
-	m_model.UpdateWorldMatrix(CVector3::Zero(), CQuaternion::Identity(), CVector3::One());
+	m_model.UpdateWorldMatrix(m_pos, CQuaternion::Identity(), CVector3::One());
 }
 void Player::Draw()
 {
@@ -25,3 +32,9 @@ void Player::Draw()
 		g_camera3D.GetProjectionMatrix()
 	);
 }
+
+//start
+//update
+/*
+ondestroy
+*/

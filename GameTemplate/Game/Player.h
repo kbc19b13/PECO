@@ -10,5 +10,7 @@ public:
 	void Draw();
 private:
 	SkinModel m_model;									//スキンモデル。
+
+	CVector3 m_pos = { 0.0f, 0.0f, 0.0f };
 };
 
