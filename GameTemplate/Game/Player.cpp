@@ -5,7 +5,7 @@
 Player::Player()
 {
 	//cmoファイルの読み込み。
-	m_model.Init(L"Assets/modelData/unityChan.cmo");
+	m_model.Init(L"Assets/modelData/PECO.cmo");
 }
 
 
@@ -15,11 +15,19 @@ Player::~Player()
 
 void Player::Update()
 {
+	
+
 	if (g_pad[0].IsPress(enButtonLeft)) {
 		m_pos.x += 5.0f;
 	}
 	if (g_pad[0].IsPress(enButtonRight)) {
 		m_pos.x -= 5.0f;
+	}
+	if (g_pad[0].IsPress(enButtonUp)) {
+		m_pos.y += 5.0f;
+	}
+	if (g_pad[0].IsPress(enButtonDown)) {
+		m_pos.y -= 5.0f;
 	}
 
 	//ワールド行列の更新。

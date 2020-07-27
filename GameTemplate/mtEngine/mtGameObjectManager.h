@@ -30,11 +30,14 @@ namespace mtEngine {
 	*/
 		static unsigned int MakeGameObjectNameKey(const char* objectName)
 		{
+			//デフォルトの名前　＝　未定義
 			static const unsigned int defaultNameKey = CUtil::MakeHash("Undefined");	//名前キー。
 			unsigned int hash;
+			//名前を未定義にする
 			if (objectName == nullptr) {
 				hash = defaultNameKey;
 			}
+			//自分の名前を返す
 			else {
 				hash = CUtil::MakeHash(objectName);
 			}
@@ -69,15 +72,26 @@ namespace mtEngine {
 			*/
 		void AddGameObject(GameObjectPrio prio, IGameObject* go, const char* objectName = nullptr)
 		{
+			//引数3のオブジェクト名
+			//引数のない戻り値(void) = オブジェクト名は返さない
 			(void)objectName;
+			//GameObjectManagerに登録されているか
 			if (!go->m_isRegist) {
-				//go->Awake();　またね(@^^)/~~~
+				//go->Awake();//　またね(@^^)/~~~
+				//ハッシュ値　＝　メモリ小、文字より数字のほうが早い
+				//名前を数値として保管
 				unsigned int hash = MakeGameObjectNameKey(objectName);
+				//at　＝ <vector>要素アクセス.<list>末尾に要素を追加する
 				m_gameObjectListArray.at(prio).push_back(go);
+				//GameObjectManagerに登録されている
 				go->m_isRegist = true;
+				//引数1の実行優先度を設定
 				go->m_priority = prio;
+				//Startはまだされていない
 				go->m_isStart = false;
+				//MakeGameObjectNameKey()の戻り値を記録
 				go->m_nameKey = hash;
+
 				if (go->m_isDead) {
 					//死亡フラグが立っている。
 					//削除リストに入っていたらそこから除去する。
@@ -93,19 +107,31 @@ namespace mtEngine {
 			 *@param[in]	prio		実行優先順位。
 			 *@param[in]	objectName	オブジェクト名。
 			 */
-		template<class T, class... TArgs>
-		T* NewGameObject(GameObjectPrio prio, const char* objectName)
+		template<class T, class... TArgs>	//テンプレ
+		T* NewGameObject(GameObjectPrio prigo, const char* objectName)
 		{
+			/*
+			テンプレートがわからなくなったら
+			https://qiita.com/hal1437/items/b6deb22a88c76eeaf90c
+			*/
 			(void*)objectName;
-			TK_ASSERT(prio <= m_gameObjectPriorityMax, "ゲームオブジェクトの優先度の最大数が大きすぎます。");
+			TK_ASSERT(prigo <= m_gameObjectPriorityMax, "ゲームオブジェクトの優先度の最大数が大きすぎます。");
 			T* newObject = new T();
 			newObject->Awake();
-			newObject->SetMarkNewFromGameObjectManager();
-			m_gameObjectListArray.at(prio).push_back(newObject);
+			newObject-> ();
+			//at　＝ <vector>要素アクセス.<list>末尾に要素を追加する
+			m_gameObjectListArray.at(prigo).push_back(newObject);
+			//ハッシュ値　＝　メモリ小、文字より数字のほうが早い
+			//名前を数値として保管
 			unsigned int hash = MakeGameObjectNameKey(objectName);
+			//GameObjectManagerに登録されている
 			newObject->m_isRegist = true;
-			newObject->m_priority = prio;
+			//引数1の実行優先度を設定
+			newObject->m_priority = prigo;
+			//MakeGameObjectNameKey()の戻り値を記録
 			newObject->m_nameKey = hash;
+
+			//設定した値を返す
 			return newObject;
 		}
 		/*!
@@ -143,23 +169,40 @@ namespace mtEngine {
 						if (p == nullptr && enableErrorMessage == true) {
 							//型変換に失敗。
 
-							TK_WARNING_MESSAGE_BOX(
-								"FingGameObject ： 型変換に失敗しました。テンプレート引数を確認してください。typeName = %s, objectName = %s",
-								typeid(T).name(),
-								objectName
-							);
+							//TK_WARNING_MESSAGE_BOX(
+							//	"FingGameObject ： 型変換に失敗しました。テンプレート引数を確認してください。typeName = %s, objectName = %s",
+							//	typeid(T).name(),
+							//	objectName
+							//);
 						}
 						return p;
 					}
 				}
 			}
 			if (enableErrorMessage == true) {
-				TK_WARNING_MESSAGE_BOX("FindGO関数に指定された名前のインスタンスを見つけることができませんでした。\n"
+				/*TK_WARNING_MESSAGE_BOX("FindGO関数に指定された名前のインスタンスを見つけることができませんでした。\n"
 					"名前が間違っていないか確認をして下さい。\n"
-					"\n\n検索された名前 【%s】\n", objectName);
+					"\n\n検索された名前 【%s】\n", objectName);*/
 			}
 			//見つからなかった。
 			return nullptr;
+		}
+		template<class T>
+		void FindGameObjects(const char* objectName, std::function<bool(T* go)> func)
+		{
+			unsigned int nameKey = CUtil::MakeHash(objectName);
+			for (auto goList : m_gameObjectListArray) {
+				for (auto go : goList) {
+					if (go->m_nameKey == nameKey) {
+						//見つけた。
+						T* p = dynamic_cast<T*>(go);
+						if (func(p) == false) {
+							//クエリ中断。
+							return;
+						}
+					}
+				}
+			}
 		}
 	private:
 		/*!
