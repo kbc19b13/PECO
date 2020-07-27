@@ -11,6 +11,7 @@ namespace mtEngine {
 	class IGameObject
 	{
 	public:
+		using IGameObjectIsBase = IGameObject;
 		/*
 		コンストラクタ初期化
 

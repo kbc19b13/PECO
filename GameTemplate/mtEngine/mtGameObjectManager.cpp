@@ -19,25 +19,24 @@ namespace mtEngine {
 			}
 		}
 	}
+	//Startを実行
 	void mtGameObjectManager::ExecuteFromMainThread()
 	{
 		//Start
 		Start();
 	}
-	/*
 	void mtGameObjectManager::ExecuteFromGameThread()
 	{
 
 		//更新系の処理。
-		{
+		{//アップデート。いる
+			Update();
 
+			/*
 			//事前アップデート。
-			//PreUpdate();
+			PreUpdate();
 			//プリレンダリングの更新処理。
 			GraphicsEngine().GetPreRender().Update();
-
-			//アップデート。いる
-			Update();
 
 			//遅延アップデート。
 			PostUpdate();
@@ -47,7 +46,9 @@ namespace mtEngine {
 			LightManager().Update();
 			//エフェクトを更新。
 			GraphicsEngine().GetEffectEngine().Update();
+			*/
 		}
+		/*
 		//描画系の処理。
 		{
 			CRenderContext& renderContext = GraphicsEngine().GetRenderContext();
@@ -66,10 +67,12 @@ namespace mtEngine {
 			//2D的なものの描画。
 			PostRender(renderContext);
 		}
+		*/
 
 		ExecuteDeleteGameObjects();
 
 	}
+	/*
 	void mtGameObjectManager::UpdateSceneGraph()
 	{
 		//ワールド行列を更新。
@@ -81,31 +84,41 @@ namespace mtEngine {
 
 	void mtGameObjectManager::ExecuteDeleteGameObjects()
 	{
-		int preBufferNo = m_currentDeleteObjectBufferNo;
+		int preBufferNo = m_currentDeleteObjectBufferNo;//現在の
 		//バッファを切り替え。
 		m_currentDeleteObjectBufferNo = 1 ^ m_currentDeleteObjectBufferNo;
+		//
 		for (mtGameObjectList& goList : m_deleteObjectArray[preBufferNo]) {
+			//リスト
 			for (IGameObject* go : goList) {
+				//実行優先度を受け取る
 				GameObjectPrio prio = go->GetPriority();
+				//std::vectorのat(要素アクセス)
 				mtGameObjectList& goExecList = m_gameObjectListArray.at(prio);
+				//std::find(渡された要素を検索)
 				auto it = std::find(goExecList.begin(), goExecList.end(), go);
 				if (it != goExecList.end()) {
 					//削除リストから除外された。
 					(*it)->m_isRegistDeadList = false;
+					//NewGOで作られているか
 					if ((*it)->IsNewFromGameObjectManager()) {
 						delete (*it);
 					}
 				}
+				//要素の削除
 				goExecList.erase(it);
 			}
+			//全要素の削除
 			goList.clear();
 		}
 	}
-
+	//初期化
 	void mtGameObjectManager::Init(int gameObjectPrioMax)
 	{
 		//TK_ASSERT(gameObjectPrioMax <= GAME_OBJECT_PRIO_MAX, "ゲームオブジェクトの優先度の最大数が大きすぎます。");
+		//キャスト
 		m_gameObjectPriorityMax = static_cast<GameObjectPrio>(gameObjectPrioMax);
+		//std::List.resaze(要素数を変更する)
 		m_gameObjectListArray.resize(gameObjectPrioMax);
 		m_deleteObjectArray[0].resize(gameObjectPrioMax);
 		m_deleteObjectArray[1].resize(gameObjectPrioMax);

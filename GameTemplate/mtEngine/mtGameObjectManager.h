@@ -45,20 +45,21 @@ namespace mtEngine {
 		}
 	public:
 		/*!
-			 *@brief	インスタンスの取得。
-			 */
+		*@brief	インスタンスの取得。
+		*///静的メンバ関数(どこからでも呼び出せる)
 		static mtGameObjectManager& Instance()
 		{
+			//限定したグローバル変数
 			static mtGameObjectManager instance;
 			return instance;
 		}
 		/// メインスレッドから呼ばれる実行処理。
 			/// </summary//概要>
-		void ExecuteFromMainThread();
+		void ExecuteFromMainThread();//Start
 		/*!
 		*@brief	ゲームスレッドから呼ばれる実行処理。
 		*/
-		void ExecuteFromGameThread();
+		void ExecuteFromGameThread();//Updeta
 		/*!
 	 *@brief	初期化。
 	 *@param[in]	gameObjectPrioMax	ゲームオブジェクトの優先度の最大値。(255まで)
@@ -115,7 +116,7 @@ namespace mtEngine {
 			https://qiita.com/hal1437/items/b6deb22a88c76eeaf90c
 			*/
 			(void*)objectName;
-			TK_ASSERT(prigo <= m_gameObjectPriorityMax, "ゲームオブジェクトの優先度の最大数が大きすぎます。");
+			//TK_ASSERT(prigo <= m_gameObjectPriorityMax, "ゲームオブジェクトの優先度の最大数が大きすぎます。");
 			T* newObject = new T();
 			newObject->Awake();
 			newObject-> ();
@@ -259,7 +260,7 @@ namespace mtEngine {
 	}
 	/*!
 	 *@brief	ゲームオブジェクト生成のヘルパー関数。
-	 *@param[in]	priority	プライオリティ。
+	 *@param[in]	priority	プライオリティ = 実行優先度
 	 *@param[in]	objectName	オブジェクト名。(NULLの指定可）
 	 *@details
 	 よくあるコンパイルエラー　よくあるコンパイルエラー　よくあるコンパイルエラー　よくあるコンパイルエラー
@@ -272,7 +273,11 @@ namespace mtEngine {
 	 よくあるコンパイルエラー　よくあるコンパイルエラー　よくあるコンパイルエラー　よくあるコンパイルエラー
 	 */
 	template<class T>
-	static inline T* NewGO(int priority, const char* objectName = nullptr, typename T::IGameObjectIsBase* = nullptr)
+	static inline T* NewGO(
+		int priority, 
+		const char* objectName = nullptr, 
+		typename T::IGameObjectIsBase* = nullptr
+	)
 	{
 		return GameObjectManager().NewGameObject<T>((GameObjectPrio)priority, objectName);
 	}

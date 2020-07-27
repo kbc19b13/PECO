@@ -35,7 +35,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 		//物理エンジンの更新。
 		g_physics.Update();
 
-		//NewGO<Player>(0);
+		NewGO<Player>(0, "Player");
 
 		//オブジェクトの更新。
 		player.Update();
