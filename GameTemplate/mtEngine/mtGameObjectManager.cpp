@@ -1,5 +1,5 @@
+#include "mtEnginePreCompile.h"
 #include "mtGameObjectManager.h"
-#include "../Game/stdafx.h"
 
 
 namespace mtEngine {

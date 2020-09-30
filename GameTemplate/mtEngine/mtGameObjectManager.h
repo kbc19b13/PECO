@@ -1,14 +1,15 @@
 #pragma once
 
+
+#ifndef _CGAMEOBJECTMANAGER_H_
+#define _CGAMEOBJECTMANAGER_H_
+
 #include "mtGameObject.h"
 #include <iostream>
 #include <list>
 #include <vector>
+#include <functional>
 #include "mtUtil.h"
-#include "../Game/stdafx.h"
-
-
-
 
 namespace mtEngine {
 	/*!
@@ -20,6 +21,16 @@ namespace mtEngine {
 		mtGameObjectManager() :
 			m_gameObjectPriorityMax(0)
 		{
+			/*
+			Initで初期化してもいい
+			エンジンが大きくなったり
+			初期化するものが多くなるとInitのほうがいいかも
+			using int型でメモリ節約
+			優先度の指定最大32
+			*/
+			m_gameObjectListArray.resize(gameObjectPrioMax);
+			m_deleteObjectArray[0].resize(gameObjectPrioMax);
+			m_deleteObjectArray[1].resize(gameObjectPrioMax);
 		}
 		~mtGameObjectManager()
 		{
@@ -118,8 +129,10 @@ namespace mtEngine {
 			(void*)objectName;
 			//TK_ASSERT(prigo <= m_gameObjectPriorityMax, "ゲームオブジェクトの優先度の最大数が大きすぎます。");
 			T* newObject = new T();
-			newObject->Awake();
-			newObject-> ();
+
+			//newObject->Awake();
+			
+			newObject->SetMarkNewFromGameObjectManager();
 			//at　＝ <vector>要素アクセス.<list>末尾に要素を追加する
 			m_gameObjectListArray.at(prigo).push_back(newObject);
 			//ハッシュ値　＝　メモリ小、文字より数字のほうが早い
@@ -225,8 +238,10 @@ namespace mtEngine {
 		GameObjectPrio				m_gameObjectPriorityMax;				//!<ゲームオブジェクトの優先度の最大数。
 		int m_currentDeleteObjectBufferNo = 0;								//!<現在の削除オブジェクトのバッファ番号。
 		static const unsigned char 			GAME_OBJECT_PRIO_MAX = 255;		//!<ゲームオブジェクトの優先度の最大値。
+		unsigned int gameObjectPrioMax = 32;	//優先度の最大数
 	};
 
+	//シングルトン（インスタンス取得）
 	static inline mtGameObjectManager& GameObjectManager()
 	{
 		return mtGameObjectManager::Instance();
@@ -317,3 +332,5 @@ namespace mtEngine {
 			});
 	}
 }
+
+#endif // _CGAMEOBJECTMANAGER_H_

@@ -1,6 +1,9 @@
 
 #pragma once
 
+#ifndef _MTUTIL_H_
+#define _MTUTIL_H_
+
 #include <string.h>
 
 namespace mtEngine
@@ -45,3 +48,5 @@ namespace mtEngine
 
 
 }
+
+#endif // _TKUTIL_H_

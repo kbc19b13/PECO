@@ -27,6 +27,9 @@
     <ClCompile Include="mtGameObjectManager.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="mtEnginePreCompile.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mtGameObject.h">
@@ -37,6 +40,9 @@
     </ClInclude>
     <ClInclude Include="mtUtil.h">
       <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="mtEnginePreCompile.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

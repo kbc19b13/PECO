@@ -6,11 +6,13 @@ Player::Player()
 {
 	//cmoファイルの読み込み。
 	m_model.Init(L"Assets/modelData/PECO.cmo");
+	
 }
 
 
 Player::~Player()
 {
+	DeleteGO("Player");
 }
 
 void Player::Update()
@@ -24,14 +26,15 @@ void Player::Update()
 		m_pos.x -= 5.0f;
 	}
 	if (g_pad[0].IsPress(enButtonUp)) {
-		m_pos.y += 5.0f;
+		m_pos.z += 5.0f;
 	}
 	if (g_pad[0].IsPress(enButtonDown)) {
-		m_pos.y -= 5.0f;
+		m_pos.z -= 5.0f;
 	}
 
 	//ワールド行列の更新。
 	m_model.UpdateWorldMatrix(m_pos, CQuaternion::Identity(), CVector3::One());
+	Draw();
 }
 void Player::Draw()
 {

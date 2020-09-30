@@ -21,6 +21,7 @@ public:
 private:
 	SkinModel m_model;									//スキンモデル。
 
-	CVector3 m_pos = { 0.0f, 0.0f, 0.0f };
+	CVector3 m_pos = { 5000.0f, 0.0f, -5000.0f };
+
 };
 

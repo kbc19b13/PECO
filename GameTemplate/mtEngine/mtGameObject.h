@@ -2,6 +2,10 @@
 
 #pragma once
 
+
+#ifndef _CGAMEOBJECT_H_
+#define _CGAMEOBJECT_H_
+
 namespace mtEngine {
 	//?
 	class mtGameObjectManager;
@@ -173,3 +177,5 @@ namespace mtEngine {
 	};
 
 }
+
+#endif // _CGAMEOBJECT_H_

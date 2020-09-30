@@ -1,12 +1,14 @@
 #pragma once
 #include "../mtEngine/mtGameObject.h"
 #include "character/CharacterController.h"
+#include "level/Level.h"
 
-class BackGround
+class BackGround : public IGameObject
 {
 public:
 	BackGround();
 	~BackGround();
+	bool Start();
 	void Update();
 	void Draw();
 
@@ -21,6 +23,9 @@ public:
 
 private:
 	SkinModel m_model;
+
+	//ƒŒƒxƒ‹
+	Level m_level;
 
 	CVector3 m_pos = { 0.0f, 0.0f, 0.0f };
 };
