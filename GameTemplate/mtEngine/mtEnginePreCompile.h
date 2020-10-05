@@ -1,7 +1,6 @@
 #pragma once
 
-#include <WinSock2.h>
-#include <windows.h>
+
 #include <stdio.h>
 #include <cstdlib>
 #include <vector>
@@ -17,3 +16,6 @@
 #include "mtUtil.h"
 #include "mtGameObject.h"
 #include "mtGameObjectManager.h"
+
+//#include "mtGameTime.h"
+//#include "mtStopwatch.h"

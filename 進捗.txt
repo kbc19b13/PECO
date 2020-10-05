@@ -1,0 +1,5 @@
+ストップウォッチクラスの作成
+
+::QueryPerformanceCounterはなんでか使える
+
+何かはわからん

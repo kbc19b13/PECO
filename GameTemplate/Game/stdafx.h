@@ -7,7 +7,7 @@
 #include <vector>
 #include <list>
 #include <D3Dcompiler.h>
-#include <Windows.h>
+//#include <Windows.h>
 #include <d3d11.h>
 #include <map>
 #include <functional>
@@ -37,9 +37,10 @@
 #include "graphics/animation/AnimationClip.h"
 #include "graphics/Camera.h"
 
-#include "mtGameObject.h"
-#include "mtGameObjectManager.h"
+#include "../mtEngine/mtGameObject.h"
+#include "../mtEngine/mtGameObjectManager.h"
 
+#include "..//mtEngine/mtEnginePreCompile.h"
 
 const float FRAME_BUFFER_W = 1280.0f;				//フレームバッファの幅。
 const float FRAME_BUFFER_H = 720.0f;				//フレームバッファの高さ。

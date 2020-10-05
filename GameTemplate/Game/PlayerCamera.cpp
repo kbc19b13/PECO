@@ -29,6 +29,7 @@ void PlayerCamera::Update()
 	target.y += 50.0f;
 
 	Camera_pos = target + m_pos;
+	
 
 	g_camera3D.SetTarget(target);
 	g_camera3D.SetPosition(Camera_pos);

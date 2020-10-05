@@ -7,6 +7,8 @@ class Player : public IGameObject
 public:
 	Player();
 	~Player();
+
+	bool Start();
 	void Update();
 	void Draw();
 
@@ -21,7 +23,10 @@ public:
 private:
 	SkinModel m_model;									//スキンモデル。
 
-	CVector3 m_pos = { 5000.0f, 0.0f, -5000.0f };
+	CharacterController CCon;
+
+	CVector3 m_pos = { 2500.0f, 0.0f, -2500.0f };
+	CVector3 m_speed = { 0.0f, 0.0f, 0.0f };
 
 };
 
