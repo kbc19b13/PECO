@@ -172,6 +172,7 @@
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\Bushes.FBX" />
     <MeshContentTask Include="Assets\modelData\Bushes_not.FBX" />
+    <MeshContentTask Include="Assets\modelData\MoriKuma.FBX" />
     <MeshContentTask Include="Assets\modelData\PECO.FBX" />
     <MeshContentTask Include="Assets\modelData\PECO_Mori_Stage.FBX" />
     <MeshContentTask Include="Assets\modelData\PECO_Stage.FBX" />

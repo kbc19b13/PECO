@@ -17,6 +17,7 @@ BackGround::~BackGround()
 bool BackGround::Start()
 {
 	//レベルを構築する。
+	//m_level.Init(L"level/levelStage.tkl", false);
 	m_level.Init(L"level/levelStage.tkl", [&](LevelObjectData& objData)
 		{
 		
@@ -24,7 +25,7 @@ bool BackGround::Start()
 
 		//クラスの処理が入らない
 		//レベル配置の通りに座標を配置する
-		return true;
+		return false;
 		});
 
 	return true;

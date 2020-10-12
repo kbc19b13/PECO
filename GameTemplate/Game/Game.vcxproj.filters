@@ -242,6 +242,9 @@
     <MeshContentTask Include="Assets\modelData\Bushes_not.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\MoriKuma.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\modelData\unityChan.fbx">

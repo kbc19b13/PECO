@@ -2,8 +2,7 @@
 class Mori : public IGameObject
 {
 public:
-	Mori()
-	{}
+	
 	virtual ~Mori()
 	{}
 
