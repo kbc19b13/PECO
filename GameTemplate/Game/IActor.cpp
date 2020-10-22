@@ -1,3 +1,2 @@
 #include "stdafx.h"
-#include "Mori.h"
-
+#include "IActor.h"

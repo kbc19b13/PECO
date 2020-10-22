@@ -2,6 +2,7 @@
 #include "BackGround.h"
 
 
+
 BackGround::BackGround()
 {
 	//comファイルの読み込み
@@ -16,17 +17,7 @@ BackGround::~BackGround()
 
 bool BackGround::Start()
 {
-	//レベルを構築する。
-	//m_level.Init(L"level/levelStage.tkl", false);
-	m_level.Init(L"level/levelStage.tkl", [&](LevelObjectData& objData)
-		{
-		
-
-
-		//クラスの処理が入らない
-		//レベル配置の通りに座標を配置する
-		return false;
-		});
+	
 
 	return true;
 }
@@ -36,7 +27,7 @@ void BackGround::Update()
 	//ワールド行列の更新。
 	m_model.UpdateWorldMatrix(m_pos, CQuaternion::Identity(), CVector3::One());
 	Draw();
-	m_level.Draw();
+	
 }
 
 void BackGround::Draw()

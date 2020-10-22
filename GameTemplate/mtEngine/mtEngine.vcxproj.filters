@@ -22,6 +22,9 @@
     <Filter Include="Time">
       <UniqueIdentifier>{32a9b07f-672c-452b-ae40-310a31934bfd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="level">
+      <UniqueIdentifier>{c86f8e78-a366-48ea-ac8c-08c97ae1af06}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="mtGameObject.cpp">
@@ -44,13 +47,13 @@
     <ClInclude Include="mtUtil.h">
       <Filter>Util</Filter>
     </ClInclude>
-    <ClInclude Include="mtGameTime.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="mtEnginePreCompile.h">
+      <Filter>Time</Filter>
     </ClInclude>
     <ClInclude Include="mtStopwatch.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>Time</Filter>
     </ClInclude>
-    <ClInclude Include="mtEnginePreCompile.h">
+    <ClInclude Include="mtGameTime.h">
       <Filter>Time</Filter>
     </ClInclude>
   </ItemGroup>

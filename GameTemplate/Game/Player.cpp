@@ -41,23 +41,34 @@ bool Player::Start()
 		4
 	);
 
-	m_CCon.Init(30.0f, 160.0f, m_pos);
+	const float CCon_radius = 30.0f;
+	const float height = 160.0f;
+
+	m_CCon.Init(CCon_radius, height, m_pos);
 	
 	return true;
 }
 
 void Player::Update()
 {
+	const float playerSpeed = -300.0f;
+	const float gravity = 980.0f;
+
 	float frametime = GameTime().GetFrameDeltaTime();
-	m_speed.x = g_pad[0].GetLStickXF() * -300.0f;
-	m_speed.z = g_pad[0].GetLStickYF() * -300.0f;
-	//m_speed.y -= 980.0f * frametime;
+	m_speed.x = g_pad[0].GetLStickXF() * playerSpeed;
+	m_speed.z = g_pad[0].GetLStickYF() * playerSpeed;
+	//m_speed.y -= gravity * frametime;
 
 	
 	m_pos = m_CCon.Execute(frametime, m_speed);
 
+	//true = 地面にいる
+	if(m_CCon.IsOnGround() == true)
+	{
+		m_PlayerAnimation.Play(0);
+	}
+
 	
-	m_PlayerAnimation.Play(0);
 	
 	if (g_pad[0].IsPress(enButtonB))
 	{
@@ -81,7 +92,7 @@ void Player::Update()
 	m_model.UpdateWorldMatrix(m_pos, CQuaternion::Identity(), CVector3::One());
 	
 	//アニメーションの再生
-	m_PlayerAnimation.Update(1.0f/30.0f);
+	m_PlayerAnimation.Update(frametime);
 	
 	Draw();
 }

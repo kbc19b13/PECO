@@ -37,6 +37,9 @@
     <Filter Include="Enemy">
       <UniqueIdentifier>{cabba8fb-498f-428e-b580-9b0710664e12}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Enemy\Move">
+      <UniqueIdentifier>{1e7ac56a-5360-4a5d-a015-843fa59b47d3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -121,8 +124,18 @@
     <ClCompile Include="PlayerCamera.cpp">
       <Filter>Player</Filter>
     </ClCompile>
-    <ClCompile Include="Mori.cpp">
+    <ClCompile Include="IActor.cpp" />
+    <ClCompile Include="Enemy\Kuma.cpp">
       <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\Move\IKumaMove.cpp">
+      <Filter>Enemy\Move</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\Move\KumaMoveUpDow.cpp">
+      <Filter>Enemy\Move</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\Move\KumaMoveLR.cpp">
+      <Filter>Enemy\Move</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -216,8 +229,18 @@
     <ClInclude Include="PlayerCamera.h">
       <Filter>Player</Filter>
     </ClInclude>
-    <ClInclude Include="Mori.h">
+    <ClInclude Include="IActor.h" />
+    <ClInclude Include="Enemy\Kuma.h">
       <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\Move\IKumaMove.h">
+      <Filter>Enemy\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\Move\KumaMoveUpDown.h">
+      <Filter>Enemy\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\Move\KumaMoveLR.h">
+      <Filter>Enemy\Move</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
