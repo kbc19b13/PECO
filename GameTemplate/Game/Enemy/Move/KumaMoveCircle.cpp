@@ -7,11 +7,12 @@ KumaMoveCircle::KumaMoveCircle(Kuma* kuma) :
 {
 	m_initPos = m_kuma->GetPosition();
 	m_kuma->SetPosition(m_initPos);
+	pos = m_initPos;
 }
 
 void KumaMoveCircle::Move()
 {
-	CVector3 pos = m_initPos;
+	
 	// 角度から移動用のベクトルを求めて描画座標に加算する
 	// 度数法の角度を弧度法に変換
 	float radius = m_Angle * 3.14f / 180.0f;

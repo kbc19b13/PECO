@@ -55,16 +55,16 @@ bool Game::Start()
 				kuma->CreateMoveUpDown();
 				return true;
 			}
-			/*
-			if (objData.EqualObjectName(L"MoriKuma_UD"))
+			
+			if (objData.EqualObjectName(L"MoriKuma_Trun"))
 			{
 				Kuma* kuma = NewGO<Kuma>(0, "Enemy");
 				kuma->SetPosition(objData.position);
-				//上下移動の処理を作成する。
-				kuma->CreateMoveUpDown();
+				//円移動の処理を作成する。
+				kuma->CreateMoveTrun();
 				return true;
 			}
-			*/
+			
 			//レベル配置の通りに座標を配置する
 			return false;
 		});
