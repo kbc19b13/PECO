@@ -3,6 +3,7 @@
 
 #include "Move/KumaMoveUpDown.h"
 #include "Move/KumaMoveLR.h"
+#include "Move/KumaMoveCircle.h"
 
 
 bool Kuma::Start()
@@ -44,6 +45,11 @@ void Kuma::CreateMoveUpDown()
 void Kuma::CreateMoveLR()
 {
 	m_move = std::make_unique<KumaMoveLR>(this);
+}
+
+void Kuma::CreateMoveTrun()
+{
+	m_move = std::make_unique<KumaMoveCircle>(this);
 }
 
 void Kuma::Draw()

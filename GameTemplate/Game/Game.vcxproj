@@ -103,6 +103,7 @@
     <ClCompile Include="character\CharacterController.cpp" />
     <ClCompile Include="Enemy\Kuma.cpp" />
     <ClCompile Include="Enemy\Move\IKumaMove.cpp" />
+    <ClCompile Include="Enemy\Move\KumaMoveCircle.cpp" />
     <ClCompile Include="Enemy\Move\KumaMoveLR.cpp" />
     <ClCompile Include="Enemy\Move\KumaMoveUpDow.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -143,6 +144,7 @@
     <ClInclude Include="character\CharacterController.h" />
     <ClInclude Include="Enemy\Kuma.h" />
     <ClInclude Include="Enemy\Move\IKumaMove.h" />
+    <ClInclude Include="Enemy\Move\KumaMoveCircle.h" />
     <ClInclude Include="Enemy\Move\KumaMoveLR.h" />
     <ClInclude Include="Enemy\Move\KumaMoveUpDown.h" />
     <ClInclude Include="Game.h" />
@@ -186,11 +188,11 @@
     <MeshContentTask Include="Assets\modelData\PECO_Stage.FBX" />
     <MeshContentTask Include="Assets\modelData\Stage_Sanple.FBX" />
     <MeshContentTask Include="Assets\modelData\wood.FBX" />
-    <None Include="Assets\modelData\unityChan.fbx">
+    <MeshContentTask Include="Assets\modelData\unityChan.fbx">
       <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
       <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
       <FileType>Document</FileType>
-    </None>
+    </MeshContentTask>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

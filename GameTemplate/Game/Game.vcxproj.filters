@@ -137,6 +137,9 @@
     <ClCompile Include="Enemy\Move\KumaMoveLR.cpp">
       <Filter>Enemy\Move</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy\Move\KumaMoveCircle.cpp">
+      <Filter>Enemy\Move</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -242,6 +245,9 @@
     <ClInclude Include="Enemy\Move\KumaMoveLR.h">
       <Filter>Enemy\Move</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy\Move\KumaMoveCircle.h">
+      <Filter>Enemy\Move</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\PECO.FBX">
@@ -268,10 +274,8 @@
     <MeshContentTask Include="Assets\modelData\MoriKuma.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Assets\modelData\unityChan.fbx">
+    <MeshContentTask Include="Assets\modelData\unityChan.fbx">
       <Filter>Assets\modelData</Filter>
-    </None>
+    </MeshContentTask>
   </ItemGroup>
 </Project>

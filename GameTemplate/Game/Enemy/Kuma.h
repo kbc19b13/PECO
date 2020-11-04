@@ -26,6 +26,8 @@ public:
 	void CreateMoveUpDown();
 
 	void CreateMoveLR();
+
+	void CreateMoveTrun();
 public:
 	
 	void SetMoveSpeed(const CVector3& movespeed)

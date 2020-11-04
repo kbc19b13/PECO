@@ -28,6 +28,17 @@ cbuffer VSPSCb : register(b0){
 	float4x4 mProj;
 };
 
+static const int Number_Direcyion_Light = 4;
+
+/// <summary>
+/// ライト用の定数バッファ。
+/// </summary>
+cbuffer LightCb : register(b0) {
+	float3 dligDirection[Number_Direcyion_Light]; //→
+	//float ...; →が勝手に追加されている
+	float4 dligColor[Number_Direcyion_Light];
+};
+
 
 /////////////////////////////////////////////////////////////
 //各種構造体
@@ -92,7 +103,9 @@ PSInput VSMain( VSInputNmTxVcTangent In )
 	pos = mul(mProj, pos);
 	psInput.Position = pos;
 	psInput.TexCoord = In.TexCoord;
+	//UV座標はそのままピクセルシェーダーに渡す。
 	psInput.Normal = normalize(mul(mWorld, In.Normal));
+	//法線はそのままピクセルシェーダーに渡す。
 	psInput.Tangent = normalize(mul(mWorld, In.Tangent));
 	return psInput;
 }
@@ -135,6 +148,7 @@ PSInput VSMainSkin( VSInputNmTxWeights In )
 	pos = mul(mProj, pos);
 	psInput.Position = pos;
 	psInput.TexCoord = In.TexCoord;
+
     return psInput;
 }
 //--------------------------------------------------------------------------------------
@@ -142,5 +156,16 @@ PSInput VSMainSkin( VSInputNmTxWeights In )
 //--------------------------------------------------------------------------------------
 float4 PSMain( PSInput In ) : SV_Target0
 {
-	return albedoTexture.Sample(Sampler, In.TexCoord);
+
+	//albedoテクスチャからカラーをフェッチする。
+	float4 albedoColor = albedoTexture.Sample(Sampler, In.TexCoord);
+	//ディレクションライトの拡散反射光を計算する。
+	float3 lig = 0.0f;
+	for (int i = 0; i < Number_Direcyion_Light; i++) {
+		lig += max(0.0f, dot(In.Normal * -1.0f, dligDirection[i])) * dligColor[i];
+	}
+	float4 finalColor = float4(0.0f, 0.0f, 0.0f, 1.0f);											//   ×
+	finalColor.xyz = albedoColor.xyz * lig;
+	return finalColor;
+	//return albedoTexture.Sample(Sampler, In.TexCoord);//finalColor
 }

@@ -18,6 +18,5 @@ public:
 	/// </summary>
 	void Move() override;
 protected:
-	CVector3 m_initPos;		//クマの初期座標。
 };
 

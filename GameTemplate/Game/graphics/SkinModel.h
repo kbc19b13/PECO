@@ -2,6 +2,8 @@
 
 #include "Skeleton.h"
 
+const int Number_Direcyion_Light = 4;
+
 /*!
 *@brief	FBXの上方向。
 */
@@ -72,6 +74,7 @@ public:
 			}
 		}
 	}
+
 	/*!
 	*@brief	SRVのレジスタ番号。
 	*/
@@ -93,8 +96,27 @@ private:
 	*@param[in]	filePath		ロードするcmoファイルのファイルパス。
 	*/
 	void InitSkeleton(const wchar_t* filePath);
+
+	/// <summary>
+	/// ディレクションライトの初期化。
+	/// </summary>
+	void InitDirectionLight();
 	
 private:
+
+
+	/// <summary>
+	/// ディレクションライト
+	/// </summary>
+	/// 要素数の指定_const変数
+	/// Number_Direcyion_Light == 4
+	struct SDirectionLight {
+		CVector4 direction[Number_Direcyion_Light];		//ライトの方向。
+		CVector4 color[Number_Direcyion_Light];			//ライトのカラー。
+	};
+
+
+
 	//定数バッファ。
 	struct SVSConstantBuffer {
 		CMatrix mWorld;
@@ -107,5 +129,11 @@ private:
 	CMatrix				m_worldMatrix;					//!<ワールド行列。
 	DirectX::Model*		m_modelDx;						//!<DirectXTKが提供するモデルクラス。
 	ID3D11SamplerState* m_samplerState = nullptr;		//!<サンプラステート。
+	
+	
+	ID3D11Buffer*		m_lightCb = nullptr;			//!<ライト用の定数バッファ。
+	SDirectionLight		m_dirLight;						//!<ディレクションライト。
+
+
 };
 

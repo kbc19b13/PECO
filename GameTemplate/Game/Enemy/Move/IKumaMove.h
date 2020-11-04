@@ -18,5 +18,6 @@ public:
 	virtual void Move() = 0;
 protected:
 	Kuma* m_kuma = nullptr;	//このクラスで移動させているクマ。
+	CVector3 m_initPos;		//クマの初期座標。
 };
 
