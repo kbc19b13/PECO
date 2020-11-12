@@ -30,22 +30,7 @@ public:
 	void CreateMoveTrun();
 public:
 	
-	void SetMoveSpeed(const CVector3& movespeed)
-	{
-		m_speed = movespeed;
-	}
-	const CVector3& GetMoveSpeed() const
-	{
-		return m_speed;
-	}
-	void SetRotation(const CQuaternion& rot)
-	{
-		m_rot = rot;
-	}
-	const CQuaternion& GetRotation() const
-	{
-		return m_rot;
-	}
+	
 	bool IsLive() const
 	{
 		return m_isLive;
@@ -64,10 +49,6 @@ protected:
 	};
 	State m_state = State_Normal;  //ステート
 
-
-	CVector3 m_speed = { 0.0f, 0.0f, 0.0f };
-	
-	
 
 	//AnimationClip配列とAnimationの変数を追加する
 	//アニメーション

@@ -15,7 +15,12 @@ public:
 	void Update();
 	void Draw();
 
-	
+	/////////Singletonパターン///////////////
+	//Playerを一体に限定
+	static Player* P_GetInstance()
+	{
+		return m_instance;
+	}
 
 private:
 	
@@ -30,5 +35,10 @@ private:
 	AnimationClip m_PlayerAnimationClips[4];
 
 	AnimationPlayController m_animPlayCon;
+
+	
+private:
+	//シングルトン用ポインタ
+	static Player* m_instance;
 };
 

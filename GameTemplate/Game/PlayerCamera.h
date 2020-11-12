@@ -10,22 +10,15 @@ public:
 	void Update();
 	bool Start();
 	
-
-	const CVector3& GetPosition() {
-		return m_pos;
-	}
-
-	void SetPosition(const CVector3 pos) {
-		m_pos = pos;
-	}
-	
 private:
-	CVector3 m_pos = { 0.0f, 200.0f, 300.0f };
-	
+	//Playerを斜めから見る固定座標
+	CVector3 m_DiagonalFixed = { 0.0f, 200.0f, 300.0f };
+	//一つ前のカメラ座標
 	CVector3 old_pos = { 0.0f, 0.0f, 0.0f };
-
+	//カメラの座標
 	CVector3 Camera_pos = { 0.0f, 0.0f, 0.0f };
 
+private:
 	//スキンモデル
 	SkinModel m_model;
 

@@ -40,6 +40,9 @@
     <Filter Include="Enemy\Move">
       <UniqueIdentifier>{1e7ac56a-5360-4a5d-a015-843fa59b47d3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Enemy\Move\MoveState">
+      <UniqueIdentifier>{c1c4a2cf-13f6-464c-8b05-4597eebd0dc8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="math\Vector.cpp">
@@ -139,6 +142,9 @@
     </ClCompile>
     <ClCompile Include="Enemy\Move\KumaMoveCircle.cpp">
       <Filter>Enemy\Move</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\Move\MoveState\MoveEscape.cpp">
+      <Filter>Enemy\Move\MoveState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -247,6 +253,9 @@
     </ClInclude>
     <ClInclude Include="Enemy\Move\KumaMoveCircle.h">
       <Filter>Enemy\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\Move\MoveState\MoveEscape.h">
+      <Filter>Enemy\Move\MoveState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

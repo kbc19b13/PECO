@@ -12,6 +12,13 @@ class IActor : public IGameObject
 {
 public:
 	/// <summary>
+	/// アクターの座標を設定。
+	/// </summary>
+	/// <param name="pos"></param>
+	void SetPosition(const CVector3 pos) {
+		m_pos = pos;
+	}
+	/// <summary>
 	/// アクターの座標を取得。
 	/// </summary>
 	/// <returns></returns>
@@ -19,17 +26,51 @@ public:
 		return m_pos;
 	}
 	/// <summary>
-	/// アクターの座標を設定。
+	/// アクターの移動速度を設定
 	/// </summary>
-	/// <param name="pos"></param>
-	void SetPosition(const CVector3 pos) {
-		m_pos = pos;
+	/// <param name="movespeed"></param>
+	void SetMoveSpeed(const CVector3& movespeed)
+	{
+		m_speed = movespeed;
+	}
+	/// <summary>
+	/// アクターの移動速度を取得
+	/// </summary>
+	/// <returns></returns>
+	const CVector3& GetMoveSpeed() const
+	{
+		return m_speed;
+	}
+	/// <summary>
+	/// アクターの回転を設定
+	/// </summary>
+	/// <param name="rot"></param>
+	void SetRotation(const CQuaternion& rot)
+	{
+		m_rot = rot;
+	}
+	/// <summary>
+	/// アクターの回転を取得
+	/// </summary>
+	/// <returns></returns>
+	const CQuaternion& GetRotation() const
+	{
+		return m_rot;
+	}
+	/// <summary>
+	/// アクターのモデルデータを取得
+	/// </summary>
+	/// <returns></returns>
+	const SkinModel& GetModel() const
+	{
+		return m_model;
 	}
 
 protected:
 	CVector3 m_pos = CVector3::Zero();			//座標。
 	CQuaternion m_rot = CQuaternion::Identity();//回転クォータニオン。
 	CVector3 m_scale = CVector3::One();			//拡大率。
+	CVector3 m_speed = CVector3::Zero();		//移動速度。
 	SkinModel m_model;							//モデルクラス。
 };
 

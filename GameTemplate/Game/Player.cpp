@@ -3,11 +3,20 @@
 #include "..//mtEngine/mtGameTime.h"
 //#include "..//mtEngine/mtStopwatch.h"
 
+//グローバルにPlayerは一人だけ
+Player* Player::m_instance = nullptr;
 
 Player::Player()
 {
-
+	//インスタンスの制限
+	if (m_instance != nullptr)
+	{
+		//2体目からはエラーが出る
+		std::abort();
+	}
 	
+	//Playerを固定
+	m_instance = this;
 }
 
 
@@ -104,10 +113,3 @@ void Player::Draw()
 	);
 }
 
-//start
-//update
-/*
-ondestroy
-
-
-*/

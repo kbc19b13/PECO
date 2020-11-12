@@ -115,7 +115,19 @@ private:
 		CVector4 color[Number_Direcyion_Light];			//ライトのカラー。
 	};
 
+	/// <summary>
+	/// ライトの構造体
+	/// </summary>
+	struct SLight {
+		SDirectionLight		directionLight;		//ディレクションライト
+		CVector3			eyePos;				//視点の座標。
+		float				specPow;			//鏡面反射の絞り。
+	};
 
+	int Raundup16(int n)
+	{
+		return (((n - 1) / 16) + 1) * 16;
+	}
 
 	//定数バッファ。
 	struct SVSConstantBuffer {
@@ -129,11 +141,11 @@ private:
 	CMatrix				m_worldMatrix;					//!<ワールド行列。
 	DirectX::Model*		m_modelDx;						//!<DirectXTKが提供するモデルクラス。
 	ID3D11SamplerState* m_samplerState = nullptr;		//!<サンプラステート。
-	
+	ID3D11ShaderResourceView* m_albedoTextureSRV = nullptr;	//!<アルベドテクスチャのSRV
 	
 	ID3D11Buffer*		m_lightCb = nullptr;			//!<ライト用の定数バッファ。
 	SDirectionLight		m_dirLight;						//!<ディレクションライト。
 
-
+	SLight				m_light;							//!<ライト構造体。ライト用の構造体を使うように変更。
 };
 

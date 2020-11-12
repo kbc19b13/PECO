@@ -33,10 +33,19 @@ static const int Number_Direcyion_Light = 4;
 /// <summary>
 /// ライト用の定数バッファ。
 /// </summary>
+struct SDirectionLight {
+	float3 direction[Number_Direcyion_Light]; //→
+		//float ...; →が勝手に追加されている
+	float4 color[Number_Direcyion_Light];
+	};
+
+/// <summary>
+/// ライト用の定数バッファ
+/// </summary>
 cbuffer LightCb : register(b0) {
-	float3 dligDirection[Number_Direcyion_Light]; //→
-	//float ...; →が勝手に追加されている
-	float4 dligColor[Number_Direcyion_Light];
+	SDirectionLight		directionLight;		//ディレクションライト。
+	float3				eyePos;				//カメラの視点。
+	float				specPow;			//スペキュラライトの絞り。
 };
 
 
@@ -70,10 +79,11 @@ struct VSInputNmTxWeights
  * @brief	ピクセルシェーダーの入力。
  */
 struct PSInput{
-	float4 Position 	: SV_POSITION;
-	float3 Normal		: NORMAL;
-	float3 Tangent		: TANGENT;
-	float2 TexCoord 	: TEXCOORD0;
+	float4 Position 	: SV_POSITION;	//座標
+	float3 Normal		: NORMAL;		//法線
+	float3 Tangent		: TANGENT;		//ターゲット
+	float3 worldPos		: TEXCOORD1;	//ワールド座標
+	float2 TexCoord 	: TEXCOORD0;	//UV座標
 };
 /*!
  *@brief	スキン行列を計算。
@@ -162,7 +172,38 @@ float4 PSMain( PSInput In ) : SV_Target0
 	//ディレクションライトの拡散反射光を計算する。
 	float3 lig = 0.0f;
 	for (int i = 0; i < Number_Direcyion_Light; i++) {
-		lig += max(0.0f, dot(In.Normal * -1.0f, dligDirection[i])) * dligColor[i];
+		lig += max(0.0f, dot(In.Normal * -1.0f, directionLight.direction[i])) * directionLight.color[i];
+	
+	//ディレクションライトの鏡面反射光を計算する。
+	{
+		//実習　鏡面反射を計算しなさい。
+		//① ライトを当てる面から視点に伸びるベクトルtoEyeDirを求める。
+		//	 視点の座標は定数バッファで渡されている。LightCbを参照するように。
+		float3 toEyeDir = eyePos - In.worldPos;
+		toEyeDir = normalize(toEyeDir);
+
+		//② １で求めたtoEyeDirの反射ベクトルを求める。
+		float3 R = reflect(
+			directionLight.direction[i],
+			In.Normal
+		);
+
+		//③ ２で求めた反射ベクトルとディレクションライトの方向との内積を取って、スペキュラの強さを計算する。
+		float t = dot(R, toEyeDir);
+		//内積の結果でマイナスが返ってこないようにする。
+		if (t < 0.0f) {
+			t = 0.0f;
+		}
+
+		//④ pow関数を使って、スペキュラを絞る。絞りの強さは定数バッファで渡されている。
+		//	 LightCbを参照するように。
+		t = pow(t, specPow);
+
+		//⑤ 鏡面反射が求まったら、ligに加算する。
+		//鏡面反射を反射光に加算する。
+		lig += directionLight.color[i].xyz * t;
+
+	}
 	}
 	float4 finalColor = float4(0.0f, 0.0f, 0.0f, 1.0f);											//   ×
 	finalColor.xyz = albedoColor.xyz * lig;

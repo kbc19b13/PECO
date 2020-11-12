@@ -70,7 +70,7 @@ void SkinModel::InitConstantBuffer()
 	D3D11_BUFFER_DESC bufferDesc;
 	ZeroMemory(&bufferDesc, sizeof(bufferDesc));				//０でクリア。
 	bufferDesc.Usage = D3D11_USAGE_DEFAULT;						//バッファで想定されている、読み込みおよび書き込み方法。
-	bufferDesc.ByteWidth = (((bufferSize - 1) / 16) + 1) * 16;	//バッファは16バイトアライメントになっている必要がある。
+	bufferDesc.ByteWidth = Raundup16(bufferSize);	//バッファは16バイトアライメントになっている必要がある。
 																//アライメントって→バッファのサイズが16の倍数ということです。
 	bufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;			//バッファをどのようなパイプラインにバインドするかを指定する。
 																//定数バッファにバインドするので、D3D11_BIND_CONSTANT_BUFFERを指定する。
@@ -82,7 +82,7 @@ void SkinModel::InitConstantBuffer()
 
 	//ライト用の定数バッファを作成。
 	//作成するバッファのサイズを変更する
-	bufferDesc.ByteWidth = sizeof(SDirectionLight);				//SDirectionLightは16byteの倍数になっているので、切り上げはやらない。
+	bufferDesc.ByteWidth = sizeof(SLight);				//SDirectionLightは16byteの倍数になっているので、切り上げはやらない。
 	g_graphicsEngine->GetD3DDevice()->CreateBuffer(&bufferDesc, NULL, &m_lightCb);
 
 
@@ -101,17 +101,19 @@ void SkinModel::InitSamplerState()
 
 void SkinModel::InitDirectionLight()
 {
-	m_dirLight.direction[0] = { 1.0f, -1.0f, 0.0f, 0.0f };
-	m_dirLight.color[0] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	m_light.directionLight.direction[0] = { 1.0f, -1.0f, 0.0f, 0.0f };
+	m_light.directionLight.color[0] = { 1.0f, 1.0f, 1.0f, 1.0f };
 
-	m_dirLight.direction[1] = { -1.0f, 0.0f, 0.0f, 0.0f };
-	m_dirLight.color[1] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	m_light.directionLight.direction[1] = { -1.0f, 0.0f, 0.0f, 0.0f };
+	m_light.directionLight.color[1] = { 1.0f, 1.0f, 1.0f, 1.0f };
 
-	m_dirLight.direction[2] = { 0.0f, 0.0f, 1.0f, 0.0f };
-	m_dirLight.color[2] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	m_light.directionLight.direction[2] = { 0.0f, 0.0f, 1.0f, 0.0f };
+	m_light.directionLight.color[2] = { 1.0f, 1.0f, 1.0f, 1.0f };
 
-	m_dirLight.direction[3] = { 1.0f, 0.0f, -1.0f, 0.0f };
-	m_dirLight.color[3] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	m_light.directionLight.direction[3] = { 1.0f, 0.0f, -1.0f, 0.0f };
+	m_light.directionLight.color[3] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	
+	m_light.specPow = 10.0f;
 }
 void SkinModel::UpdateWorldMatrix(CVector3 position, CQuaternion rotation, CVector3 scale)
 {
@@ -151,9 +153,10 @@ void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix)
 	vsCb.mView = viewMatrix;
 	d3dDeviceContext->UpdateSubresource(m_cb, 0, nullptr, &vsCb, 0, 0);
 	
-
+	//視点を設定。
+	m_light.eyePos = g_camera3D.GetPosition();
 	//ライト用の定数バッファを更新。
-	d3dDeviceContext->UpdateSubresource(m_lightCb, 0, nullptr, &m_dirLight, 0, 0);
+	d3dDeviceContext->UpdateSubresource(m_lightCb, 0, nullptr, &m_light, 0, 0);
 
 	
 	//定数バッファをGPUに転送。
