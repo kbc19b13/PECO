@@ -109,6 +109,8 @@ PSInput VSMain( VSInputNmTxVcTangent In )
 {
 	PSInput psInput = (PSInput)0;
 	float4 pos = mul(mWorld, In.Position);
+	//ワールド座標をピクセルシェーダーに渡す。
+	psInput.worldPos = pos;
 	pos = mul(mView, pos);
 	pos = mul(mProj, pos);
 	psInput.Position = pos;
@@ -150,6 +152,8 @@ PSInput VSMainSkin( VSInputNmTxWeights In )
 	  	//頂点座標にスキン行列を乗算して、頂点をワールド空間に変換。
 		//mulは乗算命令。
 	    pos = mul(skinning, In.Position);
+		//ワールド座標をピクセルシェーダーに渡す。
+		psInput.worldPos = pos;
 	}
 	psInput.Normal = normalize( mul(skinning, In.Normal) );
 	psInput.Tangent = normalize( mul(skinning, In.Tangent) );
@@ -161,6 +165,15 @@ PSInput VSMainSkin( VSInputNmTxWeights In )
 
     return psInput;
 }
+
+//--------------------------------------------------------------------------------------
+// シルエット描画用のピクセルシェーダーのエントリ関数。
+//--------------------------------------------------------------------------------------
+float4 PSMain_Silhouette(PSInput In) : SV_Target0
+{
+	return float4(0.5f, 0.5f, 0.5f, 1.0f);
+}
+
 //--------------------------------------------------------------------------------------
 // ピクセルシェーダーのエントリ関数。
 //--------------------------------------------------------------------------------------
@@ -210,3 +223,4 @@ float4 PSMain( PSInput In ) : SV_Target0
 	return finalColor;
 	//return albedoTexture.Sample(Sampler, In.TexCoord);//finalColor
 }
+

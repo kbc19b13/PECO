@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "SkinModel.h"
 #include "SkinModelDataManager.h"
+#include "SkinModelEffect.h"
 
 SkinModel::~SkinModel()
 {
@@ -70,7 +71,7 @@ void SkinModel::InitConstantBuffer()
 	D3D11_BUFFER_DESC bufferDesc;
 	ZeroMemory(&bufferDesc, sizeof(bufferDesc));				//０でクリア。
 	bufferDesc.Usage = D3D11_USAGE_DEFAULT;						//バッファで想定されている、読み込みおよび書き込み方法。
-	bufferDesc.ByteWidth = Raundup16(bufferSize);	//バッファは16バイトアライメントになっている必要がある。
+	bufferDesc.ByteWidth = Raundup16(bufferSize);				//バッファは16バイトアライメントになっている必要がある。
 																//アライメントって→バッファのサイズが16の倍数ということです。
 	bufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;			//バッファをどのようなパイプラインにバインドするかを指定する。
 																//定数バッファにバインドするので、D3D11_BIND_CONSTANT_BUFFERを指定する。
@@ -101,17 +102,24 @@ void SkinModel::InitSamplerState()
 
 void SkinModel::InitDirectionLight()
 {
+	//一本目は太陽光
 	m_light.directionLight.direction[0] = { 1.0f, -1.0f, 0.0f, 0.0f };
+	m_light.directionLight.direction[0].Normalize();
 	m_light.directionLight.color[0] = { 1.0f, 1.0f, 1.0f, 1.0f };
 
-	m_light.directionLight.direction[1] = { -1.0f, 0.0f, 0.0f, 0.0f };
-	m_light.directionLight.color[1] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	//二本目は地面からの照り返し
+	m_light.directionLight.direction[1] = { 1.0f, 1.0f, 0.0f, 0.0f };
+	m_light.directionLight.direction[1].Normalize();
+	m_light.directionLight.color[1] = { 0.4f, 0.4f, 0.4f, 1.0f };
 
-	m_light.directionLight.direction[2] = { 0.0f, 0.0f, 1.0f, 0.0f };
-	m_light.directionLight.color[2] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	//残りは周囲のオブジェクトからの反射光だとする
+	m_light.directionLight.direction[2] = { -1.0f, 0.0f, 1.0f, 0.0f };
+	m_light.directionLight.direction[2].Normalize();
+	m_light.directionLight.color[2] = { 0.3f, 0.3f, 0.3f, 1.0f };
 
 	m_light.directionLight.direction[3] = { 1.0f, 0.0f, -1.0f, 0.0f };
-	m_light.directionLight.color[3] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	m_light.directionLight.direction[3].Normalize();
+	m_light.directionLight.color[3] = { 0.3f, 0.3f, 0.3f, 1.0f };
 	
 	m_light.specPow = 10.0f;
 }
@@ -140,7 +148,7 @@ void SkinModel::UpdateWorldMatrix(CVector3 position, CQuaternion rotation, CVect
 	//スケルトンの更新。
 	m_skeleton.Update(m_worldMatrix);
 }
-void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix)
+void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix , int rendermode)
 {
 	DirectX::CommonStates state(g_graphicsEngine->GetD3DDevice());
 
@@ -152,7 +160,6 @@ void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix)
 	vsCb.mProj = projMatrix;
 	vsCb.mView = viewMatrix;
 	d3dDeviceContext->UpdateSubresource(m_cb, 0, nullptr, &vsCb, 0, 0);
-	
 	//視点を設定。
 	m_light.eyePos = g_camera3D.GetPosition();
 	//ライト用の定数バッファを更新。
@@ -166,6 +173,11 @@ void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix)
 	d3dDeviceContext->PSSetSamplers(0, 1, &m_samplerState);
 	//ボーン行列をGPUに転送。
 	m_skeleton.SendBoneMatrixArrayToGPU();
+
+	m_modelDx->UpdateEffects([&](DirectX::IEffect* material) {
+		auto modelMaterial = reinterpret_cast<ModelEffect*>(material);
+		modelMaterial->SetRenderMode(rendermode);
+		});
 
 	//描画。
 	m_modelDx->Draw(

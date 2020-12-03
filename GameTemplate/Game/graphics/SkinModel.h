@@ -54,7 +54,7 @@ public:
 	*@param[in]	projMatrix		プロジェクション行列。
 	*  カメラ座標系の3Dモデルをスクリーン座標系に変換する行列です。
 	*/
-	void Draw( CMatrix viewMatrix, CMatrix projMatrix );
+	void Draw( CMatrix viewMatrix, CMatrix projMatrix , int rendermode);
 	/*!
 	*@brief	スケルトンの取得。
 	*/
@@ -102,6 +102,7 @@ private:
 	/// </summary>
 	void InitDirectionLight();
 	
+	
 private:
 
 
@@ -146,6 +147,7 @@ private:
 	ID3D11Buffer*		m_lightCb = nullptr;			//!<ライト用の定数バッファ。
 	SDirectionLight		m_dirLight;						//!<ディレクションライト。
 
-	SLight				m_light;							//!<ライト構造体。ライト用の構造体を使うように変更。
+	SLight				m_light;						//!<ライト構造体。ライト用の構造体を使うように変更。
+
 };
 

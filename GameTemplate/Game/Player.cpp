@@ -100,16 +100,22 @@ void Player::Update()
 	//ワールド行列の更新。
 	m_model.UpdateWorldMatrix(m_pos, CQuaternion::Identity(), CVector3::One());
 	
+	renderMode = 1;
+	Draw(renderMode);
+
 	//アニメーションの再生
 	m_PlayerAnimation.Update(frametime);
 	
-	Draw();
+	
+	renderMode = 0;
+	Draw(renderMode);
 }
-void Player::Draw()
+void Player::Draw(int rendermodel)
 {
 	m_model.Draw(
 		g_camera3D.GetViewMatrix(), 
-		g_camera3D.GetProjectionMatrix()
+		g_camera3D.GetProjectionMatrix(),
+		rendermodel
 	);
 }
 

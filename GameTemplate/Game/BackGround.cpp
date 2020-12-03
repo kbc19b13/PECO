@@ -34,6 +34,7 @@ void BackGround::Draw()
 {
 	m_model.Draw(
 		g_camera3D.GetViewMatrix(),
-		g_camera3D.GetProjectionMatrix()
+		g_camera3D.GetProjectionMatrix(),
+		0
 	);
 }

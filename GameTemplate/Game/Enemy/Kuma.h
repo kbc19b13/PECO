@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Move/IKumaMove.h"
+class Player;
 
 /// <summary>
 /// 森のクマ
@@ -28,6 +29,14 @@ public:
 	void CreateMoveLR();
 
 	void CreateMoveTrun();
+	/// <summary>
+	/// クマの座標に指定されたベクトルを足し算する。
+	/// </summary>
+	/// <param name="move">足し算するベクトル</param>
+	void AddPosition(const CVector3& add)
+	{
+		m_pos += add;
+	}
 public:
 	
 	
@@ -39,11 +48,25 @@ public:
 	{
 		return m_isCotton;
 	}
-
+private:
+	/// <summary>
+	/// ステートマシンを実行
+	/// </summary>
+	void ExecuteFSM();
+	/// <summary>
+	/// 通常状態の時の処理を実行。
+	/// </summary>
+	void ExecuteFSM_Normal();
+	/// <summary>
+	/// 逃げ状態の時の処理を実行。
+	/// </summary>
+	void ExecuteFSM_Escape();
 protected:
 
 	enum State {
-		State_Normal,
+		State_Normal,			//通常状態
+		State_TransitionEscape,	//逃げに切り替え中の状態
+		State_Escape,			//逃げ状態
 		State_Dying,
 		State_Death
 	};
@@ -58,5 +81,7 @@ protected:
 	bool m_isLive = true;				//生きてる？
 	bool m_isCotton = true;				//綿入ってる？
 	std::unique_ptr< IKumaMove >	m_move;	//クマの移動処理。
+
+	Player* m_player = nullptr;
 };
 

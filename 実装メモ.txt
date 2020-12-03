@@ -11,8 +11,13 @@
 →シェイダーmodel.fxでPSMain関数の中身を変更
 →設定する色を計算する
 →reutrn　で設定した色を戻す。
-
-
+・鏡面反射を実装
+→
+・シルエット描画を実装
+→
+・RenderTargetを作成
+→GraphicsEngine.cppのInit関数の中身を変更
+→RenderTarget型のm_renderTargetを使用するように改良
 
 
 

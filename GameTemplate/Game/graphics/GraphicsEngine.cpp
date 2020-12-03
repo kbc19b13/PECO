@@ -14,12 +14,32 @@ GraphicsEngine::~GraphicsEngine()
 
 void GraphicsEngine::BegineRender()
 {
+
+	//深度ステンシルバッファを設定する	
+	m_pd3dDeviceContext->OMSetRenderTargets(1, &m_backBuffer, m_renderTarget.GetDepthStensilView());
+	ID3D11RenderTargetView* oldRenderTargetView;
+	ID3D11DepthStencilView* oldDepthStencilView;
+	m_pd3dDeviceContext->OMGetRenderTargets(1, &oldRenderTargetView, &oldDepthStencilView);
+	//レンダリングターゲットを切り替える。
+	ID3D11RenderTargetView* rts[] = {
+		m_renderTarget.GetRenderTargetView()	//｛　配列を挟まないといけない！！！！　｝
+	};
+	m_pd3dDeviceContext->OMSetRenderTargets(
+		1,									//レンダリングターゲットも数
+		rts,								//レンダリングターゲットビューを指定
+		m_renderTarget.GetDepthStensilView()//デプスステンシルビューも指定
+	);
+
 	float ClearColor[4] = { 0.5f, 0.5f, 0.5f, 1.0f }; //red,green,blue,alpha
-													  //描き込み先をバックバッファにする。
-	m_pd3dDeviceContext->OMSetRenderTargets(1, &m_backBuffer, m_depthStencilView);
+												  //描き込み先をバックバッファにする。
 	//バックバッファを灰色で塗りつぶす。
-	m_pd3dDeviceContext->ClearRenderTargetView(m_backBuffer, ClearColor);
-	m_pd3dDeviceContext->ClearDepthStencilView(m_depthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
+	m_renderTarget.ClearRenderTarget(ClearColor);
+
+	//レンダリングターゲットを元に戻す。
+	m_pd3dDeviceContext->OMSetRenderTargets(1, &oldRenderTargetView, oldDepthStencilView);
+	//レンダリングターゲットとデプスステンシルの参照カウンタを下す。
+	oldRenderTargetView->Release();
+	oldDepthStencilView->Release();
 }
 void GraphicsEngine::EndRender()
 {
@@ -35,10 +55,6 @@ void GraphicsEngine::Release()
 	if (m_depthStencil != NULL) {
 		m_depthStencil->Release();
 		m_depthStencil = NULL;
-	}
-	if (m_depthStencilView != NULL) {
-		m_depthStencilView->Release();
-		m_depthStencilView = NULL;
 	}
 	if (m_backBuffer != NULL) {
 		m_backBuffer->Release();
@@ -103,36 +119,21 @@ void GraphicsEngine::Init(HWND hWnd)
 		&m_pd3dDeviceContext							//作成したD3Dデバイスコンテキストのアドレスの格納先。
 	);
 
+	m_renderTarget.Create((UINT)FRAME_BUFFER_W, (UINT)FRAME_BUFFER_H, DXGI_FORMAT_D32_FLOAT);
+
+
 	//書き込み先になるレンダリングターゲットを作成。
 	ID3D11Texture2D* pBackBuffer = NULL;
 	m_pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
 	m_pd3dDevice->CreateRenderTargetView(pBackBuffer, NULL, &m_backBuffer);
 	pBackBuffer->Release();
-	//深度ステンシルビューの作成。
-	{
-		//深度テクスチャの作成。
-		D3D11_TEXTURE2D_DESC texDesc;
-		ZeroMemory(&texDesc, sizeof(texDesc));
-		texDesc.Width = (UINT)FRAME_BUFFER_W;
-		texDesc.Height = (UINT)FRAME_BUFFER_H;
-		texDesc.MipLevels = 1;
-		texDesc.ArraySize = 1;
-		texDesc.Format = DXGI_FORMAT_D32_FLOAT;
-		texDesc.SampleDesc.Count = 1;
-		texDesc.SampleDesc.Quality = 0;
-		texDesc.Usage = D3D11_USAGE_DEFAULT;
-		texDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
-		texDesc.CPUAccessFlags = 0;
-		texDesc.MiscFlags = 0;
-		m_pd3dDevice->CreateTexture2D(&texDesc, NULL, &m_depthStencil);
-		//深度ステンシルビューを作成。
-		D3D11_DEPTH_STENCIL_VIEW_DESC descDSV;
-		ZeroMemory(&descDSV, sizeof(descDSV));
-		descDSV.Format = texDesc.Format;
-		descDSV.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
-		descDSV.Texture2D.MipSlice = 0;
-		m_pd3dDevice->CreateDepthStencilView(m_depthStencil, &descDSV, &m_depthStencilView);
-	}
+
+
+	//Chaptre9のGame.cpp
+	
+	//深度テクスチャの作成。
+	D3D11_TEXTURE2D_DESC texDesc;
+		
 	D3D11_RASTERIZER_DESC desc = {};
 	desc.CullMode = D3D11_CULL_NONE;
 	desc.FillMode = D3D11_FILL_SOLID;

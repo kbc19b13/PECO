@@ -21,5 +21,10 @@ private:
 
 	int timer = 0;
 	int null = 0;
+
+	
+
+private:
+	Player* m_player = nullptr;
 };
 

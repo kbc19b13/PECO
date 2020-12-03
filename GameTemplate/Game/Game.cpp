@@ -21,9 +21,9 @@ Game::~Game()
 bool Game::Start()
 {
 	
-	Player* m_player = NewGO<Player>(0, "Player");
 	
-	PlayerCamera* p_camera = NewGO<PlayerCamera>(0, "playercamera");
+	
+	
 	
 	//ƒŒƒxƒ‹‚ğ\’z‚·‚éB
 	//m_level.Init(L"level/MoriLevel.tkl", false);
@@ -69,12 +69,16 @@ bool Game::Start()
 			return false;
 		});
 
+	m_player = NewGO<Player>(0, "Player");
+
+	PlayerCamera* p_camera = NewGO<PlayerCamera>(0, "playercamera");
+
 	return true;
  }
 
 void Game::Update()
 {
 	m_level.Draw();
-
+	
 
 }

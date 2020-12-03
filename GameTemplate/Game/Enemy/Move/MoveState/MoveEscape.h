@@ -1,18 +1,22 @@
 #pragma once
-#include "IActor.h"
+#include "Enemy/Move/IKumaMove.h"
+
 class Player;
 
 /// <summary>
 /// ƒNƒ}‚Ì“¦‚°‚éˆ—
 /// </summary>
 
-class MoveEscape : public IActor
+class MoveEscape : public IKumaMove
 {
 public:
-	MoveEscape();
+	MoveEscape(Kuma* kuma);
 	~MoveEscape();
 
-	void Update();
+	/// <summary>
+	/// ˆÚ“®ˆ—B
+	/// </summary>
+	void Move()override;
 
 private:
 	Player* m_player = nullptr;
