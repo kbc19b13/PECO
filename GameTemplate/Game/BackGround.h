@@ -10,7 +10,7 @@ public:
 	~BackGround();
 	bool Start();
 	void Update();
-	void Draw();
+	
 
 	
 

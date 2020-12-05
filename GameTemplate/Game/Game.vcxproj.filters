@@ -149,6 +149,9 @@
     <ClCompile Include="graphics\RenderTarget.cpp">
       <Filter>graphics</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy\Move\MoveState\MoveNormal.cpp">
+      <Filter>Enemy\Move\MoveState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -262,6 +265,9 @@
     </ClInclude>
     <ClInclude Include="graphics\RenderTarget.h">
       <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\Move\MoveState\MoveNormal.h">
+      <Filter>Enemy\Move\MoveState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

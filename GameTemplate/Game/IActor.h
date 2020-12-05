@@ -66,11 +66,16 @@ public:
 		return m_model;
 	}
 
+public:
+	void Draw(int rendermode);
+
 protected:
 	CVector3 m_pos = CVector3::Zero();			//座標。
 	CQuaternion m_rot = CQuaternion::Identity();//回転クォータニオン。
 	CVector3 m_scale = CVector3::One();			//拡大率。
 	CVector3 m_speed = CVector3::Zero();		//移動速度。
 	SkinModel m_model;							//モデルクラス。
+
+	int renderMode = 0;							//０なら通常描画、１ならシルエット描画。
 };
 

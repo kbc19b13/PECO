@@ -13,6 +13,7 @@ bool Kuma::Start()
 
 	//AnimationClipをロード(tkaファイルの読み込み)
 	//Animaitonの初期化を行う
+	//ファイル_アニメーションフレームメモ.txtに記載
 	m_MoriAnimationClips[0].Load(L"Assets/animData/Walk_Kuma.tka");
 	m_MoriAnimationClips[0].SetLoopFlag(true);
 	m_MoriAnimationClips[1].Load(L"Assets/animData/Falldown_Kuma.tka");
@@ -45,22 +46,17 @@ void Kuma::CreateMoveUpDown()
 
 void Kuma::CreateMoveLR()
 {
+	//移動処理のインスタンスを作成する。
 	m_move = std::make_unique<KumaMoveLR>(this);
 }
 
 void Kuma::CreateMoveTrun()
 {
+	//移動処理のインスタンスを作成する。
 	m_move = std::make_unique<KumaMoveCircle>(this);
 }
 
-void Kuma::Draw()
-{
-	m_model.Draw(
-		g_camera3D.GetViewMatrix(),
-		g_camera3D.GetProjectionMatrix(),
-		0
-	);
-}
+
 
 void Kuma::ExecuteFSM_Normal()
 {
@@ -83,7 +79,16 @@ void Kuma::ExecuteFSM_Normal()
 void Kuma::ExecuteFSM_Escape()
 {
 	//逃げ切ったら、通常状態に戻る
-	//if( )
+	/*
+	if( )
+	{
+		//距離が100以下なら逃げ状態に遷移する。
+		//移動処理を逃げる処理に切り替える。
+		m_move = std::make_unique<MoveNormal>(this);
+		m_state = State_Normal;
+	}
+	*/
+
 }
 void Kuma::ExecuteFSM()
 {
@@ -109,5 +114,5 @@ void Kuma::Update()
 	ExecuteFSM();
 	
 	m_model.UpdateWorldMatrix(m_pos, m_rot, m_scale);
-	Draw();
+	Draw(0);
 }

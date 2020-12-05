@@ -5,6 +5,7 @@ class Player;
 
 /// <summary>
 /// 森のクマ
+/// 敵クマの処理分岐
 /// </summary>
 class Kuma final : public IActor
 {  
@@ -18,16 +19,23 @@ public:
 
 	void Update();
 
+	/// <summary>
+	/// クマ生成前の初期化を行う
+	/// </summary>
+	/// <returns></returns>
 	bool Start();
 
-	void Draw();
 	/// <summary>
 	/// 上下移動の処理を作成。
 	/// </summary>
 	void CreateMoveUpDown();
-
+	/// <summary>
+	/// 左右移動の処理を作成
+	/// </summary>
 	void CreateMoveLR();
-
+	/// <summary>
+	/// 円回転の処理を作成
+	/// </summary>
 	void CreateMoveTrun();
 	/// <summary>
 	/// クマの座標に指定されたベクトルを足し算する。

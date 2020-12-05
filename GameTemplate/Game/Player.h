@@ -13,7 +13,7 @@ public:
 
 	bool Start();
 	void Update();
-	void Draw(int rendermodel);
+	
 
 	/////////Singletonパターン///////////////
 	//Playerを一体に限定
@@ -36,7 +36,7 @@ private:
 
 	AnimationPlayController m_animPlayCon;
 
-	int renderMode = 0;	//０なら通常描画、１ならシルエット描画。v
+	
 	
 private:
 	//シングルトン用ポインタ

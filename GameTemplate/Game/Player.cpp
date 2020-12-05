@@ -110,12 +110,5 @@ void Player::Update()
 	renderMode = 0;
 	Draw(renderMode);
 }
-void Player::Draw(int rendermodel)
-{
-	m_model.Draw(
-		g_camera3D.GetViewMatrix(), 
-		g_camera3D.GetProjectionMatrix(),
-		rendermodel
-	);
-}
+
 
