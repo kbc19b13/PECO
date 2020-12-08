@@ -13,7 +13,9 @@ protected:
 	Shader* m_pPSSilhouette = nullptr;
 	Shader m_vsShader;
 	Shader m_psShader;
-	Shader m_psSilhouette;
+	Shader m_psSilhouette;			//シルエット描画用のピクセルシェーダー。
+	Shader m_vsShadowMap;			//シャドウマップ生成用の頂点シェーダー。
+	Shader m_psShadowMap;			//シャドウマップ生成用のピクセルシェーダー。
 	bool isSkining;
 	ID3D11ShaderResourceView* m_albedoTex = nullptr;
 

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Enemy/Move/IKumaMove.h"
 
-
+/*
 /// <summary>
 /// ‹¤’Êˆ—
 /// </summary>
@@ -24,3 +24,4 @@ void IKumaMove::ChaseDown()
 {
 
 }
+*/

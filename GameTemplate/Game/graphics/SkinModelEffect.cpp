@@ -36,5 +36,11 @@ void __cdecl ModelEffect::Apply(ID3D11DeviceContext* deviceContext)
 		//デプスステンシルステートを切り替える
 		deviceContext->OMSetDepthStencilState(m_silhouettoDepthStepsilState, 0);
 		break;
+	case 2:
+		//todo シャドウマップ生成用のシェーダーを設定。
+		//シャドウマップ生成。
+		deviceContext->VSSetShader((ID3D11VertexShader*)m_vsShadowMap.GetBody(), NULL, 0);
+		deviceContext->PSSetShader((ID3D11PixelShader*)m_psShadowMap.GetBody(), NULL, 0);
+		break;
 	}
 }

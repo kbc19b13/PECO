@@ -22,6 +22,6 @@ protected:
 	CVector3 m_Speed = CVector3::Zero();		// ‘¬“x
 	float m_Radius = 0.0f;		// ”¼Œa(•`‰æ—p)
 	float m_Angle = 0.0f;		// Œü‚«‚ÌŠp“x
-	CVector3 pos = CVector3::Zero();
+	
 };
 

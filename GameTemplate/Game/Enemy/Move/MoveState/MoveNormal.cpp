@@ -14,5 +14,9 @@ MoveNormal::~MoveNormal()
 
 void MoveNormal::Move()
 {
-	m_kuma->AddPosition({ 1.0f, 0.0f, 0.0f });
+	//通常状態の処理
+
+	//if初期地にいる時は、移動処理を更新する？
+
+	//if初期地から離れている時は、初期地に帰ってくる。
 }

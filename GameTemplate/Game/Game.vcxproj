@@ -106,6 +106,7 @@
     <ClCompile Include="Enemy\Move\KumaMoveCircle.cpp" />
     <ClCompile Include="Enemy\Move\KumaMoveLR.cpp" />
     <ClCompile Include="Enemy\Move\KumaMoveUpDow.cpp" />
+    <ClCompile Include="Enemy\Move\MoveState\MoveDiscovery.cpp" />
     <ClCompile Include="Enemy\Move\MoveState\MoveEscape.cpp" />
     <ClCompile Include="Enemy\Move\MoveState\MoveNormal.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -117,6 +118,7 @@
     <ClCompile Include="graphics\RenderTarget.cpp" />
     <ClCompile Include="graphics\Shader.cpp" />
     <ClCompile Include="graphics\ShaderResources.cpp" />
+    <ClCompile Include="graphics\ShadowMap.cpp" />
     <ClCompile Include="graphics\Skeleton.cpp" />
     <ClCompile Include="graphics\SkinModel.cpp" />
     <ClCompile Include="graphics\SkinModelDataManager.cpp" />
@@ -150,6 +152,7 @@
     <ClInclude Include="Enemy\Move\KumaMoveCircle.h" />
     <ClInclude Include="Enemy\Move\KumaMoveLR.h" />
     <ClInclude Include="Enemy\Move\KumaMoveUpDown.h" />
+    <ClInclude Include="Enemy\Move\MoveState\MoveDiscovery.h" />
     <ClInclude Include="Enemy\Move\MoveState\MoveEscape.h" />
     <ClInclude Include="Enemy\Move\MoveState\MoveNormal.h" />
     <ClInclude Include="Game.h" />
@@ -161,6 +164,7 @@
     <ClInclude Include="graphics\RenderTarget.h" />
     <ClInclude Include="graphics\Shader.h" />
     <ClInclude Include="graphics\ShaderResources.h" />
+    <ClInclude Include="graphics\ShadowMap.h" />
     <ClInclude Include="graphics\Skeleton.h" />
     <ClInclude Include="graphics\SkinModel.h" />
     <ClInclude Include="graphics\SkinModelDataManager.h" />

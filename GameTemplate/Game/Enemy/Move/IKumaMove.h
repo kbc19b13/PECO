@@ -1,12 +1,15 @@
 #pragma once
 
+class IAcotr;
 class Kuma;
 class MoveEscape;
 
 /// <summary>
 /// クマの移動処理の基底クラス
+/// 基本となる変数、関数を所持
+/// 移動処理クラスはこのクラスを継承して、作成していく
 /// </summary>
-class IKumaMove
+class IKumaMove : public IActor
 {
 public:
 	IKumaMove(Kuma* kuma) :
@@ -18,19 +21,9 @@ public:
 	/// 移動処理。
 	/// </summary>
 	virtual void Move() = 0;
-
-	//共通処理
-	void KumaUpdate();
-
-	void Escape();
-
-	void ChaseDown();
-
+	
 protected:
 	Kuma* m_kuma = nullptr;	//このクラスで移動させているクマ。
 	CVector3 m_initPos;		//クマの初期座標。
-
-protected:
-	//MoveEscape m_Escape;
 };
 

@@ -5,9 +5,7 @@
 KumaMoveCircle::KumaMoveCircle(Kuma* kuma) :
 	IKumaMove(kuma)
 {
-	m_initPos = m_kuma->GetPosition();
-	m_kuma->SetPosition(m_initPos);
-	pos = m_initPos;
+	
 }
 
 void KumaMoveCircle::Move()
@@ -23,10 +21,10 @@ void KumaMoveCircle::Move()
 	add.z = sin(radius) * 5.0f;
 
 	// 結果ででた位置を中心位置に加算し、それを描画位置とする
-	pos.x = m_initPos.x + add.x;
-	pos.z = m_initPos.z + add.z;
+	m_pos.x = m_initPos.x + add.x;
+	m_pos.z = m_initPos.z + add.z;
 
 	// 向きを変える
 	m_Angle += 10.0f;
-	m_kuma->SetPosition(pos);
+	m_kuma->SetPosition(m_pos);
 }

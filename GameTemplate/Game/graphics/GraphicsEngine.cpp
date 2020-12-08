@@ -17,6 +17,10 @@ void GraphicsEngine::BegineRender()
 
 	//深度ステンシルバッファを設定する	
 	m_pd3dDeviceContext->OMSetRenderTargets(1, &m_backBuffer, m_renderTarget.GetDepthStensilView());
+	float ClearColor[4] = { 0.5f, 0.5f, 0.5f, 1.0f }; //red,green,blue,alpha
+
+	m_pd3dDeviceContext->ClearRenderTargetView(m_backBuffer, ClearColor);
+
 	ID3D11RenderTargetView* oldRenderTargetView;
 	ID3D11DepthStencilView* oldDepthStencilView;
 	m_pd3dDeviceContext->OMGetRenderTargets(1, &oldRenderTargetView, &oldDepthStencilView);
@@ -30,7 +34,6 @@ void GraphicsEngine::BegineRender()
 		m_renderTarget.GetDepthStensilView()//デプスステンシルビューも指定
 	);
 
-	float ClearColor[4] = { 0.5f, 0.5f, 0.5f, 1.0f }; //red,green,blue,alpha
 												  //描き込み先をバックバッファにする。
 	//バックバッファを灰色で塗りつぶす。
 	m_renderTarget.ClearRenderTarget(ClearColor);
@@ -119,7 +122,7 @@ void GraphicsEngine::Init(HWND hWnd)
 		&m_pd3dDeviceContext							//作成したD3Dデバイスコンテキストのアドレスの格納先。
 	);
 
-	m_renderTarget.Create((UINT)FRAME_BUFFER_W, (UINT)FRAME_BUFFER_H, DXGI_FORMAT_D32_FLOAT);
+	m_renderTarget.Create((UINT)FRAME_BUFFER_W, (UINT)FRAME_BUFFER_H, DXGI_FORMAT_R8G8B8A8_UNORM/*DXGI_FORMAT_D32_FLOAT*/);
 
 
 	//書き込み先になるレンダリングターゲットを作成。

@@ -27,6 +27,10 @@ Player::~Player()
 
 bool Player::Start()
 {
+	const float CCon_radius = 30.0f;
+	const float height = 160.0f;
+
+
 	//cmoファイルの読み込み。
 	m_model.Init(L"Assets/modelData/PECO.cmo");
 
@@ -50,8 +54,7 @@ bool Player::Start()
 		4
 	);
 
-	const float CCon_radius = 30.0f;
-	const float height = 160.0f;
+	
 
 	m_CCon.Init(CCon_radius, height, m_pos);
 	

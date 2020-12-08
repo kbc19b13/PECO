@@ -17,6 +17,7 @@ public:
 	/// ˆÚ“®ˆ—B
 	/// </summary>
 	void Move() override;
-protected:
+private:
+
 };
 
