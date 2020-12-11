@@ -5,16 +5,16 @@
 MoveNormal::MoveNormal(Kuma* kuma) :
 	IKumaMove(kuma)
 {
-
+	//通常アニメーションを流す
 }
-MoveNormal::~MoveNormal()
-{
 
-}
 
 void MoveNormal::Move()
 {
-	//通常状態の処理
+	//通常状態の移動処理を記述する
+
+	//初期座標を取得
+	CVector3 savePos = m_kuma->GetSavePos();
 
 	//if初期地にいる時は、移動処理を更新する？
 

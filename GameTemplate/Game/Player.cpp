@@ -32,27 +32,27 @@ bool Player::Start()
 
 
 	//cmoファイルの読み込み。
-	m_model.Init(L"Assets/modelData/PECO.cmo");
+	m_model.Init(L"Assets/modelData/unityChan.cmo");
 
-	//AnimationClipをロード(tkaファイルの読み込み)
-	//Animaitonの初期化を行う
-	m_PlayerAnimationClips[0].Load(L"Assets/animData/Walk_PECO.tka");
-	m_PlayerAnimationClips[0].SetLoopFlag(true);
-	m_PlayerAnimationClips[1].Load(L"Assets/animData/Sneak_PECO.tka");
-	m_PlayerAnimationClips[1].SetLoopFlag(true);
-	m_PlayerAnimationClips[2].Load(L"Assets/animData/Cat_PECO.tka");
-	m_PlayerAnimationClips[2].SetLoopFlag(true);
-	m_PlayerAnimationClips[3].Load(L"Assets/animData/Extraction_PECO.tka");
-	m_PlayerAnimationClips[3].SetLoopFlag(true);
-	//アニメーションの初期化
-	m_PlayerAnimation.Init(
-		//アニメーションを流すスキンモデル(関連付け)
-		m_model,
-		//アニメーションクリップの配列
-		m_PlayerAnimationClips,
-		//アニメーションクリップの数
-		4
-	);
+	////AnimationClipをロード(tkaファイルの読み込み)
+	////Animaitonの初期化を行う
+	//m_PlayerAnimationClips[0].Load(L"Assets/animData/Walk_PECO.tka");
+	//m_PlayerAnimationClips[0].SetLoopFlag(true);
+	//m_PlayerAnimationClips[1].Load(L"Assets/animData/Sneak_PECO.tka");
+	//m_PlayerAnimationClips[1].SetLoopFlag(true);
+	//m_PlayerAnimationClips[2].Load(L"Assets/animData/Cat_PECO.tka");
+	//m_PlayerAnimationClips[2].SetLoopFlag(true);
+	//m_PlayerAnimationClips[3].Load(L"Assets/animData/Extraction_PECO.tka");
+	//m_PlayerAnimationClips[3].SetLoopFlag(true);
+	////アニメーションの初期化
+	//m_PlayerAnimation.Init(
+	//	//アニメーションを流すスキンモデル(関連付け)
+	//	m_model,
+	//	//アニメーションクリップの配列
+	//	m_PlayerAnimationClips,
+	//	//アニメーションクリップの数
+	//	4
+	//);
 
 	
 
@@ -77,7 +77,7 @@ void Player::Update()
 	//true = 地面にいる
 	if(m_CCon.IsOnGround() == true)
 	{
-		m_PlayerAnimation.Play(0);
+		//m_PlayerAnimation.Play(0);
 	}
 
 	
@@ -100,6 +100,8 @@ void Player::Update()
 		m_pos.z -= 5.0f;
 	}*/
 
+	
+	g_graphicsEngine->GetShadowMap()->RegistShadowCaster(&m_model);
 	//ワールド行列の更新。
 	m_model.UpdateWorldMatrix(m_pos, CQuaternion::Identity(), CVector3::One());
 	

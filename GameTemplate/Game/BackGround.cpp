@@ -7,7 +7,8 @@ BackGround::BackGround()
 {
 	//comファイルの読み込み
 	m_model.Init(L"Assets/modelData/PECO_Mori_Stage.cmo");
-	
+	//地面をシャドウレシーバーにする。
+	m_model.SetShadowReciever(true);
 }
 
 BackGround::~BackGround()

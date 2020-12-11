@@ -11,7 +11,7 @@ class MoveEscape : public IKumaMove
 {
 public:
 	MoveEscape(Kuma* kuma);
-	~MoveEscape();
+	
 
 	/// <summary>
 	/// ˆÚ“®ˆ—B

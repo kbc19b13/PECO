@@ -47,6 +47,7 @@ public:
 	/// 毎フレーム呼び出して下さい。
 	/// </summary>
 
+	void Init();
 	/// <remarks>
 	/// シャドウマップに描画されるシャドウキャスターは
 	/// RegistShadowCaster関数を使用して登録されたキャスターのみです。
@@ -68,7 +69,7 @@ public:
 	{
 		m_shadowCasters.push_back(shadowCaster);
 	}
-private:
+private:	
 	CVector3 m_lightCameraPosition = CVector3::Zero();	//ライトカメラの視点。
 	CVector3 m_lightCameraTarget = CVector3::Zero();	//ライトカメラの注視点。
 	CMatrix m_lightViewMatrix = CMatrix::Identity();	//ライトビュー行列。

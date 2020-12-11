@@ -1,5 +1,6 @@
 #pragma once
 #include "RenderTarget.h"
+#include "graphics/ShadowMap.h"
 /*!
  *@brief	グラフィックスエンジン。
  */
@@ -39,6 +40,15 @@ public:
 	 *@brief	描画終了。
 	 */
 	void EndRender();
+
+	/// <summary>
+	/// シャドウマップを取得。
+	/// </summary>
+	/// <returns></returns>
+	ShadowMap* GetShadowMap()
+	{
+		return &m_shadowMap;
+	}
 private:
 	D3D_FEATURE_LEVEL		m_featureLevel;				//Direct3D デバイスのターゲットとなる機能セット。
 	ID3D11Device*			m_pd3dDevice = NULL;		//D3D11デバイス。
@@ -49,9 +59,14 @@ private:
 	ID3D11Texture2D* m_depthStencil = nullptr;			//デプスステンシルとなるテクスチャ。
 	ID3D11DepthStencilView* m_depthStencilView = nullptr;		//!<デプスステンシルビュー。
 
+	ShadowMap m_shadowMap;								//シャドウマップ。
+
 														//レンダリングターゲット関係のメンバ変数です。
 	//レンダリングターゲットの改造を楽にするために作成
 	RenderTarget m_renderTarget;						//レンダリングターゲット
+
+	
+
 };
 
-extern GraphicsEngine* g_graphicsEngine;			//グラフィックスエンジン
+extern GraphicsEngine* g_graphicsEngine;				//グラフィックスエンジン

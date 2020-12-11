@@ -8,6 +8,7 @@
 #include "Move/MoveState/MoveNormal.h"
 #include "Move/MoveState/MoveDiscovery.h"
 #include "Move/MoveState/MoveEscape.h"
+#include "Move/MoveState/MoveReturn.h"
 
 
 bool Kuma::Start()
@@ -67,6 +68,8 @@ void Kuma::CreateMoveTrun()
 
 void Kuma::ExecuteFSM_Normal()
 {
+	//Returnから遷移→通常
+
 	//プレイヤーとの距離を判定して、一定距離以下だったら逃げ状態に遷移するようにしてください。
 	CVector3 player_pos = m_player->GetPosition();
 	//プレイヤーからエネミーに伸びるベクトルを計算。
@@ -86,45 +89,65 @@ void Kuma::ExecuteFSM_Discovery()
 {
 	//Normalから遷移→待機、遅延
 	//終了するとEscapeに遷移する。
-	
+	//↓MoveDiscoveryクラスないで処理移動処理があればMove関数に記述
 	//アニメーションの再生→ビックリアニメーション。
 	//エフェクトの再生→ビックリアイコン
 
-	frametime += GameTime().GetFrameDeltaTime();
+	//計測と遷移はkumaクラスが責任を持つ→遷移クラスの作成？
+	m_frametime += GameTime().GetFrameDeltaTime();
 
-	if (frametime <= 1.0f)
+	if (m_frametime >= 1.0f)
 	{
 		//ここに遅延後の処理を描く
 		//発見状態が終わって逃げ状態に遷移する。
 		m_kumamove = std::make_unique<MoveEscape>(this);
 		m_state = State_Escape;
 
-		frametime = 0.0f;
+		m_frametime = 0.0f;
 	}
 
 }
 
 void Kuma::ExecuteFSM_Escape()
 {
-	//逃げ切ったら、通常状態に戻る
+	//Discoveryから遷移→逃走
 
+	//・Playerに捕まると拘束状態に遷移する
+	//Playerの処理に記述→フラグを立てて処理分岐？
+
+
+	//・一定距離離れると戻り状態に遷移する
+	//MoveEscapeクラスないで処理移動処理があればMove関数に記述
+	
 	//プレイヤーとの距離を判定して、一定距離以下だったら逃げ状態に遷移するようにしてください。
 	CVector3 player_pos = m_player->GetPosition();
 	//プレイヤーからエネミーに伸びるベクトルを計算。
 	CVector3 enemyToPlayerVec = player_pos - m_pos;
 	//プレイヤーとエネミーの距離を計算。
 	float distance = enemyToPlayerVec.Length();
-	
+		
 	if( distance > 1000.0f )
 	{
 		//距離が100以上なら通常状態に遷移する。
 		//移動処理を通常処理に切り替える。
-		m_kumamove = std::make_unique<MoveNormal>(this);
-		m_state = State_Normal;
+		m_kumamove = std::make_unique<MoveReturn>(this);
+		m_state = State_Return;
 	}
 	
 
 }
+
+void Kuma::ExecuteFSM_Return()
+{
+	//帰宅状態の処理
+	
+	//初期座標にいるか判定する
+	if (m_isSavePos) {
+		m_kumamove = std::make_unique<MoveNormal>(this);
+		m_state = State_Normal;
+	}
+}
+
 void Kuma::ExecuteFSM()
 {
 	switch (m_state) {
@@ -176,7 +199,7 @@ void Kuma::Update()
 		m_kumamove->Move();
 	}
 	ExecuteFSM();
-	
+	g_graphicsEngine->GetShadowMap()->RegistShadowCaster(&m_model);
 	m_model.UpdateWorldMatrix(m_pos, m_rot, m_scale);
 	Draw(0);
 }

@@ -5,6 +5,8 @@
 //#include "../mtEngine/Stopwatch.h"
 //#include "../mtEngine/mtGameTime.h"
 
+
+
 ///////////////////////////////////////////////////////////////////
 // ウィンドウプログラムのメイン関数。
 ///////////////////////////////////////////////////////////////////
@@ -13,9 +15,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//ゲームの初期化。
 	InitGame(hInstance, hPrevInstance, lpCmdLine, nCmdShow, "Game");
 	
-	NewGO<Game>(0, "Game");
+	
 
-	//Hands-On 奥のモノを手前に描画する深度ステンシルステートを作ってみよう。
+	//奥のモノを手前に描画する深度ステンシルステートを作ってみよう。
 	D3D11_DEPTH_STENCIL_DESC desc = { 0 };
 	desc.DepthEnable = true;
 	desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
@@ -30,7 +32,10 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	desc.BackFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
 	desc.BackFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
 	desc.BackFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
-
+	
+	//ゲームクラスを生成する
+	NewGO<Game>(0, "Game");
+	
 	//CStopwatch m_sw;
 
 	//ゲームループ。

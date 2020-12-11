@@ -106,9 +106,13 @@
     <ClCompile Include="Enemy\Move\KumaMoveCircle.cpp" />
     <ClCompile Include="Enemy\Move\KumaMoveLR.cpp" />
     <ClCompile Include="Enemy\Move\KumaMoveUpDow.cpp" />
+    <ClCompile Include="Enemy\Move\MoveState\IMoveState.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Enemy\Move\MoveState\MoveDiscovery.cpp" />
     <ClCompile Include="Enemy\Move\MoveState\MoveEscape.cpp" />
     <ClCompile Include="Enemy\Move\MoveState\MoveNormal.cpp" />
+    <ClCompile Include="Enemy\Move\MoveState\MoveReturn.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="graphics\animation\Animation.cpp" />
     <ClCompile Include="graphics\animation\AnimationClip.cpp" />
@@ -152,9 +156,13 @@
     <ClInclude Include="Enemy\Move\KumaMoveCircle.h" />
     <ClInclude Include="Enemy\Move\KumaMoveLR.h" />
     <ClInclude Include="Enemy\Move\KumaMoveUpDown.h" />
+    <ClInclude Include="Enemy\Move\MoveState\IMoveState.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Enemy\Move\MoveState\MoveDiscovery.h" />
     <ClInclude Include="Enemy\Move\MoveState\MoveEscape.h" />
     <ClInclude Include="Enemy\Move\MoveState\MoveNormal.h" />
+    <ClInclude Include="Enemy\Move\MoveState\MoveReturn.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="graphics\animation\Animation.h" />
     <ClInclude Include="graphics\animation\AnimationClip.h" />

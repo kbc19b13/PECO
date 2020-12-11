@@ -24,6 +24,6 @@ public:
 	
 protected:
 	Kuma* m_kuma = nullptr;	//このクラスで移動させているクマ。
-	CVector3 m_initPos;		//クマの初期座標。
+	CVector3 m_initPos = CVector3::Zero();		//クマの初期座標。
 };
 

@@ -37,10 +37,12 @@
 #include "graphics/animation/AnimationClip.h"
 #include "graphics/Camera.h"
 
-#include "../mtEngine/mtGameObject.h"
-#include "../mtEngine/mtGameObjectManager.h"
+//#include "../mtEngine/mtGameObject.h"
+//#include "../mtEngine/mtGameObjectManager.h"
 
 #include "..//mtEngine/mtEnginePreCompile.h"
+
+//#include "Game.h"
 
 using namespace mtEngine;
 
@@ -50,4 +52,5 @@ const float FRAME_BUFFER_W = 1280.0f;				//フレームバッファの幅。
 const float FRAME_BUFFER_H = 720.0f;				//フレームバッファの高さ。
 
 static const int MAX_BONE = 512;	//!<ボーンの最大数。
+
 

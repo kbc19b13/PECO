@@ -158,6 +158,8 @@
     <ClCompile Include="graphics\ShadowMap.cpp">
       <Filter>graphics</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy\Move\MoveState\IMoveState.cpp" />
+    <ClCompile Include="Enemy\Move\MoveState\MoveReturn.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -281,6 +283,8 @@
     <ClInclude Include="graphics\ShadowMap.h">
       <Filter>graphics</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy\Move\MoveState\IMoveState.h" />
+    <ClInclude Include="Enemy\Move\MoveState\MoveReturn.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\PECO.FBX">

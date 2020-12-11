@@ -4,7 +4,7 @@
 class Player;
 
 /// <summary>
-/// クマの逃げる処理
+/// クマが逃げる前の待機処理処理
 /// </summary>
 
 class MoveDiscovery : public IKumaMove
@@ -19,9 +19,7 @@ public:
 	void Move()override;
 
 private:
-	
-
-
+	float frametime = 0.0f;		//待機時間用の計測変数
 
 	//クラスのロード
 private:

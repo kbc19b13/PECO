@@ -1,4 +1,6 @@
 #pragma once
+
+
 /// <summary>
 /// アクタークラス
 /// </summary>
@@ -66,8 +68,12 @@ public:
 		return m_model;
 	}
 
+
+
 public:
 	void Draw(int rendermode);
+
+
 
 protected:
 	CVector3 m_pos = CVector3::Zero();			//座標。
@@ -77,5 +83,7 @@ protected:
 	SkinModel m_model;							//モデルクラス。
 
 	int renderMode = 0;							//０なら通常描画、１ならシルエット描画。
+	
+	
 };
 

@@ -159,6 +159,25 @@ void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix , int rendermode)
 	vsCb.mWorld = m_worldMatrix;
 	vsCb.mProj = projMatrix;
 	vsCb.mView = viewMatrix;
+
+	
+	auto shadowMap = g_graphicsEngine->GetShadowMap();
+	//定数バッファを更新。
+	SVSConstantBuffer modelFxCb;
+	modelFxCb.mWorld = m_worldMatrix;
+	modelFxCb.mProj = projMatrix;
+	modelFxCb.mView = viewMatrix;
+	//todo ライトカメラのビュー、プロジェクション行列を送る。
+	modelFxCb.mLightProj = shadowMap->GetLightProjMatrix();
+	modelFxCb.mLightView = shadowMap->GetLighViewMatrix();
+	if (m_isShadowReciever == true) {
+		modelFxCb.isShadowReciever = 1;
+	}
+	else {
+		modelFxCb.isShadowReciever = 0;
+	}
+
+
 	d3dDeviceContext->UpdateSubresource(m_cb, 0, nullptr, &vsCb, 0, 0);
 	//視点を設定。
 	m_light.eyePos = g_camera3D.GetPosition();
@@ -170,7 +189,6 @@ void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix , int rendermode)
 	d3dDeviceContext->VSSetConstantBuffers(0, 1, &m_cb);
 	d3dDeviceContext->PSSetConstantBuffers(0, 1, &m_cb);
 
-	d3dDeviceContext->VSSetConstantBuffers(1, 1, &m_lightCb);
 	d3dDeviceContext->PSSetConstantBuffers(1, 1, &m_lightCb);
 	//サンプラステートを設定。
 	d3dDeviceContext->PSSetSamplers(0, 1, &m_samplerState);

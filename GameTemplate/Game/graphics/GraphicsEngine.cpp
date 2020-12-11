@@ -32,14 +32,24 @@ void GraphicsEngine::BegineRender()
 		1,									//レンダリングターゲットも数
 		rts,								//レンダリングターゲットビューを指定
 		m_renderTarget.GetDepthStensilView()//デプスステンシルビューも指定
-	);
+	);										//描き込み先をバックバッファにする。
 
-												  //描き込み先をバックバッファにする。
+	//ビューポートもバックアップを取っておく。
+	unsigned int numViewport = 1;
+	D3D11_VIEWPORT oldViewports;
+	m_pd3dDeviceContext->RSGetViewports(&numViewport, &oldViewports);
+								
 	//バックバッファを灰色で塗りつぶす。
 	m_renderTarget.ClearRenderTarget(ClearColor);
 
+	//シャドウマップにレンダリング
+	m_shadowMap.RenderToShadowMap();
+
 	//レンダリングターゲットを元に戻す。
 	m_pd3dDeviceContext->OMSetRenderTargets(1, &oldRenderTargetView, oldDepthStencilView);
+	
+	m_pd3dDeviceContext->RSSetViewports(numViewport, &oldViewports);
+	
 	//レンダリングターゲットとデプスステンシルの参照カウンタを下す。
 	oldRenderTargetView->Release();
 	oldDepthStencilView->Release();
@@ -121,7 +131,7 @@ void GraphicsEngine::Init(HWND hWnd)
 		&m_featureLevel,								//使用される機能セットの格納先。
 		&m_pd3dDeviceContext							//作成したD3Dデバイスコンテキストのアドレスの格納先。
 	);
-
+	m_shadowMap.Init();
 	m_renderTarget.Create((UINT)FRAME_BUFFER_W, (UINT)FRAME_BUFFER_H, DXGI_FORMAT_R8G8B8A8_UNORM/*DXGI_FORMAT_D32_FLOAT*/);
 
 

@@ -4,6 +4,13 @@
 
 ShadowMap::ShadowMap()
 {
+	
+}
+ShadowMap::~ShadowMap()
+{
+}
+void ShadowMap::Init()
+{
 	//シャドウマップ生成用のレンダリングターゲットを作成。
 	//解像度は2048×2048。
 	//テクスチャのフォーマットはR成分のみの32bit浮動小数点型。
@@ -12,9 +19,6 @@ ShadowMap::ShadowMap()
 		2048,
 		DXGI_FORMAT_R32_FLOAT
 	);
-}
-ShadowMap::~ShadowMap()
-{
 }
 void ShadowMap::Update(CVector3 lightCameraPos, CVector3 lightCameraTarget)
 {
@@ -57,17 +61,25 @@ void ShadowMap::Update(CVector3 lightCameraPos, CVector3 lightCameraTarget)
 }
 void ShadowMap::RenderToShadowMap()
 {
+	
+
 	auto d3dDeviceContext = g_graphicsEngine->GetD3DDeviceContext();
 	//レンダリングターゲットを切り替える。
 	ID3D11RenderTargetView* rts[] = {
 		m_shadowMapRT.GetRenderTargetView()
 	};
-	d3dDeviceContext->OMSetRenderTargets(1, rts, m_shadowMapRT.GetDepthStensilView());
+	d3dDeviceContext->OMSetRenderTargets(
+		2,
+		rts,
+		m_shadowMapRT.GetDepthStensilView()
+	);
 	//ビューポートを設定。
 	d3dDeviceContext->RSSetViewports(1, m_shadowMapRT.GetViewport());
+	
+	float clearColor[4] = { 1.0f, 1.0f, 1.0f, 1.0f }; //red,green,blue,alpha
+
 	//シャドウマップをクリア。
 	//一番奥のZは1.0なので、1.0で塗りつぶす。
-	float clearColor[4] = { 1.0f, 1.0f, 1.0f, 1.0f }; //red,green,blue,alpha
 	m_shadowMapRT.ClearRenderTarget(clearColor);
 
 	//シャドウキャスターをシャドウマップにレンダリング。

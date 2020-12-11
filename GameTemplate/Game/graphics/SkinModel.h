@@ -75,6 +75,23 @@ public:
 		}
 	}
 
+	/// <summary>
+	/// シャドウレシーバーのフラグを設定する。
+	/// </summary>
+	/// <param name="flag">trueを渡すとシャドウレシーバーになる</param>
+	/// <remarks>
+	/// シャドウレシーバーとは影を落とされるオブジェクトのことです。
+	/// シャドウキャスターによって生成された、シャドウマップを利用して
+	/// 自身に影を落とします。
+	/// オブジェクトがシャドウレシーバーかつシャドウキャスターになっている場合は
+	/// セルフシャドウ(自分の影が自分に落ちる)を行うことができます。
+	/// </remarks>
+	void SetShadowReciever(bool flag)
+	{
+		m_isShadowReciever = flag;
+	}
+
+
 	/*!
 	*@brief	SRVのレジスタ番号。
 	*/
@@ -135,6 +152,10 @@ private:
 		CMatrix mWorld;
 		CMatrix mView;
 		CMatrix mProj;
+		//シャドウマップ用ライトビュー行列を追加。
+		CMatrix mLightView;	//ライトビュー行列。
+		CMatrix mLightProj;	//ライトプロジェクション行列。
+		int isShadowReciever;	//シャドウレシーバーフラグ。
 	};
 	EnFbxUpAxis			m_enFbxUpAxis = enFbxUpAxisZ;	//!<FBXの上方向。
 	ID3D11Buffer*		m_cb = nullptr;					//!<定数バッファ。
@@ -149,5 +170,6 @@ private:
 
 	SLight				m_light;						//!<ライト構造体。ライト用の構造体を使うように変更。
 
+	bool m_isShadowReciever = false;						//シャドウレシーバーのフラグ。
 };
 

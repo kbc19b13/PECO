@@ -7,11 +7,11 @@ class Player;
 /// ƒNƒ}‚Ì“¦‚°‚éˆ—
 /// </summary>
 
-class MoveNormal : public IKumaMove
+class MoveReturn : public IKumaMove
 {
 public:
-	MoveNormal(Kuma* kuma);
-	
+	MoveReturn(Kuma* kuma);
+	~MoveReturn();
 
 	/// <summary>
 	/// ˆÚ“®ˆ—B
