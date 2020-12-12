@@ -69,7 +69,7 @@ void ShadowMap::RenderToShadowMap()
 		m_shadowMapRT.GetRenderTargetView()
 	};
 	d3dDeviceContext->OMSetRenderTargets(
-		2,
+		1,
 		rts,
 		m_shadowMapRT.GetDepthStensilView()
 	);
