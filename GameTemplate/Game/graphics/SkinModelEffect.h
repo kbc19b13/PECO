@@ -10,7 +10,9 @@ protected:
 	std::wstring m_materialName;	//!<マテリアル名。
 	Shader* m_pVSShader = nullptr;
 	Shader* m_pPSShader = nullptr;
-	Shader* m_pPSSilhouette = nullptr;
+	Shader* m_pPSSilhouette = nullptr;		//シルエット描画用ピクセルシェーダー
+	Shader* m_pVSShadowMap = nullptr;		//シャドウマップ用頂点シェーダー
+	Shader* m_pPSShadowMap = nullptr;		//シャドウマップ用ピクセルシェーダー
 	Shader m_vsShader;
 	Shader m_psShader;
 	Shader m_psSilhouette;			//シルエット描画用のピクセルシェーダー。
@@ -26,18 +28,7 @@ protected:
 	ID3D11DepthStencilState* depthStencilState = nullptr;
 
 public:
-	ModelEffect()
-	{
-		m_psShader.Load("Assets/shader/model.fx", "PSMain", Shader::EnType::PS);
-		
-		m_pPSShader = &m_psShader;
-
-		m_psSilhouette.Load("Assets/shader/model.fx", "PSMain_Silhouette", Shader::EnType::PS);
-
-		m_pPSSilhouette = &m_psSilhouette;
-
-		InitSilhouettoDepthStepsilState();
-	}
+	ModelEffect();
 	virtual ~ModelEffect()
 	{
 		if (m_albedoTex) {
@@ -87,6 +78,9 @@ public:
 	{
 		m_vsShader.Load("Assets/shader/model.fx", "VSMain", Shader::EnType::VS);
 		m_pVSShader = &m_vsShader;
+
+
+
 		isSkining = false;
 	}
 };
@@ -101,8 +95,10 @@ public:
 		wchar_t hoge[256];
 		GetCurrentDirectoryW(256, hoge);
 		m_vsShader.Load("Assets/shader/model.fx", "VSMainSkin", Shader::EnType::VS);
-		
 		m_pVSShader = &m_vsShader;
+		
+
+
 		isSkining = true;
 	}
 };

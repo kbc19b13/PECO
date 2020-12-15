@@ -2,6 +2,28 @@
 #include "graphics/SkinModelEffect.h"
 #include "graphics/SkinModelShaderConst.h"
 
+ModelEffect::ModelEffect()
+{
+	m_psShader.Load("Assets/shader/model.fx", "PSMain", Shader::EnType::PS);
+
+	m_pPSShader = &m_psShader;
+
+	m_psSilhouette.Load("Assets/shader/model.fx", "PSMain_Silhouette", Shader::EnType::PS);
+
+	m_pPSSilhouette = &m_psSilhouette;
+
+
+
+	m_psShadowMap.Load("Assets/shader/model.fx", "PSMain_ShadowMap", Shader::EnType::PS);
+
+	m_pPSShadowMap = &m_psShadowMap;
+
+	m_vsShadowMap.Load("Assets/shader/model.fx", "VSMain_ShadowMap", Shader::EnType::VS);
+	m_pVSShadowMap = &m_vsShadowMap;
+
+	InitSilhouettoDepthStepsilState();
+}
+
 void ModelEffect::InitSilhouettoDepthStepsilState()
 {
 	//D3Dデバイスを取得。
@@ -37,6 +59,7 @@ void __cdecl ModelEffect::Apply(ID3D11DeviceContext* deviceContext)
 		deviceContext->OMSetDepthStencilState(m_silhouettoDepthStepsilState, 0);
 		break;
 	case 2:
+		//こいつのせい、きちんと設定してやろう！
 		//todo シャドウマップ生成用のシェーダーを設定。
 		//シャドウマップ生成。
 		deviceContext->VSSetShader((ID3D11VertexShader*)m_vsShadowMap.GetBody(), NULL, 0);
