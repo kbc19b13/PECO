@@ -140,6 +140,7 @@ PSInput VSMain( VSInputNmTxVcTangent In )
 	//カメラ座標系からスクリーン座標系に変換する。
 	psInput.Position = mul(mProj, psInput.Position);
 
+	psInput.worldPos = pos;
 	if (isShadowReciever == 1) {
 		//続いて、ライトビュープロジェクション空間に変換。
 		psInput.posInLVP = mul(mLightView, pos);
@@ -148,14 +149,11 @@ PSInput VSMain( VSInputNmTxVcTangent In )
 
 	//UV座標はそのままピクセルシェーダーに渡す。
 	psInput.TexCoord = In.TexCoord;
-	//法線はそのままピクセルシェーダーに渡す。
-	psInput.Normal = In.Normal;
-	/*
-	//UV座標はそのままピクセルシェーダーに渡す。
+	
 	psInput.Normal = normalize(mul(mWorld, In.Normal));
 	//法線はそのままピクセルシェーダーに渡す。
 	psInput.Tangent = normalize(mul(mWorld, In.Tangent));
-	*/
+	
 	return psInput;
 }
 
@@ -192,6 +190,13 @@ PSInput VSMainSkin( VSInputNmTxWeights In )
 		//ワールド座標をピクセルシェーダーに渡す。
 		psInput.worldPos = pos;
 	}
+	if (isShadowReciever == 1) {
+		//続いて、ライトビュープロジェクション空間に変換。
+		psInput.posInLVP = mul(mLightView, pos);
+		psInput.posInLVP = mul(mLightProj, psInput.posInLVP);
+	}
+
+
 	psInput.Normal = normalize( mul(skinning, In.Normal) );
 	psInput.Tangent = normalize( mul(skinning, In.Tangent) );
 	

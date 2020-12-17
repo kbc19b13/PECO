@@ -201,5 +201,5 @@ void Kuma::Update()
 	ExecuteFSM();
 	g_graphicsEngine->GetShadowMap()->RegistShadowCaster(&m_model);
 	m_model.UpdateWorldMatrix(m_pos, m_rot, m_scale);
-	Draw(0);
+	Draw(enRenderMode_Normal);
 }

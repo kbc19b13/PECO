@@ -13,18 +13,20 @@ protected:
 	Shader* m_pPSSilhouette = nullptr;		//シルエット描画用ピクセルシェーダー
 	Shader* m_pVSShadowMap = nullptr;		//シャドウマップ用頂点シェーダー
 	Shader* m_pPSShadowMap = nullptr;		//シャドウマップ用ピクセルシェーダー
+	
 	Shader m_vsShader;
 	Shader m_psShader;
-	Shader m_psSilhouette;			//シルエット描画用のピクセルシェーダー。
-	Shader m_vsShadowMap;			//シャドウマップ生成用の頂点シェーダー。
-	Shader m_psShadowMap;			//シャドウマップ生成用のピクセルシェーダー。
+	Shader m_psSilhouette;					//シルエット描画用のピクセルシェーダー。
+	Shader m_vsShadowMap;					//シャドウマップ生成用の頂点シェーダー。
+	Shader m_psShadowMap;					//シャドウマップ生成用のピクセルシェーダー。
 	bool isSkining;
 	ID3D11ShaderResourceView* m_albedoTex = nullptr;
 
 	//シルエット描画のための判定変数
-	int m_renderMode = 0;
+	EnRenderMode m_renderMode = enRenderMode_Normal;
+	//シルエット描画用のデプス
 	ID3D11DepthStencilState* m_silhouettoDepthStepsilState = nullptr;
-	//デプスステンシルステートを作成。
+	//デプスステンシルステート
 	ID3D11DepthStencilState* depthStencilState = nullptr;
 
 public:
@@ -35,6 +37,8 @@ public:
 			m_albedoTex->Release();
 		}
 	}
+	//この関数はDirectX::Model::Draw内部のドローコールの直前に呼ばれる。
+	//なので、この関数のなかで、シェーダーの設定や、テクスチャの設定などを行うとよい...
 	void __cdecl Apply(ID3D11DeviceContext* deviceContext) override;
 
 	void __cdecl GetVertexShaderBytecode(void const** pShaderByteCode, size_t* pByteCodeLength) override
@@ -57,7 +61,7 @@ public:
 	}
 	
 
-	void SetRenderMode(int renderMode)
+	void SetRenderMode(EnRenderMode renderMode)
 	{
 		m_renderMode = renderMode;
 	}
@@ -96,8 +100,6 @@ public:
 		GetCurrentDirectoryW(256, hoge);
 		m_vsShader.Load("Assets/shader/model.fx", "VSMainSkin", Shader::EnType::VS);
 		m_pVSShader = &m_vsShader;
-		
-
 
 		isSkining = true;
 	}

@@ -27,6 +27,6 @@ void BackGround::Update()
 {
 	//ワールド行列の更新。
 	m_model.UpdateWorldMatrix(m_pos, CQuaternion::Identity(), CVector3::One());
-	Draw(0);
+	Draw(enRenderMode_Normal);
 	
 }

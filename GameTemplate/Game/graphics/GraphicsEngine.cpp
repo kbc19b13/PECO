@@ -14,6 +14,17 @@ GraphicsEngine::~GraphicsEngine()
 
 void GraphicsEngine::BegineRender()
 {
+	//Chapter_12を参照してコードを単純化、簡略化
+	//関数化して見やすく変更
+	//GraphicsEngineは完了…
+	//SkinModelEffect←
+	//シャドウマップの後にポストエフェクトを実装
+	//①オフスクリーンに3Dモデルを描画
+	//→画面真っ暗
+	//②①で描いた絵をテクスチャに貼り付ける
+	//2Dテクスチャを使用
+	//→画面が戻ったら確認
+	//モノクロ化を実装して確認作業を行う。
 
 	//深度ステンシルバッファを設定する	
 	m_pd3dDeviceContext->OMSetRenderTargets(1, &m_backBuffer, m_renderTarget.GetDepthStensilView());
@@ -42,6 +53,7 @@ void GraphicsEngine::BegineRender()
 	//バックバッファを灰色で塗りつぶす。
 	m_renderTarget.ClearRenderTarget(ClearColor);
 
+	//PreRender()、事前レンダリング→レンダリングの準備
 	//シャドウマップにレンダリング
 	m_shadowMap.RenderToShadowMap();
 
@@ -68,6 +80,10 @@ void GraphicsEngine::Release()
 	if (m_depthStencil != NULL) {
 		m_depthStencil->Release();
 		m_depthStencil = NULL;
+	}
+	if (m_depthStencilView != NULL) {
+		m_depthStencilView->Release();
+		m_depthStencilView = NULL;
 	}
 	if (m_backBuffer != NULL) {
 		m_backBuffer->Release();
@@ -131,7 +147,10 @@ void GraphicsEngine::Init(HWND hWnd)
 		&m_featureLevel,								//使用される機能セットの格納先。
 		&m_pd3dDeviceContext							//作成したD3Dデバイスコンテキストのアドレスの格納先。
 	);
+
+	//シャドウマップのInit関数→初期化
 	m_shadowMap.Init();
+	//レンダーターゲットの作成
 	m_renderTarget.Create((UINT)FRAME_BUFFER_W, (UINT)FRAME_BUFFER_H, DXGI_FORMAT_R8G8B8A8_UNORM/*DXGI_FORMAT_D32_FLOAT*/);
 
 
@@ -141,9 +160,33 @@ void GraphicsEngine::Init(HWND hWnd)
 	m_pd3dDevice->CreateRenderTargetView(pBackBuffer, NULL, &m_backBuffer);
 	pBackBuffer->Release();
 
+	//もしかしたらエラー
+	//深度ステンシルビューの作成。
+	{
+		//深度テクスチャの作成。
+		D3D11_TEXTURE2D_DESC texDesc;
+		ZeroMemory(&texDesc, sizeof(texDesc));
+		texDesc.Width = (UINT)FRAME_BUFFER_W;
+		texDesc.Height = (UINT)FRAME_BUFFER_H;
+		texDesc.MipLevels = 1;
+		texDesc.ArraySize = 1;
+		texDesc.Format = DXGI_FORMAT_D32_FLOAT;
+		texDesc.SampleDesc.Count = 1;
+		texDesc.SampleDesc.Quality = 0;
+		texDesc.Usage = D3D11_USAGE_DEFAULT;
+		texDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+		texDesc.CPUAccessFlags = 0;
+		texDesc.MiscFlags = 0;
+		m_pd3dDevice->CreateTexture2D(&texDesc, NULL, &m_depthStencil);
+		//深度ステンシルビューを作成。
+		D3D11_DEPTH_STENCIL_VIEW_DESC descDSV;
+		ZeroMemory(&descDSV, sizeof(descDSV));
+		descDSV.Format = texDesc.Format;
+		descDSV.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+		descDSV.Texture2D.MipSlice = 0;
+		m_pd3dDevice->CreateDepthStencilView(m_depthStencil, &descDSV, &m_depthStencilView);
+	}
 
-	//Chaptre9のGame.cpp
-	
 	//深度テクスチャの作成。
 	D3D11_TEXTURE2D_DESC texDesc;
 		

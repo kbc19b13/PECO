@@ -8,6 +8,11 @@ RenderTarget::RenderTarget()
 
 RenderTarget::~RenderTarget()
 {
+	Release();
+}
+
+void RenderTarget::Release()
+{
 	if (m_depthStencilView != nullptr) {
 		m_depthStencilView->Release();
 		m_depthStencilView = nullptr;
@@ -58,8 +63,8 @@ void RenderTarget::Create(unsigned int w, unsigned int h, DXGI_FORMAT texFormat)
 		//〇レンダリングターゲットのテクスチャは、
 		//△レンダリングターゲット、ShaderResourceView、
 		//×UnorderedAccessViewとしてバインドする。
-		//texDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS;
-		texDesc.BindFlags = D3D11_BIND_RENDER_TARGET;
+		texDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS;
+		//texDesc.BindFlags = D3D11_BIND_RENDER_TARGET;
 		//×マルチサンプリングの数。1でいい。
 		texDesc.SampleDesc.Count = 1;
 		//×マルチサンプリングの品質。0でいい。
@@ -110,13 +115,13 @@ void RenderTarget::Create(unsigned int w, unsigned int h, DXGI_FORMAT texFormat)
 		//×0でいい。
 		srvDesc.Texture2D.MostDetailedMip = 0;
 		texDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
-		d3dDevice->CreateTexture2D(&texDesc, nullptr, &m_renderTargetTex);
 		//〇SRVを作成する。
-		d3dDevice->CreateShaderResourceView(
+		auto hr = d3dDevice->CreateShaderResourceView(
 			m_renderTargetTex,
 			&srvDesc,
 			&m_renderTargetSRV
 		);
+		int hog = 0;
 	}
 	//4.デプスステンシルテクスチャの作成
 	D3D11_TEXTURE2D_DESC depthTexDesc = texDesc;
@@ -156,22 +161,10 @@ void RenderTarget::Create(unsigned int w, unsigned int h, DXGI_FORMAT texFormat)
 			&m_depthStencilView
 		);
 	}
-
-	//ラスタライザの設定
+	//6.ビューポートの設定
 	{
-		D3D11_RASTERIZER_DESC desc = {};
-		desc.CullMode = D3D11_CULL_NONE;
-		desc.FillMode = D3D11_FILL_SOLID;
-		desc.DepthClipEnable = true;
-		desc.MultisampleEnable = true;
-		//ラスタライザとビューポートを初期化。
-		d3dDevice->CreateRasterizerState(&desc, &m_rasterizerState);
-		d3dDeviceContext->RSSetState(m_rasterizerState);
-	}
-	//ビューポートの設定
-	{
-		m_viewport.Width = FRAME_BUFFER_W;
-		m_viewport.Height = FRAME_BUFFER_H;
+		m_viewport.Width = w;
+		m_viewport.Height = h;
 		m_viewport.TopLeftX = 0;
 		m_viewport.TopLeftY = 0;
 		m_viewport.MinDepth = 0.0f;
@@ -179,6 +172,18 @@ void RenderTarget::Create(unsigned int w, unsigned int h, DXGI_FORMAT texFormat)
 		d3dDeviceContext->RSSetViewports(1, &m_viewport);
 
 	}
+
+	//ラスタライザの設定
+	//{
+	//	D3D11_RASTERIZER_DESC desc = {};
+	//	desc.CullMode = D3D11_CULL_NONE;
+	//	desc.FillMode = D3D11_FILL_SOLID;
+	//	desc.DepthClipEnable = true;
+	//	desc.MultisampleEnable = true;
+	//	//ラスタライザとビューポートを初期化。
+	//	d3dDevice->CreateRasterizerState(&desc, &m_rasterizerState);
+	//	d3dDeviceContext->RSSetState(m_rasterizerState);
+	//}
 }
 
 

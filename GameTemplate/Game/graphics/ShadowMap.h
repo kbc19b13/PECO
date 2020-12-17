@@ -69,6 +69,10 @@ public:
 	{
 		m_shadowCasters.push_back(shadowCaster);
 	}
+	ID3D11ShaderResourceView* GetShdowMapTexture()
+	{
+		return m_shadowMapRT.GetRenderTargetSRV();
+	}
 private:	
 	CVector3 m_lightCameraPosition = CVector3::Zero();	//ライトカメラの視点。
 	CVector3 m_lightCameraTarget = CVector3::Zero();	//ライトカメラの注視点。

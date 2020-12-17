@@ -121,7 +121,7 @@ void SkinModel::InitDirectionLight()
 	m_light.directionLight.direction[3].Normalize();
 	m_light.directionLight.color[3] = { 0.3f, 0.3f, 0.3f, 1.0f };
 	
-	m_light.specPow = 10.0f;
+	m_light.specPow = 2.0f;
 }
 void SkinModel::UpdateWorldMatrix(CVector3 position, CQuaternion rotation, CVector3 scale)
 {
@@ -148,26 +148,21 @@ void SkinModel::UpdateWorldMatrix(CVector3 position, CQuaternion rotation, CVect
 	//スケルトンの更新。
 	m_skeleton.Update(m_worldMatrix);
 }
-void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix , int rendermode)
+void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix , EnRenderMode rendermode)
 {
 	DirectX::CommonStates state(g_graphicsEngine->GetD3DDevice());
 
 	ID3D11DeviceContext* d3dDeviceContext = g_graphicsEngine->GetD3DDeviceContext();
 
-	//定数バッファの内容を更新。
-	SVSConstantBuffer vsCb;
-	vsCb.mWorld = m_worldMatrix;
-	vsCb.mProj = projMatrix;
-	vsCb.mView = viewMatrix;
-
 	
 	auto shadowMap = g_graphicsEngine->GetShadowMap();
+
 	//定数バッファを更新。
 	SVSConstantBuffer modelFxCb;
 	modelFxCb.mWorld = m_worldMatrix;
 	modelFxCb.mProj = projMatrix;
 	modelFxCb.mView = viewMatrix;
-	//todo ライトカメラのビュー、プロジェクション行列を送る。
+	//ライトカメラのビュー、プロジェクション行列を送る。
 	modelFxCb.mLightProj = shadowMap->GetLightProjMatrix();
 	modelFxCb.mLightView = shadowMap->GetLighViewMatrix();
 	if (m_isShadowReciever == true) {
@@ -178,7 +173,7 @@ void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix , int rendermode)
 	}
 
 
-	d3dDeviceContext->UpdateSubresource(m_cb, 0, nullptr, &vsCb, 0, 0);
+	d3dDeviceContext->UpdateSubresource(m_cb, 0, nullptr, &modelFxCb, 0, 0);
 	//視点を設定。
 	m_light.eyePos = g_camera3D.GetPosition();
 	//ライト用の定数バッファを更新。
@@ -192,6 +187,9 @@ void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix , int rendermode)
 	d3dDeviceContext->PSSetConstantBuffers(1, 1, &m_lightCb);
 	//サンプラステートを設定。
 	d3dDeviceContext->PSSetSamplers(0, 1, &m_samplerState);
+	ID3D11ShaderResourceView* srv = shadowMap->GetShdowMapTexture();
+	d3dDeviceContext->PSSetShaderResources(2, 1, &srv);
+
 	//ボーン行列をGPUに転送。
 	m_skeleton.SendBoneMatrixArrayToGPU();
 

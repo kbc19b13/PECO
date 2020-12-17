@@ -1,6 +1,16 @@
 #pragma once
 #include "RenderTarget.h"
 #include "graphics/ShadowMap.h"
+
+/// <summary>
+/// レンダリングモード
+/// </summary>
+enum EnRenderMode
+{
+	enRenderMode_Normal,		//通常描画
+	enRenderMode_Silhouette,	//シルエット描画
+	enRenderMode_ShadowMap,		//シャドウマップ描画
+};
 /*!
  *@brief	グラフィックスエンジン。
  */

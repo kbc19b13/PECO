@@ -54,7 +54,8 @@ bool Player::Start()
 	//	4
 	//);
 
-	
+	//地面をシャドウレシーバーにする。
+	m_model.SetShadowReciever(true);
 
 	m_CCon.Init(CCon_radius, height, m_pos);
 	
@@ -105,14 +106,14 @@ void Player::Update()
 	//ワールド行列の更新。
 	m_model.UpdateWorldMatrix(m_pos, CQuaternion::Identity(), CVector3::One());
 	
-	renderMode = 1;
+	renderMode = enRenderMode_Silhouette;
 	Draw(renderMode);
 
 	//アニメーションの再生
 	m_PlayerAnimation.Update(frametime);
 	
 	
-	renderMode = 0;
+	renderMode = enRenderMode_Normal;
 	Draw(renderMode);
 }
 

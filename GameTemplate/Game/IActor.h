@@ -71,7 +71,7 @@ public:
 
 
 public:
-	void Draw(int rendermode);
+	void Draw(EnRenderMode rendermode);
 
 
 
@@ -82,7 +82,7 @@ protected:
 	CVector3 m_speed = CVector3::Zero();		//移動速度。
 	SkinModel m_model;							//モデルクラス。
 
-	int renderMode = 0;							//０なら通常描画、１ならシルエット描画。
+	EnRenderMode renderMode = enRenderMode_Normal;							//０なら通常描画、１ならシルエット描画。
 	
 	
 };

@@ -53,8 +53,10 @@ public:
 	*  ワールド座標系の3Dモデルをカメラ座標系に変換する行列です。
 	*@param[in]	projMatrix		プロジェクション行列。
 	*  カメラ座標系の3Dモデルをスクリーン座標系に変換する行列です。
+	*@param[in] renderMode		描画モード
+	*	GraphicsEngine.h の EnRenderMode を参照。
 	*/
-	void Draw( CMatrix viewMatrix, CMatrix projMatrix , int rendermode);
+	void Draw( CMatrix viewMatrix, CMatrix projMatrix , EnRenderMode rendermode);
 	/*!
 	*@brief	スケルトンの取得。
 	*/
