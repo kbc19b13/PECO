@@ -20,10 +20,5 @@ void MoveNormal::Move()
 
 	//if初期地から離れている時は、初期地に帰ってくる。
 
-	if (m_kuma->PE_GetDistance() < 100.0f)
-	{
-		//距離が100以下なら逃げ状態に遷移する。
-		//移動処理を逃げる処理に切り替える。
-		m_kuma->ExecuteFSM_Discovery();
-	}
+	
 }

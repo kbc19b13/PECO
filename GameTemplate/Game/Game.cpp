@@ -41,6 +41,7 @@ bool Game::Start()
 				Kuma* kuma = NewGO<Kuma>(0, "Enemy");
 				kuma->SetPosition(objData.position);
 				//停止している何も入っていないクマさん
+				kuma->ExecuteFSM_Normal();
 				return true;
 			}
 			if (objData.EqualObjectName(L"MoriKuma_LR"))
@@ -68,7 +69,14 @@ bool Game::Start()
 				Kuma* kuma = NewGO<Kuma>(0, "Enemy");
 				kuma->SetPosition(objData.position);
 				//円移動の処理を作成する。
-				kuma->CreateMoveTrun();
+				kuma->CreateMoveCircle();
+				return true;
+			}
+			if (objData.EqualObjectName(L"PECO"))
+			{
+				//Playerの生成
+				Player* player = NewGO<Player>(0, "PECO");
+				player->SetPosition(objData.position);
 				return true;
 			}
 			
@@ -76,7 +84,7 @@ bool Game::Start()
 			return false;
 		});
 	//Playerを生成
-	m_player = NewGO<Player>(0, "Player");
+	//m_player = NewGO<Player>(0, "Player");
 	//Playerを中心とするカメラを生成
 	PlayerCamera* p_camera = NewGO<PlayerCamera>(0, "playercamera");
 

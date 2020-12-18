@@ -15,6 +15,6 @@ void KumaMoveUpDown::Move()
 	t += 0.01f;
 	float up = sinf(t);
 	CVector3 pos = m_initPos;
-	pos.y += up * 10.0f;
+	pos.y += up * 1.0f;
 	m_kuma->SetPosition(pos);
 }

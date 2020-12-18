@@ -14,7 +14,7 @@ void KumaMoveLR::Move()
 	t += 0.01f;
 	float up = sinf(t);
 	CVector3 pos = m_initPos;
-	pos.x += up * 10.0f;
+	pos.x += up * 1.0f;
 	m_kuma->SetPosition(pos);
 }
 

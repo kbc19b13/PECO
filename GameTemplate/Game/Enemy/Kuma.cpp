@@ -43,9 +43,6 @@ bool Kuma::Start()
 		7
 	);
 
-	//シャドウキャスターに登録
-	g_graphicsEngine->GetShadowMap()->RegistShadowCaster(&m_model);
-
 	m_player = Player::P_GetInstance();
 
 	return true;
@@ -77,7 +74,7 @@ void Kuma::CreateMoveLR()
 	m_movestate = State_LR;
 }
 
-void Kuma::CreateMoveTrun()
+void Kuma::CreateMoveCircle()
 {
 	//移動処理のインスタンスを作成する。
 	m_kumamove = std::make_unique<KumaMoveCircle>(this);
@@ -86,9 +83,26 @@ void Kuma::CreateMoveTrun()
 
 void Kuma::ExecuteFSM_Normal()
 {
-	//戻り状態から切り替え通常状態のインスタンスを作成。
-	m_kumamove = std::make_unique<MoveNormal>(this);
-	m_state = State_Normal;
+	//
+	
+
+	switch (m_movestate) {
+
+	case State_Circle:
+		//円移動の処理を作成
+		CreateMoveCircle();
+		break;
+
+	case State_LR:
+		//左右移動の処理を作成
+		CreateMoveLR();
+		break;
+
+	case State_UpDown:
+		//上下移動の処理を作成
+		CreateMoveUpDown();
+		break;
+	}
 }
 void Kuma::ExecuteFSM_Discovery()
 {
@@ -143,17 +157,26 @@ void Kuma::Update()
 	//関数内のみで使用する変数を作成
 	float frametime = GameTime().GetFrameDeltaTime();
 	
-	//ステートマシン
-	ExecuteFSM();
+	if (PE_GetDistance() < 100.0f)
+	{
+		//距離が100以下なら逃げ状態に遷移する。
+		//移動処理を逃げる処理に切り替える。
+		ExecuteFSM_Discovery();
+	}
+	
 	//クマの移動処理を実行する。
 	if (m_kumamove) {
 		//クマの移動処理を実行する。
 		m_kumamove->Move();
 	}
-
+	//ステートマシン
+	ExecuteFSM();
 	//アニメーションの再生
 	m_MoriAnimation.Update(frametime);
 
+
+	//シャドウキャスターに登録
+	g_graphicsEngine->GetShadowMap()->RegistShadowCaster(&m_model);
 	//座標を更新
 	m_model.UpdateWorldMatrix(m_pos, m_rot, m_scale);
 	//通常描画

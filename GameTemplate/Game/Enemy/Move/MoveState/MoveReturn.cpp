@@ -15,14 +15,18 @@ MoveReturn::~MoveReturn()
 void MoveReturn::Move()
 {
 	//‹A‘îó‘Ô‚Ìˆ—
+	CVector3 ReturnPos = m_kuma->GetPos();
 	CVector3 savePos = m_kuma->GetSavePos();
-	
+	CVector3 ReturnVector = savePos - ReturnPos;
+	ReturnVector.Normalize();
+
+	m_kuma->AddPosition(ReturnVector);
 	//‹A‘îó‘Ô‚Ìˆ—
-	if (savePos.x == m_pos.x &&
-		savePos.y == m_pos.y &&
-		savePos.z == m_pos.z)
+	if (savePos.x - ReturnPos.x <= 1.0f &&
+		savePos.y - ReturnPos.y <= 1.0f &&
+		savePos.z - ReturnPos.z <= 1.0f)
 	{
-		m_kuma->SetisSavePos(true);
+		m_kuma->SetisSavePos(true);	
 	}
 	else {
 		m_kuma->SetisSavePos(false);
@@ -30,6 +34,7 @@ void MoveReturn::Move()
 
 	//‰ŠúÀ•W‚É‚¢‚é‚©”»’è‚·‚é
 	if (m_kuma->IsSavePos()) {
+		
 		m_kuma->ExecuteFSM_Normal();
 	}
 }

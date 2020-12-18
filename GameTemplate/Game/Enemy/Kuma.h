@@ -9,6 +9,25 @@ class Player;
 /// </summary>
 class Kuma final : public IActor
 {  
+	//構造体は上位に描こう関数に使用するときにエラーが出る…
+protected:
+	//初期移動ステート構造体
+	enum MoveState {
+		State_Circle,		//円移動
+		State_LR,			//左右移動
+		State_UpDown,		//上下移動
+	};
+
+	//状態管理構造体
+	enum State {
+		State_Normal,			//通常状態
+		State_Discovery,		//発見状態
+		State_Escape,			//逃走状態
+		State_Return,			//帰宅状態
+		State_Restraint,		//拘束状態
+		State_Fainted,			//気絶状態
+		State_Death				//死亡状態
+	};
 	
 public:
 	
@@ -40,9 +59,9 @@ public:
 	/// </summary>
 	void CreateMoveLR();
 	/// <summary>
-	/// 円回転の処理を作成
+	/// 円移動の処理を作成
 	/// </summary>
-	void CreateMoveTrun();
+	void CreateMoveCircle();
 public:
 	/// 通常状態の時の処理を作成。
 	/// </summary>
@@ -68,6 +87,13 @@ public:
 	void AddPosition(const CVector3& add)
 	{
 		m_pos += add;
+	}
+	/// <summary>
+	/// クマの座標を取得
+	/// </summary>
+	const CVector3& GetPos() const
+	{
+		return m_pos;
 	}
 	/// <summary>
 	/// Playerとの距離を判定する関数
@@ -108,9 +134,10 @@ public:
 	{
 		m_frametime += addtime;
 	}
-
-	//初期状態の設定
-	void SetState();
+	const MoveState GetState() const
+	{
+		return m_movestate;
+	}
 public:
 	bool IsSavePos() const
 	{
@@ -138,25 +165,9 @@ private:
 
 protected:
 
-	//初期移動ステート構造体
-	enum MoveState {
-		State_Circle,		//円移動
-		State_LR,			//左右移動
-		State_UpDown		//上下移動
-	};
 	
-	//状態管理構造体
-	enum State {
-		State_Normal,			//通常状態
-		State_Discovery,		//発見状態
-		State_Escape,			//逃走状態
-		State_Return,			//帰宅状態
-		State_Restraint,		//拘束状態
-		State_Fainted,			//気絶状態
-		State_Death				//死亡状態
-	};
 
-	MoveState m_movestate = State_Circle;	//移動状態
+	MoveState m_movestate = State_LR;	//移動状態
 
 	State m_state = State_Normal;  //ステート
 

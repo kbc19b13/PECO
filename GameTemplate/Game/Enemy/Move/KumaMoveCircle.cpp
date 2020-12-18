@@ -17,14 +17,14 @@ void KumaMoveCircle::Move()
 
 	// 三角関数を使用し、円の位置を割り出す。
 	CVector3 add = CVector3::Zero();
-	add.x = cos(radius) * 5.0f;
-	add.z = sin(radius) * 5.0f;
+	add.x = cos(radius) ;
+	add.z = sin(radius) ;
 
 	// 結果ででた位置を中心位置に加算し、それを描画位置とする
 	m_pos.x = m_initPos.x + add.x;
 	m_pos.z = m_initPos.z + add.z;
 
 	// 向きを変える
-	m_Angle += 10.0f;
+	m_Angle += 1.0f;
 	m_kuma->SetPosition(m_pos);
 }
