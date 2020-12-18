@@ -19,7 +19,7 @@ public:
 	void Move()override;
 
 private:
-	float frametime = 0.0f;		//待機時間用の計測変数
+	
 
 	//クラスのロード
 private:

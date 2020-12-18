@@ -32,27 +32,35 @@ bool Player::Start()
 
 
 	//cmoファイルの読み込み。
-	m_model.Init(L"Assets/modelData/unityChan.cmo");
+	m_model.Init(L"Assets/modelData/PECO.cmo");
+	/*m_PlayerAnimationClips[0].Load(L"Assets/animData/walk.tka");
+	m_PlayerAnimationClips[0].SetLoopFlag(true);
+
+	m_PlayerAnimation.Init(
+		m_model,
+		m_PlayerAnimationClips,
+		1
+	);*/
 
 	////AnimationClipをロード(tkaファイルの読み込み)
 	////Animaitonの初期化を行う
-	//m_PlayerAnimationClips[0].Load(L"Assets/animData/Walk_PECO.tka");
-	//m_PlayerAnimationClips[0].SetLoopFlag(true);
-	//m_PlayerAnimationClips[1].Load(L"Assets/animData/Sneak_PECO.tka");
-	//m_PlayerAnimationClips[1].SetLoopFlag(true);
-	//m_PlayerAnimationClips[2].Load(L"Assets/animData/Cat_PECO.tka");
-	//m_PlayerAnimationClips[2].SetLoopFlag(true);
-	//m_PlayerAnimationClips[3].Load(L"Assets/animData/Extraction_PECO.tka");
-	//m_PlayerAnimationClips[3].SetLoopFlag(true);
-	////アニメーションの初期化
-	//m_PlayerAnimation.Init(
-	//	//アニメーションを流すスキンモデル(関連付け)
-	//	m_model,
-	//	//アニメーションクリップの配列
-	//	m_PlayerAnimationClips,
-	//	//アニメーションクリップの数
-	//	4
-	//);
+	m_PlayerAnimationClips[0].Load(L"Assets/animData/Walk_PECO.tka");
+	m_PlayerAnimationClips[0].SetLoopFlag(true);
+	m_PlayerAnimationClips[1].Load(L"Assets/animData/Sneak_PECO.tka");
+	m_PlayerAnimationClips[1].SetLoopFlag(true);
+	m_PlayerAnimationClips[2].Load(L"Assets/animData/Cat_PECO.tka");
+	m_PlayerAnimationClips[2].SetLoopFlag(true);
+	m_PlayerAnimationClips[3].Load(L"Assets/animData/Extraction_PECO.tka");
+	m_PlayerAnimationClips[3].SetLoopFlag(true);
+	//アニメーションの初期化
+	m_PlayerAnimation.Init(
+		//アニメーションを流すスキンモデル(関連付け)
+		m_model,
+		//アニメーションクリップの配列
+		m_PlayerAnimationClips,
+		//アニメーションクリップの数
+		4
+	);
 
 	//地面をシャドウレシーバーにする。
 	m_model.SetShadowReciever(true);
@@ -66,8 +74,8 @@ void Player::Update()
 {
 	const float playerSpeed = -300.0f;
 	const float gravity = 980.0f;
-
 	float frametime = GameTime().GetFrameDeltaTime();
+	
 	m_speed.x = g_pad[0].GetLStickXF() * playerSpeed;
 	m_speed.z = g_pad[0].GetLStickYF() * playerSpeed;
 	//m_speed.y -= gravity * frametime;
@@ -78,7 +86,7 @@ void Player::Update()
 	//true = 地面にいる
 	if(m_CCon.IsOnGround() == true)
 	{
-		//m_PlayerAnimation.Play(0);
+		m_PlayerAnimation.Play(0);
 	}
 
 	
@@ -101,6 +109,8 @@ void Player::Update()
 		m_pos.z -= 5.0f;
 	}*/
 
+	//アニメーションの再生
+	m_PlayerAnimation.Update(frametime);
 	
 	g_graphicsEngine->GetShadowMap()->RegistShadowCaster(&m_model);
 	//ワールド行列の更新。
@@ -109,10 +119,6 @@ void Player::Update()
 	renderMode = enRenderMode_Silhouette;
 	Draw(renderMode);
 
-	//アニメーションの再生
-	m_PlayerAnimation.Update(frametime);
-	
-	
 	renderMode = enRenderMode_Normal;
 	Draw(renderMode);
 }

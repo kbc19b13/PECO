@@ -18,6 +18,8 @@ public:
 	/// </summary>
 	void Move()override;
 
+	
+
 private:
 	Player* m_player = nullptr;
 

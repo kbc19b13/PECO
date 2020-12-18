@@ -19,7 +19,7 @@ public:
 	{}
 	/// <summary>
 	/// クマの更新関数
-	/// 適切なMoveを
+	/// 適切なMoveを呼び出し更新する。
 	/// </summary>
 	void Update();
 	/// <summary>
@@ -29,7 +29,7 @@ public:
 	/// <returns></returns>
 	bool Start();
 
-	//移動状態を作成する関数
+	//状態を作成する関数
 public:
 	/// <summary>
 	/// 上下移動の処理を作成。
@@ -43,6 +43,24 @@ public:
 	/// 円回転の処理を作成
 	/// </summary>
 	void CreateMoveTrun();
+public:
+	/// 通常状態の時の処理を作成。
+	/// </summary>
+	void ExecuteFSM_Normal();
+	/// <summary>
+	/// 発見状態の時の処理を作成。
+	/// </summary>
+	void ExecuteFSM_Discovery();
+	/// <summary>
+	/// 逃げ状態の時の処理を作成。
+	/// </summary>
+	void ExecuteFSM_Escape();
+	/// <summary>
+	/// 帰宅状態の時の処理を作成。
+	/// </summary>
+	void ExecuteFSM_Return();
+	
+public:
 	/// <summary>
 	/// クマの座標に指定されたベクトルを足し算する。
 	/// </summary>
@@ -52,6 +70,17 @@ public:
 		m_pos += add;
 	}
 	/// <summary>
+	/// Playerとの距離を判定する関数
+	/// </summary>
+	float PE_GetDistance();
+	/// <summary>
+	/// アニメーションの状態を変更
+	/// </summary>
+	void SetAnimation(const int number)
+	{
+		m_MoriAnimation.Play(number);
+	}
+	/// <summary>
 	/// 初期座標を取得。
 	/// </summary>
 	/// <returns></returns>
@@ -59,10 +88,34 @@ public:
 	{
 		return m_SavePos;
 	}
+	/// <summary>
+	/// 初期座標かの判定結果を設定
+	/// </summary>
+	/// <param name="issavepos">設定する判定結果</param>
+	void SetisSavePos(const bool issavepos)
+	{
+		m_isSavePos = issavepos;
+	}
+	const float GetFrameTime() const
+	{
+		return m_frametime;
+	}
+	void SetFrameTime(const float frametime)
+	{
+		m_frametime = frametime;
+	}
+	void AddTime(const float addtime)
+	{
+		m_frametime += addtime;
+	}
+
 	//初期状態の設定
 	void SetState();
 public:
-	
+	bool IsSavePos() const
+	{
+		return m_isSavePos;
+	}
 	bool IsLive() const
 	{
 		return m_isLive;
@@ -79,21 +132,10 @@ private:
 	/// </summary>
 	void ExecuteFSM();
 	/// <summary>
-	/// 通常状態の時の処理を実行。
-	/// </summary>
-	void ExecuteFSM_Normal();
-	/// <summary>
-	/// 発見状態の時の処理を実行。
-	/// </summary>
-	void ExecuteFSM_Discovery();
-	/// <summary>
-	/// 逃げ状態の時の処理を実行。
-	/// </summary>
-	void ExecuteFSM_Escape();
-	/// <summary>
-	/// 帰宅状態の時の処理を実行。
-	/// </summary>
-	void ExecuteFSM_Return();
+
+
+	
+
 protected:
 
 	//初期移動ステート構造体
@@ -122,13 +164,13 @@ protected:
 	//AnimationClip配列とAnimationの変数を追加する
 	//アニメーション
 	Animation m_MoriAnimation;
-	AnimationClip m_MoriAnimationClips[5];
+	AnimationClip m_MoriAnimationClips[7];
 
 	bool m_isLive = true;					//生きてる？
 	bool m_isCotton = true;					//綿入ってる？
 	CVector3 m_SavePos = CVector3::Zero();	//初期座標
-	float m_frametime = 0.0f;					//待機時間を計測。
-	int m_isSavePos = 0;						//初期座標にいるのかを判定
+	bool m_isSavePos = true;				//初期座標かを判定
+	float m_frametime = 0.0f;	//待機時間を計測。
 
 protected:
 

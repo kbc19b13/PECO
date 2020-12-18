@@ -315,4 +315,8 @@
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\animData\idle_Kuma.tka" />
+    <None Include="Assets\animData\Surprise_Kuma.tka" />
+  </ItemGroup>
 </Project>
