@@ -54,19 +54,10 @@
     <ClCompile Include="math\Matrix.cpp">
       <Filter>math</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\GraphicsEngine.cpp">
-      <Filter>graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\SkinModel.cpp">
-      <Filter>graphics</Filter>
-    </ClCompile>
     <ClCompile Include="graphics\SkinModelDataManager.cpp">
       <Filter>graphics</Filter>
     </ClCompile>
     <ClCompile Include="graphics\Skeleton.cpp">
-      <Filter>graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\SkinModelEffect.cpp">
       <Filter>graphics</Filter>
     </ClCompile>
     <ClCompile Include="graphics\Shader.cpp">
@@ -146,20 +137,36 @@
     <ClCompile Include="Enemy\Move\MoveState\MoveEscape.cpp">
       <Filter>Enemy\Move\MoveState</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\RenderTarget.cpp">
-      <Filter>graphics</Filter>
-    </ClCompile>
     <ClCompile Include="Enemy\Move\MoveState\MoveNormal.cpp">
       <Filter>Enemy\Move\MoveState</Filter>
     </ClCompile>
     <ClCompile Include="Enemy\Move\MoveState\MoveDiscovery.cpp">
       <Filter>Enemy\Move\MoveState</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\ShadowMap.cpp">
-      <Filter>graphics</Filter>
-    </ClCompile>
     <ClCompile Include="Enemy\Move\MoveState\IMoveState.cpp" />
     <ClCompile Include="Enemy\Move\MoveState\MoveReturn.cpp" />
+    <ClCompile Include="GameObject\mtGameObject.cpp" />
+    <ClCompile Include="GameObject\mtGameObjectManager.cpp" />
+    <ClCompile Include="Noncopy.cpp" />
+    <ClCompile Include="graphics\Draw\GraphicsEngine.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\Draw\RenderTarget.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\Draw\ShadowMap.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\Draw\SkinModel.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\Draw\SkinModelEffect.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\Draw\Sprite.cpp" />
+    <ClCompile Include="graphics\Draw\Bloom.cpp" />
+    <ClCompile Include="graphics\Draw\PostEffect.cpp" />
+    <ClCompile Include="graphics\Draw\GausianBlur.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -171,19 +178,10 @@
     <ClInclude Include="math\Matrix.h">
       <Filter>math</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\GraphicsEngine.h">
-      <Filter>graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\SkinModel.h">
-      <Filter>graphics</Filter>
-    </ClInclude>
     <ClInclude Include="graphics\SkinModelDataManager.h">
       <Filter>graphics</Filter>
     </ClInclude>
     <ClInclude Include="graphics\Skeleton.h">
-      <Filter>graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\SkinModelEffect.h">
       <Filter>graphics</Filter>
     </ClInclude>
     <ClInclude Include="graphics\Shader.h">
@@ -271,20 +269,39 @@
     <ClInclude Include="Enemy\Move\MoveState\MoveEscape.h">
       <Filter>Enemy\Move\MoveState</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\RenderTarget.h">
-      <Filter>graphics</Filter>
-    </ClInclude>
     <ClInclude Include="Enemy\Move\MoveState\MoveNormal.h">
       <Filter>Enemy\Move\MoveState</Filter>
     </ClInclude>
     <ClInclude Include="Enemy\Move\MoveState\MoveDiscovery.h">
       <Filter>Enemy\Move\MoveState</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\ShadowMap.h">
-      <Filter>graphics</Filter>
-    </ClInclude>
     <ClInclude Include="Enemy\Move\MoveState\IMoveState.h" />
     <ClInclude Include="Enemy\Move\MoveState\MoveReturn.h" />
+    <ClInclude Include="GameObject\mtGameObject.h" />
+    <ClInclude Include="GameObject\mtGameObjectManager.h" />
+    <ClInclude Include="Time\mtGameTime.h" />
+    <ClInclude Include="Time\mtStopwatch.h" />
+    <ClInclude Include="util\mtUtil.h" />
+    <ClInclude Include="Noncopy.h" />
+    <ClInclude Include="graphics\Draw\GraphicsEngine.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\Draw\RenderTarget.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\Draw\ShadowMap.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\Draw\SkinModel.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\Draw\SkinModelEffect.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\Draw\Sprite.h" />
+    <ClInclude Include="graphics\Draw\Bloom.h" />
+    <ClInclude Include="graphics\Draw\PostEffect.h" />
+    <ClInclude Include="graphics\Draw\GausianBlur.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\PECO.FBX">
@@ -312,6 +329,12 @@
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\unityChan.fbx">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\test.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\YK_Idle.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
   </ItemGroup>

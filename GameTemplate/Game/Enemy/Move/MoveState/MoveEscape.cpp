@@ -5,6 +5,8 @@
 MoveEscape::MoveEscape(Kuma* kuma) :
 	IKumaMove(kuma)
 {
+	m_player = Player::P_GetInstance();
+
 	//アニメーションの再生
 	//逃げる時のアニメーションを再生
 	
@@ -28,9 +30,8 @@ void MoveEscape::Move()
 	m_kuma->AddPosition({ 1.0f, 0.0f, 0.0f });
 
 	//Playerとクマとの距離を求めて、1000離れると戻り状態に切り替える。	
-	if (m_kuma->PE_GetDistance() > 1000.0f)
+	if (GetDistance(m_player->GetPosition(), m_pos) > 1000.0f)
 	{
-
 		//距離が1000以上なら戻り状態に遷移する。
 		//移動処理を戻り処理に切り替える。
 		m_kuma->ExecuteFSM_Return();

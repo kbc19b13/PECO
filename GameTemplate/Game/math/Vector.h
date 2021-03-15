@@ -564,6 +564,25 @@ public:
 		z = pw * qz + px * qy - py * qx + pz * qw;
 	}
 	/*!
+		*@brief	ベクトルにクォータニオンを適用する。
+		*@param[in,out] v	ベクトル。
+		*/
+	void Apply(CVector3& _v)
+	{
+		DirectX::XMVECTOR xmv = DirectX::XMVector3Rotate(_v, *this);
+		DirectX::XMStoreFloat3(&_v.vec, xmv);
+	}
+	/*!
+	*@brief	ベクトル同士の外積。
+	*/
+	template< class TVector>
+	static inline TVector Cross(const TVector& v0, const TVector& v1)
+	{
+		TVector result;
+		result.Cross(v0, v1);
+		return result;
+	}
+	/*!
 	*@brief	ベクトルにクォータニオンを適用する。
 	*@param[in,out] v	ベクトル。
 	*/

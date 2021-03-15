@@ -1,7 +1,7 @@
 #pragma once
 #include "Enemy/Move/IKumaMove.h"
 
-class Player;
+#include "Player.h"
 
 /// <summary>
 /// ƒNƒ}‚Ì“¦‚°‚éˆ—

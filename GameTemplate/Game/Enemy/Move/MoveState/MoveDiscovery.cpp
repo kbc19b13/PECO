@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "..//mtEngine/mtGameTime.h"
+#include "Time/mtGameTime.h"
 #include "MoveDiscovery.h"
 #include "Enemy/Kuma.h"
 

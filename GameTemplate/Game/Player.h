@@ -11,33 +11,67 @@ public:
 	Player();
 	~Player();
 
+	/// <summary>
+	/// 開始処理
+	/// </summary>
+	/// <returns></returns>
 	bool Start();
+	/// <summary>
+	/// 更新処理
+	/// </summary>
 	void Update();
+	/// <summary>
+	/// 方向取得処理
+	/// </summary>
+	void Direction();
+	/// <summary>
+	/// 移動処理
+	/// </summary>
+	void Move();
+	/// <summary>
+	/// アニメーション再生
+	/// </summary>
+	void Anim();
+
+private:
+	////////////////*構造の変数*/////////////////////
+	//フレート対応時間計測変数
+	float frametime = 0.0f;
+	
+	//キャラコン
+	CharacterController m_CCon;
+
+	//AnimationClip配列とAnimationの変数を追加する
+	//アニメーション
+	
+	Animation m_PlayerAnimation;
+	AnimationClip m_PlayerAnimationClips[4];
+
+	AnimationPlayController m_animPlayCon;
+	
+	//////////////////////////////////////////////////
+	
+	////////////////*方向取得の変数*//////////////////
+	//playerの前方向取得
+	CVector3 p_mae = CVector3::Front();
+	//playerの上方向取得
+	CVector3 p_ue = CVector3::Up();
+	//playerの右方向取得
+	CVector3 p_migi = CVector3::Right();
+
+	//Quaternionを行列に変換
+	CMatrix p_rot = CMatrix::Identity();
+	//////////////////////////////////////////////////
 	
 
+
+public:
 	/////////Singletonパターン///////////////
 	//Playerを一体に限定
 	static Player* P_GetInstance()
 	{
 		return m_instance;
 	}
-
-private:
-	
-	CharacterController m_CCon;
-
-	
-	CVector3 m_speed = { 0.0f, 0.0f, 0.0f };
-
-	//AnimationClip配列とAnimationの変数を追加する
-	//アニメーション
-	Animation m_PlayerAnimation;
-	AnimationClip m_PlayerAnimationClips[4];
-
-	AnimationPlayController m_animPlayCon;
-
-	
-	
 private:
 	//シングルトン用ポインタ
 	static Player* m_instance;

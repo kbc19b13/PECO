@@ -96,10 +96,6 @@ public:
 		return m_pos;
 	}
 	/// <summary>
-	/// Playerとの距離を判定する関数
-	/// </summary>
-	float PE_GetDistance();
-	/// <summary>
 	/// アニメーションの状態を変更
 	/// </summary>
 	void SetAnimation(const int number)
@@ -158,14 +154,8 @@ private:
 	/// ステートマシンを実行
 	/// </summary>
 	void ExecuteFSM();
-	/// <summary>
-
-
-	
 
 protected:
-
-	
 
 	MoveState m_movestate = State_LR;	//移動状態
 

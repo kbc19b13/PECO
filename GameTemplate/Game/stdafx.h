@@ -13,6 +13,10 @@
 #include <functional>
 #include <algorithm>
 
+//Effekseerのヘッダーファイルをインクルード。
+#include "Effekseer.h"
+#include "EffekseerRendererDX11.h"
+
 #include "btBulletDynamicsCommon.h"
 #include "BulletCollision\CollisionDispatch\btGhostObject.h"
 
@@ -23,14 +27,15 @@
 #include "DirectXTK/Inc/SpriteFont.h"
 #include "DirectXTK/Inc/DDSTextureLoader.h"
 
+#include "Noncopy.h"
 #include "physics/Physics.h"
 #include "HID/Pad.h"
 
 #include "math/Vector.h"
 #include "math/Matrix.h"
-#include "graphics/GraphicsEngine.h"
+#include "graphics/Draw/GraphicsEngine.h"
 
-#include "graphics/SkinModel.h"
+#include "graphics/Draw/SkinModel.h"
 #include "graphics/Skeleton.h"
 
 #include "graphics/animation/Animation.h"
@@ -40,11 +45,12 @@
 //#include "../mtEngine/mtGameObject.h"
 //#include "../mtEngine/mtGameObjectManager.h"
 
-#include "..//mtEngine/mtEnginePreCompile.h"
+#include "../Game/GameObject/mtGameObject.h"
+#include "../Game/GameObject/mtGameObjectManager.h"
 
 //#include "Game.h"
 
-using namespace mtEngine;
+
 
 #include "IActor.h"
 

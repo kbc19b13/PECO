@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Enemy/Move/IKumaMove.h"
+#include "Player.h"
 
 /// <summary>
 /// クマの移動処理(上下移動)
@@ -17,7 +18,8 @@ public:
 	/// 移動処理。
 	/// </summary>
 	void Move() override;
-protected:
-	CVector3 m_initPos;		//クマの初期座標。
+
+private:
+	Player* m_player = nullptr;
 };
 

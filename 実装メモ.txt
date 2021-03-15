@@ -22,6 +22,75 @@
 →GraphicsEngine.cppのInit関数の中身を変更
 →RenderTarget型のm_renderTargetを使用するように改良
 ・デプスシャドウ技法(シャドウマップ)
+→ShadowMapクラスの追加
+→RenderTargetクラスの追加
+・ポストエフェクトを使用可能にする
+→オフスクリーンレンダリングを利用して描画の加工を目的とする
+→Spriteクラスの追加
+　→2Dの表示処理
+・Noncopyクラスの追加
+→コピー渡しの禁止
+・ブルームの実装
+→Bloomクラスの追加
+　→PostEffectクラスの追加
+　→GaussianBlurクラスの追加
+
+
+現在進行中の実装の参考資料
+～～～～～～～～～～～～～～～～～～～～～～～～～～
+
+13.1を参考
+
+
+Update()
+  →PostEffect.Update()
+　  ←空
+Render()
+ →BegineRender()	→〇
+   →PreRender()	→
+   →ForwordRender()	→
+   →PostRender()	→
+ →EndRender()		→
+
+
+
+
+Bloom
+ブルームのみ、の処理責任
+輝度抽出、加算合成が仕事
+
+
+PostEffect
+ポストエフェクトの処理責任を移譲
+エフェクト処理を取りまとめ
+
+
+GaussianBlur
+ガウシアンブラーの処理責任
+ブラー処理
+
+～～～～～～～～～～～～～～～～～～～～～～～～～～
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

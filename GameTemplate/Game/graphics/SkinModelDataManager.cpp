@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "graphics/SkinModelDataManager.h"
-#include "graphics/SkinModelEffect.h"
+#include "graphics/Draw/SkinModelEffect.h"
 #include "graphics/Skeleton.h"
 
 //g_skinModelDataManager‚ÌÀ‘ÌB

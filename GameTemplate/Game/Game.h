@@ -1,5 +1,5 @@
 #pragma once
-#include "../mtEngine/mtGameObject.h"
+#include "GameObject/mtGameObject.h"
 #include "level/Level.h"
 
 

@@ -7,7 +7,13 @@
 
 Game::Game()
 {
-
+	//2DƒJƒƒ‰‚Ìî•ñ‚ğİ’è‚µ‚Ä‚¢‚éB
+	g_camera2D.SetUpdateProjMatrixFunc(Camera::enUpdateProjMatrixFunc_Ortho);
+	g_camera2D.SetWidth(FRAME_BUFFER_W);
+	g_camera2D.SetHeight(FRAME_BUFFER_H);
+	g_camera2D.SetPosition({ 0.0f, 0.0f, -10.0f });
+	g_camera2D.SetTarget(CVector3::Zero());
+	g_camera2D.Update();
 }
 Game::~Game()
 {

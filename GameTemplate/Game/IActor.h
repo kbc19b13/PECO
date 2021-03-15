@@ -1,4 +1,5 @@
 #pragma once
+#include "GameObject/mtGameObject.h"
 
 
 /// <summary>
@@ -67,13 +68,15 @@ public:
 	{
 		return m_model;
 	}
-
-
+	/// <summary>
+	/// 2点間の距離求める
+	/// </summary>
+	/// v1→v2に伸びるベクトルを計算
+	/// <returns>求めた距離を返す</returns>
+	float GetDistance(const CVector3 v1, const CVector3 v2);
 
 public:
 	void Draw(EnRenderMode rendermode);
-
-
 
 protected:
 	CVector3 m_pos = CVector3::Zero();			//座標。
