@@ -43,8 +43,6 @@ bool Kuma::Start()
 		7
 	);
 
-	m_savePos = m_pos;
-
 	m_player = Player::P_GetInstance();
 
 	return true;

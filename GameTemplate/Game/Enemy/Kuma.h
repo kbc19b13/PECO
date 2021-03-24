@@ -119,6 +119,13 @@ public:
 		return m_savePos;
 	}
 	/// <summary>
+	/// ‰ŠúÀ•W‚ğİ’è‚·‚é
+	/// </summary>
+	void SetSavePos(const CVector3 pos)
+	{
+		m_savePos = pos;
+	}
+	/// <summary>
 	/// ‰ŠúÀ•W‚©‚Ì”»’èŒ‹‰Ê‚ğİ’è
 	/// </summary>
 	/// <param name="issavepos">İ’è‚·‚é”»’èŒ‹‰Ê</param>

@@ -16,7 +16,7 @@ void MoveReturn::Move()
 {
 	//Playerとクマとの距離を求めて処理を行う
 	//Playerの座標を取得する処理が入るので
-	if (GetDistance(m_player->GetPosition(), m_pos) < 100.0f)
+	if (GetDistance(m_player->GetPosition(), m_kuma->GetPos()) < 100.0f)
 	{
 		//距離が100以下なら逃げ状態に遷移する。
 		//移動処理を逃げる処理に切り替える。
@@ -30,9 +30,13 @@ void MoveReturn::Move()
 	ReturnVector.Normalize();
 
 	m_kuma->AddPosition(ReturnVector);
+
+	
 	//帰宅状態の処理
-	if (savePos.x - ReturnPos.x <= 1.0f &&
-		savePos.z - ReturnPos.z <= 1.0f)
+	if (ReturnPos.x <= 1.0f &&
+		ReturnPos.z <= 1.0f &&
+		ReturnPos.x <= -1.0f &&
+		ReturnPos.z <= -1.0f)
 	{
 		m_kuma->SetisSavePos(true);	
 	}

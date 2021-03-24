@@ -46,6 +46,7 @@ bool Game::Start()
 				//敵クマさんとして生成
 				Kuma* kuma = NewGO<Kuma>(0, "Enemy");
 				kuma->SetPosition(objData.position);
+				kuma->SetSavePos(objData.position);
 				//停止している何も入っていないクマさん
 				kuma->ExecuteFSM_Normal();
 				return true;
@@ -55,6 +56,7 @@ bool Game::Start()
 				//敵クマさんとして生成
 				Kuma* kuma = NewGO<Kuma>(0, "Enemy");
 				kuma->SetPosition(objData.position);
+				kuma->SetSavePos(objData.position);
 				//左右移動の処理を作成する。
 				kuma->CreateMoveLR();
 				return true;
@@ -64,6 +66,7 @@ bool Game::Start()
 				//敵クマさんとして生成
 				Kuma* kuma = NewGO<Kuma>(0, "Enemy");
 				kuma->SetPosition(objData.position);
+				kuma->SetSavePos(objData.position);
 				//上下移動の処理を作成する。
 				kuma->CreateMoveUpDown();
 				return true;
@@ -74,6 +77,7 @@ bool Game::Start()
 				//敵クマさんとして生成
 				Kuma* kuma = NewGO<Kuma>(0, "Enemy");
 				kuma->SetPosition(objData.position);
+				kuma->SetSavePos(objData.position);
 				//円移動の処理を作成する。
 				kuma->CreateMoveCircle();
 				return true;
