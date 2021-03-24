@@ -32,21 +32,30 @@ bool PlayerCamera::Start()
 
 void PlayerCamera::Update()
 {
-	
-	/*//////////const変数を定義////////////*/
 	//注視点の高さを設定
 	const float set_height = 50.0f;
-	//カメラの上方向を設定
-	const CVector3 set_Up = { 0.0f,  1.0f,  0.0f };
-	
+
 	//カメラを更新。
 	//注視点を計算する。
 	CVector3 target = m_player->GetPosition();
-
 	//一つ前のpositionに置き換える
 	old_pos = Camera_pos;
 
-	/////////////////////////////////////////////////////////
+	CameraUpdate();
+
+	target.y = set_height;
+	CVector3 pos = target + Camera_pos;
+
+	g_camera3D.SetTarget(target);
+	g_camera3D.SetPosition(pos);
+	
+	//カメラの更新。
+	g_camera3D.Update();
+}
+void PlayerCamera::CameraUpdate()
+{
+	//カメラの上方向を設定
+	const CVector3 set_Up = { 0.0f,  1.0f,  0.0f };
 
 	//パッドの入力でカメラを回転
 	float rStickX = g_pad[0].GetRStickXF();
@@ -78,16 +87,4 @@ void PlayerCamera::Update()
 		//カメラが下向きすぎ。
 		Camera_pos = old_pos;
 	}
-	
-	target.y = set_height;
-
-	CVector3 pos = target + Camera_pos;
-	
-
-	g_camera3D.SetTarget(target);
-	g_camera3D.SetPosition(pos);
-	
-	//カメラの更新。
-	g_camera3D.Update();
 }
-

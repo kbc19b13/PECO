@@ -33,26 +33,9 @@ bool Player::Start()
 	//cmoファイルの読み込み。
 	m_model.Init(L"Assets/modelData/PECO.cmo");
 	
-	//AnimationClipをロード(tkaファイルの読み込み)
-	//Animaitonの初期化を行う
-	m_PlayerAnimationClips[0].Load(L"Assets/animData/Walk_PECO.tka");
-	m_PlayerAnimationClips[0].SetLoopFlag(true);
-	m_PlayerAnimationClips[1].Load(L"Assets/animData/Sneak_PECO.tka");
-	m_PlayerAnimationClips[1].SetLoopFlag(true);
-	m_PlayerAnimationClips[2].Load(L"Assets/animData/Cat_PECO.tka");
-	m_PlayerAnimationClips[2].SetLoopFlag(true);
-	m_PlayerAnimationClips[3].Load(L"Assets/animData/Extraction_PECO.tka");
-	m_PlayerAnimationClips[3].SetLoopFlag(true);
 	//アニメーションの初期化
-	m_PlayerAnimation.Init(
-		//アニメーションを流すスキンモデル(関連付け)
-		m_model,
-		//アニメーションクリップの配列
-		m_PlayerAnimationClips,
-		//アニメーションクリップの数
-		4
-	);
-
+	AnimInit();
+	
 	//Playerをシャドウレシーバーにする。
 	m_model.SetShadowReciever(true);
 
@@ -65,16 +48,18 @@ void Player::Update()
 {
 	//変数
 	frametime = GameTime().GetFrameDeltaTime();
+	
+	//スティックでの移動
+	lStickY = g_pad[0].GetLStickYF();
+	lStickX = -g_pad[0].GetLStickXF();
 
 	//方向の取得処理
 	Direction();
 	//移動処理
 	Move();
+	m_pos = m_CCon.Execute(frametime, m_speed);
 	//アニメーション再生
 	Anim();
-
-	//アニメーションの再生
-	m_PlayerAnimation.Update(frametime);
 
 	g_graphicsEngine->GetShadowMap()->RegistShadowCaster(&m_model);
 	//ワールド行列の更新。
@@ -113,12 +98,8 @@ void Player::Direction()
 void Player::Move()
 {
 	//定数
-	const float playerSpeed = -200.0f;
+	const float speed = -200.0f;
 	const float gravity = 980.0f;
-
-	//スティックでの移動
-	float lStickY = g_pad[0].GetLStickYF();
-	float lStickX = -g_pad[0].GetLStickXF();
 
 	//カメラの前方方向と右方向を取得。
 	CVector3 cameraForward = g_camera3D.GetForward();
@@ -132,8 +113,8 @@ void Player::Move()
 	m_speed.x = 0.0f;
 	m_speed.z = 0.0f;
 	//p_moveSpeed.y -= 980.0f * GameTime().GetFrameDeltaTime();
-	m_speed += cameraForward * lStickY * playerSpeed;	//奥方向への移動速度を代入。
-	m_speed += cameraRight * lStickX * -playerSpeed;		//右方向への移動速度を加算。
+	m_speed += cameraForward * lStickY * -speed;	//奥方向への移動速度を代入。
+	m_speed += cameraRight * lStickX * speed;		//右方向への移動速度を加算。
 	
 
 	if (fabsf(m_speed.x) < 0.001f
@@ -154,9 +135,45 @@ void Player::Move()
 	//moveSpeedでpositionを動かす
 	m_pos += m_speed;
 }
+void Player::AnimInit()
+{
+	//アニメーションの処理を初期化
+	m_PlayerAnimationClips[0].Load(L"Assets/animData/Walk_PECO.tka");
+	m_PlayerAnimationClips[0].SetLoopFlag(true);
+	m_PlayerAnimation.Init(
+		//アニメーションを流すスキンモデル(関連付け)
+		m_model,
+		//アニメーションクリップの配列
+		m_PlayerAnimationClips,
+		//アニメーションクリップの数
+		1
+	);
+
+	//AnimationClipをロード(tkaファイルの読み込み)
+	//Animaitonの初期化を行う
+	/*
+	m_PlayerAnimationClips[0].Load(L"Assets/animData/Walk_PECO.tka");
+	m_PlayerAnimationClips[0].SetLoopFlag(true);
+	m_PlayerAnimationClips[1].Load(L"Assets/animData/Sneak_PECO.tka");
+	m_PlayerAnimationClips[1].SetLoopFlag(true);
+	m_PlayerAnimationClips[2].Load(L"Assets/animData/Cat_PECO.tka");
+	m_PlayerAnimationClips[2].SetLoopFlag(true);
+	m_PlayerAnimationClips[3].Load(L"Assets/animData/Extraction_PECO.tka");
+	m_PlayerAnimationClips[3].SetLoopFlag(true);
+	//アニメーションの初期化
+	m_PlayerAnimation.Init(
+		//アニメーションを流すスキンモデル(関連付け)
+		m_model,
+		//アニメーションクリップの配列
+		m_PlayerAnimationClips,
+		//アニメーションクリップの数
+		4
+	);
+	*/
+}
 void Player::Anim()
 {
-	m_pos = m_CCon.Execute(frametime, m_speed);
+	
 
 	//true = 地面にいる
 	if(m_CCon.IsOnGround() == true)
@@ -180,5 +197,6 @@ void Player::Anim()
 		m_pos.z -= 5.0f;
 	}*/
 
-	
+	//アニメーションの再生
+	m_PlayerAnimation.Update(frametime);
 }

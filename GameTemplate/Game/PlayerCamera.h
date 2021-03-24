@@ -9,7 +9,11 @@ public:
 
 	void Update();
 	bool Start();
-	
+	/// <summary>
+	/// カメラの更新処理
+	/// </summary>
+	void CameraUpdate();
+
 private:
 	//一つ前のカメラ座標
 	CVector3 old_pos = { 0.0f, 0.0f, 0.0f };

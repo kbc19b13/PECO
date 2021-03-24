@@ -135,20 +135,23 @@ public:
 		m_updateProjMatrixFunc = func;
 	}
 private:
-	CMatrix	m_viewMatrix = CMatrix::Identity();		//ビュー行列。
-	CMatrix m_projMatrix = CMatrix::Identity();		//プロジェクション行列。
-	CVector3 m_target = CVector3::Zero();			//注視点。
-	CVector3 m_position = CVector3::Zero();			//視点。
-	CVector3 m_up = CVector3::Up();					//上方向。
-	CVector3 m_forward = CVector3::Front();			//!<カメラの前方。
-	CVector3 m_right = CVector3::Right();			//!<カメラの右。
-	float m_viewAngle = CMath::DegToRad(60.0f);		//画角。
-	float m_far = 10000.0f;							//遠い平面までの距離。
-	float m_near = 1.0f;							//近平面までの距離。
+	CMatrix	m_viewProjectionMatrix = CMatrix::Identity();	//!<ビュープロジェクション行列。
+	CMatrix	m_viewMatrixInv = CMatrix::Identity();			//!<ビュー行列の逆行列。
+	CMatrix	m_viewMatrix = CMatrix::Identity();				//ビュー行列。
+	CMatrix m_projMatrix = CMatrix::Identity();				//プロジェクション行列。
+	CMatrix	m_cameraRotation;								//!<カメラの回転行列。
+	CVector3 m_target = CVector3::Zero();					//注視点。
+	CVector3 m_position = CVector3::Zero();					//視点。
+	CVector3 m_up = CVector3::Up();							//上方向。
+	CVector3 m_forward = CVector3::Front();					//!<カメラの前方。
+	CVector3 m_right = CVector3::Right();					//!<カメラの右。
+	float m_viewAngle = CMath::DegToRad(60.0f);				//画角。
+	float m_far = 10000.0f;									//遠い平面までの距離。
+	float m_near = 1.0f;									//近平面までの距離。
 	
 	//追加
-	float m_width = 1280.0f;						//平行投影の幅。
-	float m_height = 720.0f;						//平行投影の高さ。
+	float m_width = 1280.0f;								//平行投影の幅。
+	float m_height = 720.0f;								//平行投影の高さ。
 	EnUpdateProjMatrixFunc m_updateProjMatrixFunc = enUpdateProjMatrixFunc_Perspective;	//射影行列の作成方法。
 
 };

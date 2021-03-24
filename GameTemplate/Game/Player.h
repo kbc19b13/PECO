@@ -32,6 +32,10 @@ public:
 	/// アニメーション再生
 	/// </summary>
 	void Anim();
+	/// <summary>
+	/// アニメーションの初期化
+	/// </summary>
+	void AnimInit();
 
 private:
 	////////////////*構造の変数*/////////////////////
@@ -43,11 +47,10 @@ private:
 
 	//AnimationClip配列とAnimationの変数を追加する
 	//アニメーション
-	
 	Animation m_PlayerAnimation;
-	AnimationClip m_PlayerAnimationClips[4];
+	AnimationClip m_PlayerAnimationClips[1];
 
-	AnimationPlayController m_animPlayCon;
+	//AnimationPlayController m_animPlayCon;
 	
 	//////////////////////////////////////////////////
 	
@@ -63,7 +66,8 @@ private:
 	CMatrix p_rot = CMatrix::Identity();
 	//////////////////////////////////////////////////
 	
-
+	float lStickY = 0.0f;	//LスティックのY軸情報
+	float lStickX = 0.0f;	//LスティックのX軸情報
 
 public:
 	/////////Singletonパターン///////////////

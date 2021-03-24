@@ -47,10 +47,18 @@ public:
 	/// アニメーションの初期化
 	/// <returns></returns>
 	bool Start();
-
-	//状態を作成する関数
-public:
 	/// <summary>
+	/// 共通処理
+	/// </summary>
+	void CommonUpdate();
+	/// <summary>
+	/// 共通移動処理
+	/// </summary>
+	void CommonMove(const CVector3 speed);
+
+public://状態を作成する関数
+	
+	/// /// <summary>
 	/// 上下移動の処理を作成。
 	/// </summary>
 	void CreateMoveUpDown();
@@ -108,7 +116,7 @@ public:
 	/// <returns></returns>
 	const CVector3& GetSavePos() const
 	{
-		return m_SavePos;
+		return m_savePos;
 	}
 	/// <summary>
 	/// 初期座標かの判定結果を設定
@@ -169,7 +177,7 @@ protected:
 
 	bool m_isLive = true;					//生きてる？
 	bool m_isCotton = true;					//綿入ってる？
-	CVector3 m_SavePos = CVector3::Zero();	//初期座標
+	CVector3 m_savePos = CVector3::Zero();	//初期座標
 	bool m_isSavePos = true;				//初期座標かを判定
 	float m_frametime = 0.0f;	//待機時間を計測。
 

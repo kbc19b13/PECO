@@ -10,7 +10,7 @@ void IActor::Draw(EnRenderMode rendermode)
 	);
 }
 
-float IActor::GetDistance(const CVector3 v1, const CVector3 v2)
+float IActor::GetDistance(const CVector3& v1, const CVector3& v2)
 {
 	//プレイヤーからエネミーに伸びるベクトルを計算。
 	CVector3 d_Vec = v1 - v2;

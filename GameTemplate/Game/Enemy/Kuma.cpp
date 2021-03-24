@@ -43,6 +43,8 @@ bool Kuma::Start()
 		7
 	);
 
+	m_savePos = m_pos;
+
 	m_player = Player::P_GetInstance();
 
 	return true;
@@ -74,7 +76,6 @@ void Kuma::ExecuteFSM_Normal()
 {
 	//元の移動状態に戻す
 	switch (m_movestate) {
-
 	case State_Circle:
 		//円移動の処理を作成
 		CreateMoveCircle();
@@ -120,6 +121,8 @@ void Kuma::Update()
 		//クマの移動処理を実行する。
 		m_kumamove->Move();
 	}
+
+	CommonMove(m_kumamove->GetMoveSpeed());
 
 	//Playerとクマとの距離を求めて処理を行う
 	//Playerの座標を取得する処理が入るので
@@ -168,4 +171,25 @@ void Kuma::ExecuteFSM()
 
 	}
 
+}
+void Kuma::CommonUpdate()
+{
+	
+}
+void Kuma::CommonMove(const CVector3 speed)
+{
+	if (fabsf(speed.x) < 0.001f
+		&& fabsf(speed.z) < 0.001f) {
+		//m_moveSpeed.xとm_moveSpeed.zの絶対値がともに0.001以下ということは
+		//このフレームではキャラは移動していないので旋回する必要はない。
+		return;
+	}
+	//atan2はtanθの値を角度(ラジアン単位)に変換してくれる関数。
+	//m_moveSpeed.x / m_moveSpeed.zの結果はtanθになる。
+	//atan2を使用して、角度を求めている。
+	//これが回転角度になる。
+	float angle = atan2(speed.x, speed.z);
+	//atanが返してくる角度はラジアン単位なので
+	//SetRotationDegではなくSetRotationを使用する。
+	m_rot.SetRotation(CVector3::AxisY(), angle);
 }
