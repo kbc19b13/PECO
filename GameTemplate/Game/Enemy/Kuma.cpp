@@ -72,41 +72,24 @@ void Kuma::CreateMoveCircle()
 /////////////////状態処理///////////////////
 void Kuma::ExecuteFSM_Normal()
 {
-	//元の移動状態に戻す
-	switch (m_movestate) {
-	case State_Circle:
-		//円移動の処理を作成
-		CreateMoveCircle();
-		break;
-
-	case State_LR:
-		//左右移動の処理を作成
-		CreateMoveLR();
-		break;
-
-	case State_UpDown:
-		//上下移動の処理を作成
-		CreateMoveUpDown();
-		break;
-	}
+	m_changeStateRequest.nextState = State_Normal;
+	m_changeStateRequest.isRequest = true;
 }
 void Kuma::ExecuteFSM_Discovery()
 {
-	//待機状態のインスタンスを作成。
-	m_kumamove = std::make_unique<MoveDiscovery>(this);
-	m_state = State_Discovery;
+	m_changeStateRequest.nextState = State_Discovery;
+	m_changeStateRequest.isRequest = true;
+	
 }
 void Kuma::ExecuteFSM_Escape()
 {
-	//逃げ状態のインスタンスを作成。
-	m_kumamove = std::make_unique<MoveEscape>(this);
-	m_state = State_Escape;
+	m_changeStateRequest.nextState = State_Escape;
+	m_changeStateRequest.isRequest = true;
 }
 void Kuma::ExecuteFSM_Return()
 {
-	//戻り状態のインスタンスを作成。
-	m_kumamove = std::make_unique<MoveReturn>(this);
-	m_state = State_Return;
+	m_changeStateRequest.nextState = State_Return;
+	m_changeStateRequest.isRequest = true;
 }
 ////////////////////////////////////////////////
 void Kuma::Update()
@@ -118,9 +101,8 @@ void Kuma::Update()
 	if (m_kumamove) {
 		//クマの移動処理を実行する。
 		m_kumamove->Move();
+		CommonMove(m_kumamove->GetMoveSpeed());
 	}
-
-	CommonMove(m_kumamove->GetMoveSpeed());
 
 	//Playerとクマとの距離を求めて処理を行う
 	//Playerの座標を取得する処理が入るので
@@ -145,28 +127,48 @@ void Kuma::Update()
 }
 void Kuma::ExecuteFSM()
 {
-	switch (m_state) {
+	if (m_changeStateRequest.isRequest) {
+		m_changeStateRequest.isRequest = false;
+		switch (m_changeStateRequest.nextState) {
+		case State_Normal:
+			//通常状態
+			switch (m_movestate) {
+			case State_Circle:
+				//円移動の処理を作成
+				CreateMoveCircle();
+				break;
 
-	case State_Normal:
-		//通常状態
-		ExecuteFSM_Normal();
-		break;
+			case State_LR:
+				//左右移動の処理を作成
+				CreateMoveLR();
+				break;
 
-	case State_Discovery:
-		//発見状態
-		ExecuteFSM_Discovery();
-		break;
+			case State_UpDown:
+				//上下移動の処理を作成
+				CreateMoveUpDown();
+				break;
+			}
+			break;
 
-	case State_Escape:
-		//逃げ状態
-		ExecuteFSM_Escape();
-		break;
+		case State_Discovery:
+			//発見状態
+			m_kumamove = std::make_unique<MoveDiscovery>(this);
+			
+			break;
 
-	case State_Return:
-		//戻り状態
-		ExecuteFSM_Return();
-		break;
+		case State_Escape:
+			//逃げ状態
+			m_kumamove = std::make_unique<MoveEscape>(this);
+			
+			break;
 
+		case State_Return:
+			//戻り状態
+			m_kumamove = std::make_unique<MoveReturn>(this);
+			
+			break;
+		}
+		m_state = m_changeStateRequest.nextState;
 	}
 
 }

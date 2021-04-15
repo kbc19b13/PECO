@@ -23,13 +23,7 @@ void MoveReturn::Move()
 		m_kuma->ExecuteFSM_Discovery();
 	}
 
-	//‹A‘îó‘Ô‚Ìˆ—
-	CVector3 ReturnPos = m_kuma->GetPos();
-	CVector3 savePos = m_kuma->GetSavePos();
-	CVector3 ReturnVector = savePos - ReturnPos;
-	ReturnVector.Normalize();
-
-	m_kuma->AddPosition(ReturnVector);
+	CVector3 ReturnPos = CVector3::Zero();
 
 	
 	//‹A‘îó‘Ô‚Ìˆ—
@@ -48,5 +42,15 @@ void MoveReturn::Move()
 	if (m_kuma->IsSavePos()) {
 		
 		m_kuma->ExecuteFSM_Normal();
+	}
+	else
+	{
+		//‹A‘îó‘Ô‚Ìˆ—
+		ReturnPos = m_kuma->GetPos();
+		CVector3 savePos = m_kuma->GetSavePos();
+		CVector3 ReturnVector = savePos - ReturnPos;
+		ReturnVector.Normalize();
+
+		m_kuma->SetMoveSpeed(ReturnVector);
 	}
 }

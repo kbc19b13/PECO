@@ -28,7 +28,12 @@ protected:
 		State_Fainted,			//気絶状態
 		State_Death				//死亡状態
 	};
-	
+	//ステート切り替えリクエスト
+	struct ChangeStateRequest {
+		State nextState;	//次のステート
+		bool isRequest;		//リクエストを受けている？
+
+	};
 public:
 	
 	Kuma()
@@ -171,7 +176,7 @@ private:
 	void ExecuteFSM();
 
 protected:
-
+	ChangeStateRequest m_changeStateRequest;
 	MoveState m_movestate = State_LR;	//移動状態
 
 	State m_state = State_Normal;  //ステート
