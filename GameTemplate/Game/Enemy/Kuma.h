@@ -13,15 +13,22 @@ class Kuma final : public IActor
 protected:
 	//初期移動ステート構造体
 	enum MoveState {
-		State_Circle,		//円移動
-		State_LR,			//左右移動
-		State_UpDown,		//上下移動
+		State_Circle,			//円移動
+		State_LR,				//左右移動
+		State_UpDown,			//上下移動
 	};
-
+	//発見状況
+	enum DiscoverySituation
+	{
+		States_Still,			//未だ
+		States_Found,			//発見した
+		States_Discovered		//発見された
+	};
 	//状態管理構造体
 	enum State {
 		State_Normal,			//通常状態
 		State_Discovery,		//発見状態
+		State_Tracking,			//追跡状態
 		State_Escape,			//逃走状態
 		State_Return,			//帰宅状態
 		State_Restraint,		//拘束状態
@@ -34,11 +41,10 @@ protected:
 		bool isRequest;		//リクエストを受けている？
 
 	};
+
 public:
-	
 	Kuma()
 	{}
-
 	virtual ~Kuma()
 	{}
 	/// <summary>
@@ -59,9 +65,22 @@ public:
 	/// <summary>
 	/// 共通移動処理
 	/// </summary>
-	void CommonMove(const CVector3 speed);
+	void CommonMove();
+	/// <summary>
+	/// 前に向く
+	/// </summary>
+	void Forward(const CVector3 speed);
+	/// <summary>
+	/// 視野角の判定を行う
+	/// </summary>
+	void OutLook();
+private://ステートの管理関数
+	/// <summary>
+	/// ステートマシンを実行
+	/// </summary>
+	void ExecuteFSM();
 
-public://状態を作成する関数
+public:/*初期移動状態を作成する関数*/
 	
 	/// /// <summary>
 	/// 上下移動の処理を作成。
@@ -75,7 +94,7 @@ public://状態を作成する関数
 	/// 円移動の処理を作成
 	/// </summary>
 	void CreateMoveCircle();
-public:
+public:/*状態を作成する関数*/
 	/// 通常状態の時の処理を作成。
 	/// </summary>
 	void ExecuteFSM_Normal();
@@ -91,16 +110,10 @@ public:
 	/// 帰宅状態の時の処理を作成。
 	/// </summary>
 	void ExecuteFSM_Return();
+
+
 	
-public:
-	/// <summary>
-	/// クマの座標に指定されたベクトルを足し算する。
-	/// </summary>
-	/// <param name="move">足し算するベクトル</param>
-	void AddPosition(const CVector3& add)
-	{
-		m_pos += add;
-	}
+public:/*取得関数*/
 	/// <summary>
 	/// クマの座標を取得
 	/// </summary>
@@ -109,19 +122,28 @@ public:
 		return m_pos;
 	}
 	/// <summary>
-	/// アニメーションの状態を変更
-	/// </summary>
-	void SetAnimation(const int number)
-	{
-		m_MoriAnimation.Play(number);
-	}
-	/// <summary>
 	/// 初期座標を取得。
 	/// </summary>
 	/// <returns></returns>
 	const CVector3& GetSavePos() const
 	{
 		return m_savePos;
+	}
+	/// <summary>
+/// 現在の状態を取得
+/// </summary>
+/// <returns></returns>
+	const MoveState GetState() const
+	{
+		return m_movestate;
+	}
+public:/*設定関数*/
+	/// <summary>
+	/// アニメーションの状態を設定
+	/// </summary>
+	void SetAnimation(const int number)
+	{
+		m_MoriAnimation.Play(number);
 	}
 	/// <summary>
 	/// 初期座標を設定する
@@ -138,49 +160,87 @@ public:
 	{
 		m_isSavePos = issavepos;
 	}
+	/// <summary>
+	/// 発見状態の状況を設定
+	/// </summary>
+	/// <returns>設定する状況</returns>
+	void SetStates(const DiscoverySituation states)
+	{
+		m_states = states;
+	}
+	/// <summary>
+	/// 発見状態の状況を取得
+	/// </summary>
+	/// <returns>状況</returns>
+	const DiscoverySituation GetStates() const
+	{
+		return m_states;
+	}
+	/// <summary>
+	/// フレーム時間を取得
+	/// </summary>
+	/// <returns></returns>
 	const float GetFrameTime() const
 	{
 		return m_frametime;
 	}
+	/// <summary>
+	/// フレーム時間を設定
+	/// </summary>
+	/// <param name="frametime"></param>
 	void SetFrameTime(const float frametime)
 	{
 		m_frametime = frametime;
 	}
-	void AddTime(const float addtime)
-	{
-		m_frametime += addtime;
+	/// <summary>
+	/// 現在の状態を設定
+	/// </summary>
+	MoveState SetState(const MoveState state) {
+		m_movestate = state;
 	}
-	const MoveState GetState() const
-	{
-		return m_movestate;
-	}
-public:
+public:/*判定関数*/
+	/// <summary>
+	/// 初期座標判定
+	/// </summary>
+	/// <returns></returns>
 	bool IsSavePos() const
 	{
 		return m_isSavePos;
 	}
+	/// <summary>
+	/// 生存判定
+	/// </summary>
+	/// <returns></returns>
 	bool IsLive() const
 	{
 		return m_isLive;
 	}
+	/// <summary>
+	/// 死亡判定
+	/// </summary>
+	/// <returns></returns>
 	bool IsDying() const
 	{
 		return m_isCotton;
 	}
 
-	//ステートの管理関数
-private:
+public://加算関数
 	/// <summary>
-	/// ステートマシンを実行
+	/// 1フレームの時間を加算
 	/// </summary>
-	void ExecuteFSM();
+	/// <param name="addtime"></param>
+	void AddTime(const float addtime)
+	{
+		m_frametime += addtime;
+	}
 
 protected:
 	ChangeStateRequest m_changeStateRequest;
-	MoveState m_movestate = State_LR;	//移動状態
+	MoveState m_movestate = State_LR;			//移動状態
 
-	State m_state = State_Normal;  //ステート
+	State m_state = State_Normal;				//ステート
 
+	DiscoverySituation m_states = States_Still;	//状況
 
 	//AnimationClip配列とAnimationの変数を追加する
 	//アニメーション
@@ -191,7 +251,7 @@ protected:
 	bool m_isCotton = true;					//綿入ってる？
 	CVector3 m_savePos = CVector3::Zero();	//初期座標
 	bool m_isSavePos = true;				//初期座標かを判定
-	float m_frametime = 0.0f;	//待機時間を計測。
+	float m_frametime = 0.0f;				//待機時間を計測。
 
 protected:
 

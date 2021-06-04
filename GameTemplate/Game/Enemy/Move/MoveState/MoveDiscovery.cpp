@@ -37,8 +37,18 @@ void MoveDiscovery::Move()
 		m_kuma->SetFrameTime(0.0f);
 		//通常アニメーションを再生
 		m_kuma->SetAnimation(0);
-
-		//発見状態が終わって逃げ状態に遷移する。
-		m_kuma->ExecuteFSM_Escape();
+		
+		if (m_kuma->GetStates() == 0) {
+			//発見状態が終わって逃げ状態に遷移する。
+			m_kuma->ExecuteFSM_Escape();
+		}
+		else if (m_kuma->GetStates() == 1) {
+			//発見状態が終わって逃げ状態に遷移する。
+			m_kuma->ExecuteFSM_Escape();
+		}
+		else if (m_kuma->GetStates() == 2){
+			//発見状態が終わって逃げ状態に遷移する。
+			m_kuma->ExecuteFSM_Escape();
+		}
 	}
 }

@@ -144,7 +144,6 @@
       <Filter>Enemy\Move\MoveState</Filter>
     </ClCompile>
     <ClCompile Include="Enemy\Move\MoveState\IMoveState.cpp" />
-    <ClCompile Include="Enemy\Move\MoveState\MoveReturn.cpp" />
     <ClCompile Include="GameObject\mtGameObject.cpp" />
     <ClCompile Include="GameObject\mtGameObjectManager.cpp" />
     <ClCompile Include="Noncopy.cpp" />
@@ -167,6 +166,9 @@
     <ClCompile Include="graphics\Draw\Bloom.cpp" />
     <ClCompile Include="graphics\Draw\PostEffect.cpp" />
     <ClCompile Include="graphics\Draw\GausianBlur.cpp" />
+    <ClCompile Include="Enemy\Move\MoveState\MoveReturn.cpp">
+      <Filter>Enemy\Move\MoveState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -276,7 +278,6 @@
       <Filter>Enemy\Move\MoveState</Filter>
     </ClInclude>
     <ClInclude Include="Enemy\Move\MoveState\IMoveState.h" />
-    <ClInclude Include="Enemy\Move\MoveState\MoveReturn.h" />
     <ClInclude Include="GameObject\mtGameObject.h" />
     <ClInclude Include="GameObject\mtGameObjectManager.h" />
     <ClInclude Include="Time\mtGameTime.h" />
@@ -302,6 +303,9 @@
     <ClInclude Include="graphics\Draw\Bloom.h" />
     <ClInclude Include="graphics\Draw\PostEffect.h" />
     <ClInclude Include="graphics\Draw\GausianBlur.h" />
+    <ClInclude Include="Enemy\Move\MoveState\MoveReturn.h">
+      <Filter>Enemy\Move\MoveState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\PECO.FBX">

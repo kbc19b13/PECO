@@ -45,6 +45,8 @@ bool Kuma::Start()
 
 	m_player = Player::P_GetInstance();
 
+	m_states = States_Still;
+
 	return true;
 }
 ////////////////移動処理//////////////////////
@@ -101,8 +103,10 @@ void Kuma::Update()
 	if (m_kumamove) {
 		//クマの移動処理を実行する。
 		m_kumamove->Move();
-		CommonMove(m_kumamove->GetMoveSpeed());
+		CommonMove();
 	}
+
+	OutLook();
 
 	//Playerとクマとの距離を求めて処理を行う
 	//Playerの座標を取得する処理が入るので
@@ -172,11 +176,7 @@ void Kuma::ExecuteFSM()
 	}
 
 }
-void Kuma::CommonUpdate()
-{
-	
-}
-void Kuma::CommonMove(const CVector3 speed)
+void Kuma::Forward(const CVector3 speed)
 {
 	if (fabsf(speed.x) < 0.001f
 		&& fabsf(speed.z) < 0.001f) {
@@ -192,4 +192,47 @@ void Kuma::CommonMove(const CVector3 speed)
 	//atanが返してくる角度はラジアン単位なので
 	//SetRotationDegではなくSetRotationを使用する。
 	m_rot.SetRotation(CVector3::AxisY(), angle);
+
+	m_pos += m_speed;
+}
+void Kuma::OutLook()
+{
+	//視野角判定をとる
+	//前方方向を求める
+	CVector3 kumaForward = CVector3::AxisZ();
+	//回転に加算
+	m_rot.Multiply(kumaForward);
+
+	//Playerに向かってレイを飛ばす
+	CVector3 toPlayerDir = m_player->GetPosition() - m_pos;
+	//Playerまでの距離
+	float toPlayerLen = toPlayerDir.Length();
+	//正規化
+	toPlayerDir.Normalize();
+
+	//内積を計算
+	float innerProduct = kumaForward.Dot(toPlayerDir);
+	//角度を計算
+	float angle = acos(innerProduct);
+
+	//視野角判定
+	if (fabsf(angle) < CMath::DegToRad(45.0f)
+		&& toPlayerLen < 1000.0f)
+	{
+		//状況を伝える
+		m_states = States_Still;
+		//状態を切り替える
+		ExecuteFSM_Discovery();
+	}
+}
+void Kuma::CommonUpdate()
+{
+	
+}
+void Kuma::CommonMove()
+{
+	//前を向く関数
+	Forward(m_kumamove->GetMoveSpeed());
+
+
 }

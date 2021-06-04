@@ -51,6 +51,8 @@ void MoveReturn::Move()
 		CVector3 ReturnVector = savePos - ReturnPos;
 		ReturnVector.Normalize();
 
-		m_kuma->SetMoveSpeed(ReturnVector);
+		m_speed = ReturnVector;
+
+		m_kuma->SetMoveSpeed(m_speed);
 	}
 }

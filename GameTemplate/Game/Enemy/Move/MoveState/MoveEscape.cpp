@@ -29,7 +29,7 @@ void MoveEscape::Move()
 	m_speed = { 1.0f, 0.0f, 0.0f };
 
 	//クマの座標を更新
-	m_kuma->AddPosition(m_speed);
+	m_kuma->SetMoveSpeed(m_speed);
 
 	//Playerとクマとの距離を求めて、1000離れると戻り状態に切り替える。	
 	if (GetDistance(m_player->GetPosition(), m_pos) > 1000.0f)
