@@ -71,10 +71,14 @@ public:
 	/// <summary>
 	/// 2点間の距離求める
 	/// </summary>
-	/// v1→v2に伸びるベクトルを計算
+	/// v1→v2に伸びるベクトルを計算し取得
 	/// <returns>求めた距離を返す</returns>
 	float GetDistance(const CVector3& v1, const CVector3& v2);
-
+	/// <summary>
+	/// v1→ｖ2の方向を計算し取得
+	/// </summary>
+	/// <returns>求めた方向を返す</returns>
+	CVector3 GetDirection(const CVector3& v1, const CVector3& v2);
 public:
 	void Draw(EnRenderMode rendermode);
 

@@ -169,6 +169,9 @@
     <ClCompile Include="Enemy\Move\MoveState\MoveReturn.cpp">
       <Filter>Enemy\Move\MoveState</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy\Move\MoveState\MoveChase.cpp">
+      <Filter>Enemy\Move\MoveState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -304,6 +307,9 @@
     <ClInclude Include="graphics\Draw\PostEffect.h" />
     <ClInclude Include="graphics\Draw\GausianBlur.h" />
     <ClInclude Include="Enemy\Move\MoveState\MoveReturn.h">
+      <Filter>Enemy\Move\MoveState</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\Move\MoveState\MoveChase.h">
       <Filter>Enemy\Move\MoveState</Filter>
     </ClInclude>
   </ItemGroup>

@@ -43,8 +43,8 @@ void MoveDiscovery::Move()
 			m_kuma->ExecuteFSM_Escape();
 		}
 		else if (m_kuma->GetStates() == 1) {
-			//発見状態が終わって逃げ状態に遷移する。
-			m_kuma->ExecuteFSM_Escape();
+			//発見状態が終わって追跡状態に遷移する。
+			m_kuma->ExecuteFSM_Chase();
 		}
 		else if (m_kuma->GetStates() == 2){
 			//発見状態が終わって逃げ状態に遷移する。

@@ -28,7 +28,7 @@ protected:
 	enum State {
 		State_Normal,			//’Êíó‘Ô
 		State_Discovery,		//”­Œ©ó‘Ô
-		State_Tracking,			//’ÇÕó‘Ô
+		State_Chase,			//’ÇÕó‘Ô
 		State_Escape,			//“¦‘–ó‘Ô
 		State_Return,			//‹A‘îó‘Ô
 		State_Restraint,		//S‘©ó‘Ô
@@ -110,8 +110,11 @@ public:/*ó‘Ô‚ğì¬‚·‚éŠÖ”*/
 	/// ‹A‘îó‘Ô‚Ì‚Ìˆ—‚ğì¬B
 	/// </summary>
 	void ExecuteFSM_Return();
-
-
+	/// <summary>
+	/// ’ÇÕó‘Ô‚Ì‚Ìˆ—‚ğì¬
+	/// </summary>
+	void ExecuteFSM_Chase();
+	
 	
 public:/*æ“¾ŠÖ”*/
 	/// <summary>

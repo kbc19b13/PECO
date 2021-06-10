@@ -9,6 +9,7 @@
 #include "Move/MoveState/MoveDiscovery.h"
 #include "Move/MoveState/MoveEscape.h"
 #include "Move/MoveState/MoveReturn.h"
+#include "Move/MoveState/MoveChase.h"
 
 
 bool Kuma::Start()
@@ -93,6 +94,11 @@ void Kuma::ExecuteFSM_Return()
 	m_changeStateRequest.nextState = State_Return;
 	m_changeStateRequest.isRequest = true;
 }
+void Kuma::ExecuteFSM_Chase()
+{
+	m_changeStateRequest.nextState = State_Chase;
+	m_changeStateRequest.isRequest = true;
+}
 ////////////////////////////////////////////////
 void Kuma::Update()
 {
@@ -157,22 +163,26 @@ void Kuma::ExecuteFSM()
 		case State_Discovery:
 			//î≠å©èÛë‘
 			m_kumamove = std::make_unique<MoveDiscovery>(this);
-			
+
 			break;
 
 		case State_Escape:
 			//ì¶Ç∞èÛë‘
 			m_kumamove = std::make_unique<MoveEscape>(this);
-			
+
 			break;
 
 		case State_Return:
 			//ñﬂÇËèÛë‘
 			m_kumamove = std::make_unique<MoveReturn>(this);
-			
+
+			break;
+		case State_Chase:
+			//í«ê’èÛë‘
+			m_kumamove = std::make_unique<MoveChase>(this);
 			break;
 		}
-		m_state = m_changeStateRequest.nextState;
+			m_state = m_changeStateRequest.nextState;
 	}
 
 }
@@ -220,7 +230,7 @@ void Kuma::OutLook()
 		&& toPlayerLen < 1000.0f)
 	{
 		//èÛãµÇì`Ç¶ÇÈ
-		m_states = States_Still;
+		m_states = States_Found;
 		//èÛë‘ÇêÿÇËë÷Ç¶ÇÈ
 		ExecuteFSM_Discovery();
 	}

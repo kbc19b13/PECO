@@ -19,3 +19,13 @@ float IActor::GetDistance(const CVector3& v1, const CVector3& v2)
 
 	return distance;
 }
+
+CVector3 IActor::GetDirection(const CVector3& v1, const CVector3& v2)
+{
+	//プレイヤーからエネミーに伸びるベクトルを計算
+	CVector3 direction = v1 - v2;
+	//正規化で方向のみ取
+	direction.Normalize();
+
+	return direction;
+}
