@@ -347,6 +347,9 @@
     <MeshContentTask Include="Assets\modelData\YK_Idle.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\tree.fbx">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\animData\idle_Kuma.tka" />

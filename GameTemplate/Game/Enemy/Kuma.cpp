@@ -112,6 +112,7 @@ void Kuma::Update()
 		CommonMove();
 	}
 
+	Forward(m_speed);
 	OutLook();
 
 	//Player‚ÆƒNƒ}‚Æ‚Ì‹——£‚ğ‹‚ß‚Äˆ—‚ğs‚¤

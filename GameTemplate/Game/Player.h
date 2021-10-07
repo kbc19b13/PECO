@@ -31,11 +31,11 @@ public:
 	/// <summary>
 	/// アニメーション再生
 	/// </summary>
-	void Anim();
+	//void Anim();
 	/// <summary>
 	/// アニメーションの初期化
 	/// </summary>
-	void AnimInit();
+	//void AnimInit();
 
 private:
 	////////////////*構造の変数*/////////////////////
@@ -47,8 +47,8 @@ private:
 
 	//AnimationClip配列とAnimationの変数を追加する
 	//アニメーション
-	Animation m_PlayerAnimation;
-	AnimationClip m_PlayerAnimationClips[1];
+	//Animation m_PlayerAnimation;
+	//AnimationClip m_PlayerAnimationClips[1];
 
 	//AnimationPlayController m_animPlayCon;
 	

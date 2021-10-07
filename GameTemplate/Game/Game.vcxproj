@@ -225,6 +225,7 @@
     <MeshContentTask Include="Assets\modelData\PECO_Stage.FBX" />
     <MeshContentTask Include="Assets\modelData\Stage_Sanple.FBX" />
     <MeshContentTask Include="Assets\modelData\test.FBX" />
+    <MeshContentTask Include="Assets\modelData\tree.fbx" />
     <MeshContentTask Include="Assets\modelData\wood.FBX" />
     <MeshContentTask Include="Assets\modelData\unityChan.fbx">
       <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
